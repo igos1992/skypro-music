@@ -1,9 +1,9 @@
 import './App.css';
 import MainNavMenu from './components/MainNavMenu';
 import MainSidebar from './components/MainSidebar';
-import MainCenterBlock from './components/MainCenterBlock';
+import MainCenterBlock from './components/Main Center Block/MainCenterBlock';
 import Bar from './components/Bar';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
 
 function App() {
   return (

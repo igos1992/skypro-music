@@ -1,12 +1,16 @@
 import SidebarPersonal from './Main Sidebar under components/SidebarPersonal';
 import SidebarBlock from './Main Sidebar under components/SidebarBlock';
 
-function MainSidebar () {
+function MainSidebar() {
   return (
     <div className="main__sidebar sidebar">
-              <SidebarPersonal />
-              <SidebarBlock />
-            </div>
+      <SidebarPersonal />
+      <div className="sidebar__block">
+        <div className="sidebar__list">
+          <SidebarBlock />
+        </div>
+      </div>
+    </div>
   );
 }
 
