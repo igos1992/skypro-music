@@ -1,6 +1,7 @@
 import CenterBlockSearch from './Center Block Search/CenterBlockSearch';
 import CenterBlockFilter from './Center Block Filter/CenterBlockFilter';
 import CenterBlockContent from './Center Block Content/CenterBlockContent';
+import './MainCenterBlock.css';
 
 function MainCenterBlock() {
   return (

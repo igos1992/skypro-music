@@ -1,5 +1,8 @@
-import PlayerControls from './under components/PlayerControls';
+import './Bar.css';
+import PlayerControls from './Player Controls/PlayerControls';
 import { useEffect, useState } from "react";
+import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
+import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
 
 function Bar() {
 
@@ -18,7 +21,6 @@ function Bar() {
         <div className="bar__player-block">
           <div className="bar__player player">
             <PlayerControls />
-
             <div className="player__track-play track-play">
               <div className="track-play__contain">
                 {loading ? (
@@ -49,37 +51,10 @@ function Bar() {
                   </div>
                 )}
               </div>
-
-              <div className="track-play__like-dis">
-                <div className="track-play__like _btn-icon">
-                  <svg className="track-play__like-svg" alt="like">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like" />
-                  </svg>
-                </div>
-                <div className="track-play__dislike _btn-icon">
-                  <svg className="track-play__dislike-svg" alt="dislike">
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike" />
-                  </svg>
-                </div>
-              </div>
+              <TrackPlayLikeDis />
             </div>
           </div>
-          <div className="bar__volume-block volume">
-            <div className="volume__content">
-              <div className="volume__image">
-                <svg className="volume__svg" alt="volume">
-                  <use xlinkHref="img/icon/sprite.svg#icon-volume" />
-                </svg>
-              </div>
-              <div className="volume__progress _btn">
-                <input
-                  className="volume__progress-line _btn"
-                  type="range"
-                  name="range"
-                />
-              </div>
-            </div>
-          </div>
+          <BarVolumeBlock />
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import './SidebarPersonal.css';
+
 function SidebarPersonal() {
   return (
     <div className="sidebar__personal">

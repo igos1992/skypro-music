@@ -1,3 +1,5 @@
+import './NavLogo.css';
+
 function NavLogo() {
   return (
     <div className="nav__logo logo">

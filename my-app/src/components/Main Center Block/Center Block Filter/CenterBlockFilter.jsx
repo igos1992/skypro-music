@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ArrayMusic from '../../Array/ArrayMusic';
+import './CenterBlockFilter.css';
 
 function CenterBlockFilter() {
 
@@ -36,7 +37,7 @@ function CenterBlockFilter() {
       {/* перебираем массив с песнями и рендерим исполнителя */}
       {trackAuthorVisible ? (
         <div className="filter__wrap">
-          <button className="filter__button button-author _btn-text_active" onClick={toggleVisibilityAuthor}>
+          <button className="filter__button _btn-text_active" onClick={toggleVisibilityAuthor}>
             исполнителю
           </button>
           <div className="filter__length">
@@ -53,15 +54,15 @@ function CenterBlockFilter() {
           </div>
         </div>
       ) : (
-        <button className="filter__button button-author _btn-text" onClick={toggleVisibilityAuthor}>
+        <button className="filter__button _btn-text" onClick={toggleVisibilityAuthor}>
           исполнителю
         </button>
       )}
 
-      {/* перебираем массив с песнями и рендерим года выпуска */}  
+      {/* перебираем массив с песнями и рендерим года выпуска */}
       {yearOfReleaseVisible ? (
         <div className="filter__wrap">
-          <button className="filter__button button-year _btn-text_active" onClick={toggleVisibilityYear}>
+          <button className="filter__button _btn-text_active" onClick={toggleVisibilityYear}>
             году выпуска
           </button>
           <div className="filter__length">
@@ -78,7 +79,7 @@ function CenterBlockFilter() {
           </div>
         </div>
       ) : (
-        <button className="filter__button button-year _btn-text" onClick={toggleVisibilityYear}>
+        <button className="filter__button _btn-text" onClick={toggleVisibilityYear}>
           году выпуска
         </button>
       )}
@@ -86,7 +87,7 @@ function CenterBlockFilter() {
       {/* перебираем массив с песнями и рендерим жанра */}
       {visibleGenre ? (
         <div className="filter__wrap">
-          <button className="filter__button button-genre _btn-text_active" onClick={toggleVisibilityGenre}>
+          <button className="filter__button _btn-text_active" onClick={toggleVisibilityGenre}>
             жанру
           </button>
           <div className="filter__length">
@@ -103,7 +104,7 @@ function CenterBlockFilter() {
           </div>
         </div>
       ) : (
-        <button className="filter__button button-genre _btn-text" onClick={toggleVisibilityGenre}>
+        <button className="filter__button _btn-text" onClick={toggleVisibilityGenre}>
           жанру
         </button>
       )}

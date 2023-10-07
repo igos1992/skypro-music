@@ -1,5 +1,6 @@
 import NavMenu from "../Nav Menu/NavMenu";
 import { useState } from "react";
+import './NavBurger.css';
 
 function NavBurger() {
   const [visible, setVisible] = useState(false);

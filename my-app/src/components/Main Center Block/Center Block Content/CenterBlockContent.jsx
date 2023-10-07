@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ArrayMusic from '../../Array/ArrayMusic';
+import './CenterBlockContent.css';
 
 function CenterBlockContent() {
 

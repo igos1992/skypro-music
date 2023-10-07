@@ -1,5 +1,6 @@
 import SidebarPersonal from './Sidebar Personal/SidebarPersonal';
 import SidebarBlock from './Sidebar Block/SidebarBlock';
+import './MainSidebar.css';
 
 function MainSidebar() {
   return (

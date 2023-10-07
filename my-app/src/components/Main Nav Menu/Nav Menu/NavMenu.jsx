@@ -1,3 +1,5 @@
+import './NavMenu.css';
+
 function NavMenu() {
   return (
     <div className="nav__menu menu">

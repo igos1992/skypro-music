@@ -1,3 +1,5 @@
+import './CenterBlockSearch.css';
+
 function CenterBlockSearch() {
   return (
     <div className="centerblock__search search">

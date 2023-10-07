@@ -1,3 +1,5 @@
+import './PlayerControls.css';
+
 function PlayerControls() {
   return (
     <div className="player__controls">
