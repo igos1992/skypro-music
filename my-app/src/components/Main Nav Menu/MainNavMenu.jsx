@@ -1,5 +1,5 @@
-import NavBurger from './Main Nav Menu under components/NavBurger';
-import NavLogo from './Main Nav Menu under components/NavLogo';
+import NavBurger from './Nav Burger/NavBurger';
+import NavLogo from './Nav Logo/NavLogo';
 
 function MainNavMenu() {
   return (

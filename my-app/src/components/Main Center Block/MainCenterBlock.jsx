@@ -1,6 +1,6 @@
-import CenterBlockSearch from './under components/CenterBlockSearch';
-import CenterBlockFilter from './under components/CenterBlockFilter';
-import CenterBlockContent from './under components/CenterBlockContent';
+import CenterBlockSearch from './Center Block Search/CenterBlockSearch';
+import CenterBlockFilter from './Center Block Filter/CenterBlockFilter';
+import CenterBlockContent from './Center Block Content/CenterBlockContent';
 
 function MainCenterBlock() {
   return (

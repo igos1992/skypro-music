@@ -1,4 +1,4 @@
-import PlayerControls from './Bar under components/PlayerControls';
+import PlayerControls from './under components/PlayerControls';
 import { useEffect, useState } from "react";
 
 function Bar() {

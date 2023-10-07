@@ -1,4 +1,4 @@
-import NavMenu from "./NavMenu";
+import NavMenu from "../Nav Menu/NavMenu";
 import { useState } from "react";
 
 function NavBurger() {

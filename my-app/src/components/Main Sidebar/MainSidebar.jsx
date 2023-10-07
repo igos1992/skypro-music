@@ -1,5 +1,5 @@
-import SidebarPersonal from './Main Sidebar under components/SidebarPersonal';
-import SidebarBlock from './Main Sidebar under components/SidebarBlock';
+import SidebarPersonal from './Sidebar Personal/SidebarPersonal';
+import SidebarBlock from './Sidebar Block/SidebarBlock';
 
 function MainSidebar() {
   return (
