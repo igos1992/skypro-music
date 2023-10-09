@@ -37,6 +37,7 @@
   padding: 6px 20px;
   background-color: inherit;
   color: #ffffff;
+  margin-right: 10px;
 }
 
 .filter__button:not(:last-child) {
@@ -132,3 +133,5 @@
   color: #ad61ff;
   cursor: pointer;
 }
+
+

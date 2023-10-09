@@ -25,6 +25,7 @@
 
 .player__btn-prev {
   margin-right: 23px;
+  cursor: pointer;
 }
 
 .player__btn-prev-svg {
@@ -52,6 +53,7 @@
   height: 14px;
   fill: inherit;
   stroke: #d9d9d9;
+  cursor: pointer;
 }
 
 .player__btn-repeat {

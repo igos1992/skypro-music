@@ -29,6 +29,7 @@
   width: 13px;
   height: 18px;
   margin-right: 17px;
+  cursor: pointer;
 }
 
 .volume__svg {
