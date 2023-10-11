@@ -1,4 +1,6 @@
-.centerblock__filter {
+import { styled } from 'styled-components'
+
+export const CenterBlockFilter = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10,24 +12,24 @@
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 51px;
-}
+`
 
-.filter__title {
+export const FilterTitle = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   margin-right: 15px;
-}
+`
 
-.filter__wrap {
+export const FilterWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-}
+`
 
-.filter__button {
+export const FilterButton = styled.button`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -38,19 +40,26 @@
   background-color: inherit;
   color: #ffffff;
   margin-right: 10px;
-}
-
-.filter__button:not(:last-child) {
-  margin-right: 10px;
-}
-
-._btn-text_active {
   border-color: #ad61ff;
   color: #ad61ff;
   cursor: pointer;
-}
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  &:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+  }
+  &:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+  }
 
-.filter__length {
+`
+
+export const FilterLength = styled.div`
   position: absolute;
   width: 26px;
   height: 26px;
@@ -62,9 +71,9 @@
   justify-content: center;
   top: -13px;
   right: 8px;
-}
+`
 
-.filter__menu {
+export const FilterMenu = styled.div`
   position: absolute;
   top: 50px;
   width: 248px;
@@ -74,9 +83,14 @@
   border-radius: 12px;
   padding: 34px;
   overflow-y: hidden;
-}
+`
 
-.filter__list {
+export const FilterMenuYear = styled(FilterMenu)`
+  width: 248px;
+  height: 305px;
+`
+
+export const FilterList = styled.ul`
   width: 180px;
   height: 305px;
   display: flex;
@@ -89,49 +103,32 @@
   letter-spacing: 0em;
   text-align: left;
   overflow-y: scroll;
-}
-
-.filter__list a {
   color: #fff;
-}
-
-.filter__list a:active,
-.filter__list a:hover {
   color: #ad61ff;
-  text-decoration: underline;
   transition: color 0.3s ease;
-}
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #4b4949;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 2px;
+    height: 65px;
+  }
+`
 
-.filter__list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.filter__list::-webkit-scrollbar-track {
-  background-color: #4B4949;
-
-}
-
-.filter__list::-webkit-scrollbar-thumb {
-  background-color: #FFFFFF;
-  border-radius: 2px;
-  height: 65px;
-}
-
-.filter__menu-year {
-  width: 248px;
-  height: 305px;
-}
-
-._btn-text:hover {
-  border-color: #d9b6ff;
-  color: #d9b6ff;
-  cursor: pointer;
-}
-
-._btn-text:active {
-  border-color: #ad61ff;
-  color: #ad61ff;
-  cursor: pointer;
-}
-
-
+export const TextDecoration = styled.a`
+  color: #fff;
+  &:active {
+    color: #ad61ff;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+  &:hover {
+    color: #ad61ff;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+`

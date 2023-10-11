@@ -1,17 +1,17 @@
 import SidebarPersonal from './Sidebar Personal/SidebarPersonal';
 import SidebarBlock from './Sidebar Block/SidebarBlock';
-import './MainSidebar.css';
+import * as S from './MainSidebar.style';
 
 function MainSidebar() {
   return (
-    <div className="main__sidebar sidebar">
+    <S.MainSidebar>
       <SidebarPersonal />
-      <div className="sidebar__block">
-        <div className="sidebar__list">
+      <S.SidebarBlock>
+        <S.SidebarList>
           <SidebarBlock />
-        </div>
-      </div>
-    </div>
+        </S.SidebarList>
+      </S.SidebarBlock>
+    </S.MainSidebar>
   );
 }
 

@@ -1,26 +1,26 @@
-import './NavMenu.css';
+import * as S from './NavMenu.style';
 
 function NavMenu() {
   return (
-    <div className="nav__menu menu">
-      <ul className="menu__list">
-        <li className="menu__item">
-          <a href="./" className="menu__link">
+    <S.NavMenu>
+      <S.MenuList>
+        <S.MenuItem>
+          <S.MenuLink href="./">
             Главное
-          </a>
-        </li>
-        <li className="menu__item">
-          <a href="./" className="menu__link">
+          </S.MenuLink>
+        </S.MenuItem>
+        <S.MenuItem>
+          <S.MenuLink href="./">
             Мой плейлист
-          </a>
-        </li>
-        <li className="menu__item">
-          <a href="../signin.html" className="menu__link">
+          </S.MenuLink>
+        </S.MenuItem>
+        <S.MenuItem>
+          <S.MenuLink href="../signin.html">
             Войти
-          </a>
-        </li>
-      </ul>
-    </div>
+          </S.MenuLink>
+        </S.MenuItem>
+      </S.MenuList>
+    </S.NavMenu>
   );
 }
 
