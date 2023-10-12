@@ -1,13 +1,13 @@
 import NavBurger from './Nav Burger/NavBurger';
 import NavLogo from './Nav Logo/NavLogo';
-import './MainNavMenu.css';
+import * as S from './MainNavMenu.style';
 
 function MainNavMenu() {
   return (
-    <nav className="main__nav nav">
+    <S.MainNav>
       <NavLogo />
       <NavBurger />
-    </nav>
+    </S.MainNav>
   )
 }
 

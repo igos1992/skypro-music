@@ -93,6 +93,7 @@ const ArrayMusic = [
     trackName: 'Knives n Cherries',
     addition: '',
     trackAuthor: 'minthaze',
+    album: 'Captivating',
     id: 10,
     time: '1:48',
     yearOfRelease: 1992,

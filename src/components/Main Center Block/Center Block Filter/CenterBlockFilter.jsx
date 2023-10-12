@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ArrayMusic from '../../Array/ArrayMusic';
-import './CenterBlockFilter.css';
+import * as S from './CenterBlockFilter.style';
 
 function CenterBlockFilter() {
 
@@ -10,72 +10,72 @@ function CenterBlockFilter() {
   };
 
   return (
-    
-    <div className="centerblock__filter filter">
-      <div className="filter__title">Искать по:</div>
-      <div className="filter__wrap">
-        <button className="filter__button _btn-text_active _btn-text" onClick={() => toggleVisibleFilter("author")}>
+
+    <S.CenterBlockFilter>
+      <S.FilterTitle >Искать по:</S.FilterTitle>
+      <S.FilterWrap>
+        <S.FilterButton onClick={() => toggleVisibleFilter("author")}>
           исполнителю
-        </button>
+        </S.FilterButton>
         {activeFilter === "author" &&
-        <>
-          <div className="filter__length">
-            {ArrayMusic.length}
-          </div>
-          <div className="filter__menu">
-            <ul className="filter__list">
-              {ArrayMusic.map((item) => (
-                <li key={item.id}>
-                  <a href='#'>{item.trackName}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>}
-      </div>
-
-      <div className="filter__wrap">
-        <button className="filter__button _btn-text_active _btn-text" onClick={() => toggleVisibleFilter("year")}>
-          году выпуска
-        </button>
-        {activeFilter === "year" &&
-        <>
-          <div className="filter__length">
-            {ArrayMusic.length}
-          </div>
-          <div className="filter__menu filter__menu-year">
-            <ul className="filter__list">
-              {ArrayMusic.map((item) => (
-                <li className='filter__list-item' key={item.id} >
-                  <a href='#'>{item.yearOfRelease}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>}
-      </div>
-
-      <div className="filter__wrap">
-        <button className="filter__button _btn-text_active _btn-text" onClick={() => toggleVisibleFilter("genre")}>
-          жанру
-        </button>
-        {activeFilter === "genre" &&
           <>
-            <div className="filter__length">
+            <S.FilterLength>
               {ArrayMusic.length}
-            </div>
-            <div className="filter__menu">
-              <ul className="filter__list">
+            </S.FilterLength>
+            <S.FilterMenu>
+              <S.FilterList>
                 {ArrayMusic.map((item) => (
                   <li key={item.id}>
-                    <a href='#'>{item.genre}</a>
+                    <S.TextDecoration href='#'>{item.trackName}</S.TextDecoration>
                   </li>
                 ))}
-              </ul>
-            </div>
+              </S.FilterList>
+            </S.FilterMenu>
           </>}
-      </div>
-    </div>
+      </S.FilterWrap>
+
+      <S.FilterWrap>
+        <S.FilterButton onClick={() => toggleVisibleFilter("year")}>
+          году выпуска
+        </S.FilterButton>
+        {activeFilter === "year" &&
+          <>
+            <S.FilterLength >
+              {ArrayMusic.length}
+            </S.FilterLength>
+            <S.FilterMenuYear>
+              <S.FilterList>
+                {ArrayMusic.map((item) => (
+                  <li key={item.id} >
+                    <S.TextDecoration href='#'>{item.yearOfRelease}</S.TextDecoration>
+                  </li>
+                ))}
+              </S.FilterList>
+            </S.FilterMenuYear>
+          </>}
+      </S.FilterWrap>
+
+      <S.FilterWrap>
+        <S.FilterButton onClick={() => toggleVisibleFilter("genre")}>
+          жанру
+        </S.FilterButton>
+        {activeFilter === "genre" &&
+          <>
+            <S.FilterLength>
+              {ArrayMusic.length}
+            </S.FilterLength>
+            <S.FilterMenu>
+              <S.FilterList>
+                {ArrayMusic.map((item) => (
+                  <li key={item.id}>
+                    <S.TextDecoration href='#'>{item.genre}</S.TextDecoration>
+                  </li>
+                ))}
+              </S.FilterList>
+            </S.FilterMenu>
+          </>}
+      </S.FilterWrap>
+    </S.CenterBlockFilter>
   )
 }
 
