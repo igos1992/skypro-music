@@ -1,8 +1,8 @@
-import './Bar.css';
 import PlayerControls from './Player Controls/PlayerControls';
 import { useEffect, useState } from "react";
 import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
 import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
+import * as S from './Bar.style';
 
 function Bar() {
 
@@ -15,49 +15,49 @@ function Bar() {
   })
 
   return (
-    <div className="bar">
-      <div className="bar__content">
-        <div className="bar__player-progress" />
-        <div className="bar__player-block">
-          <div className="bar__player player">
+    <S.Bar>
+      <S.BarContent>
+        <S.BarPlayerProgress />
+        <S.BarPlayerBlock>
+          <S.BarPlayer>
             <PlayerControls />
-            <div className="player__track-play track-play">
-              <div className="track-play__contain">
+            <S.PlayerTrackPlay>
+              <S.TrackPlayContain>
                 {loading ? (
-                  <div className="skeleton__track-play__image" />
+                  <S.SkeletonTrackPlayImage />
                 ) : (
-                  <div className="track-play__image">
-                    <svg className="track-play__svg" alt="music">
+                  <S.TrackPlayImage>
+                    <S.TrackPlaySvg alt="music">
                       <use xlinkHref="img/icon/sprite.svg#icon-note" />
-                    </svg>
-                  </div>
+                    </S.TrackPlaySvg>
+                  </S.TrackPlayImage>
                 )}
                 {loading ? (
-                  <div className="skeleton__track-play__author" />
+                  <S.SkeletonTrackPlayAuthor />
                 ) : (
-                  <div className="track-play__author">
-                    <a className="track-play__author-link" href="http://">
+                  <S.TrackPlayAuthor>
+                    <S.TrackPlayAuthorLink href="http://">
                       Ты та...
-                    </a>
-                  </div>
+                    </S.TrackPlayAuthorLink>
+                  </S.TrackPlayAuthor>
                 )}
                 {loading ? (
-                  <div className="skeleton__track-play__album" />
+                  <S.SkeletonTrackPlayAlbum />
                 ) : (
-                  <div className="track-play__album">
-                    <a className="track-play__album-link" href="http://">
+                  <S.TrackPlayAlbum >
+                    <S.TrackPlayAlbumLink href="http://">
                       Баста
-                    </a>
-                  </div>
+                    </S.TrackPlayAlbumLink>
+                  </S.TrackPlayAlbum>
                 )}
-              </div>
+              </S.TrackPlayContain>
               <TrackPlayLikeDis />
-            </div>
-          </div>
+            </S.PlayerTrackPlay>
+          </S.BarPlayer>
           <BarVolumeBlock />
-        </div>
-      </div>
-    </div>
+        </S.BarPlayerBlock>
+      </S.BarContent>
+    </S.Bar>
   );
 }
 

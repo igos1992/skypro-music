@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArrayMusic from '../../Array/ArrayMusic';
-import './CenterBlockContent.css';
+import * as S from './CenterBlockContent.style'
 
 function CenterBlockContent() {
 
@@ -14,76 +14,76 @@ function CenterBlockContent() {
 
   return (
 
-    <div className="centerblock__content">
-      <div className="content__title playlist-title" >
-        <div className="playlist-title__col col01">Трек</div>
-        <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-        <div className="playlist-title__col col03">АЛЬБОМ</div>
-        <div className="playlist-title__col col04">
-          <svg className="playlist-title__svg" alt="time">
+    <S.CenterBlockContent>
+      <S.ContentTitle>
+        <S.Col01>ТРЕК</S.Col01>
+        <S.Col02>ИСПОЛНИТЕЛЬ</S.Col02>
+        <S.Col03>АЛЬБОМ</S.Col03>
+        <S.Col04>
+          <S.PlayListTitleSvg alt="time">
             <use xlinkHref="img/icon/sprite.svg#icon-watch" />
-          </svg>
-        </div>
-      </div>
-      <div className="content__playlist playlist">
+          </S.PlayListTitleSvg>
+        </S.Col04>
+      </S.ContentTitle>
+      <S.ContentPlaylist>
         {ArrayMusic.map((music) => (
-          <div className="playlist__item" key={music.id}>
-            <div className="playlist__track track">
-              <div className="track__title">
+          <S.PlayListItem key={music.id}>
+            <S.PlayListTrack>
+              <S.TrackTitle>
                 {loading ? (
-                  <div className="skeleton__title-image" />
+                  <S.SkeletonTitleImage />
                 ) : (
-                  <div className="track__title-image">
-                    <svg className="track__title-svg" alt="music">
+                  <S.TrackTitleImage>
+                    <S.TrackTitleSvg alt="music">
                       <use xlinkHref="img/icon/sprite.svg#icon-note" />
-                    </svg>
-                  </div>
+                    </S.TrackTitleSvg>
+                  </S.TrackTitleImage>
                 )
                 }
                 {loading ? (
-                  <div className="skeleton__title-text" />
+                  <S.SkeletonTitleText />
                 ) : (
-                  <div className="track__title-text">
-                    <a className="track__title-link" href="http://">
+                  <S.TrackTitleText>
+                    <S.TrackTitleLink href="http://">
                       {music.trackName}
-                      <span className="track__title-span">{music.addition}</span>
-                    </a>
-                  </div>
+                      <S.TrackTitleSpan>{music.addition}</S.TrackTitleSpan>
+                    </S.TrackTitleLink>
+                  </S.TrackTitleText>
                 )}
-              </div>
+              </S.TrackTitle>
               {loading ? (
-                <div className="skeleton__author" />
+                <S.SkeletonAuthor />
               ) : (
-                <div className="track__author">
-                  <a className="track__author-link" href="http://">
+                <S.TrackAuthor>
+                  <S.TrackAuthorLink href="http://">
                     {music.trackAuthor}
-                  </a>
-                </div>
+                  </S.TrackAuthorLink>
+                </S.TrackAuthor>
               )}
               {loading ? (
-                <div className="skeleton__album" />
+                <S.SkeletonAlbum />
               ) : (
-                <div className="track__album">
-                  <a className="track__album-link" href="http://">
+                <S.TrackAlbum>
+                  <S.TrackAlbumLink href="http://">
                     {music.album}
-                  </a>
-                </div>
+                  </S.TrackAlbumLink>
+                </S.TrackAlbum>
               )}
-              <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              <S.TrackTime>
+                <S.TrackTimeSvg alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like" />
-                </svg>
+                </S.TrackTimeSvg>
                 {loading ? (
-                  <div className="track__time-text">0:00</div>
+                  <S.TrackTimeText>0:00</S.TrackTimeText>
                 ) : (
-                  <span className="track__time-text">{music.time}</span>
+                  <S.TrackTimeTextSpan>{music.time}</S.TrackTimeTextSpan>
                 )}
-              </div>
-            </div>
-          </div>
+              </S.TrackTime>
+            </S.PlayListTrack>
+          </S.PlayListItem>
         ))}
-      </div>
-    </div>
+      </S.ContentPlaylist>
+    </S.CenterBlockContent>
   );
 }
 

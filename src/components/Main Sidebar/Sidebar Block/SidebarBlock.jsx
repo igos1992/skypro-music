@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import './SidebarBlock.css';
+import * as S from './SidebarBlock.style';
 
 function SidebarBlock() {
 
@@ -14,43 +14,40 @@ function SidebarBlock() {
   return (
     <>
       {loading ? (
-        <div className="skeleton__sidebar__item" />
+        <S.SkeletonSidebarItem />
       ) : (
-        <div className="sidebar__item">
-          <a className="sidebar__link" href="./">
-            <img
-              className="sidebar__img"
+        <S.SidebarItem>
+          <S.SidebarLink href="./">
+            <S.SidebarImg
               src="img/playlist01.png"
               alt="day's playlist"
             />
-          </a>
-        </div>
+          </S.SidebarLink>
+        </S.SidebarItem>
       )}
       {loading ? (
-        <div className="skeleton__sidebar__item" />
+        <S.SkeletonSidebarItem />
       ) : (
-        <div className="sidebar__item">
-          <a className="sidebar__link" href="./">
-            <img
-              className="sidebar__img"
+        <S.SidebarItem >
+          <S.SidebarLink href="./">
+            <S.SidebarImg
               src="img/playlist02.png"
               alt="day's playlist"
             />
-          </a>
-        </div>
+          </S.SidebarLink>
+        </S.SidebarItem>
       )}
       {loading ? (
-        <div className="skeleton__sidebar__item" />
+        <S.SkeletonSidebarItem />
       ) : (
-        <div className="sidebar__item">
-          <a className="sidebar__link" href="./">
-            <img
-              className="sidebar__img"
+        <S.SidebarItem>
+          <S.SidebarLink href="./">
+            <S.SidebarImg
               src="img/playlist03.png"
               alt="day's playlist"
             />
-          </a>
-        </div>
+          </S.SidebarLink>
+        </S.SidebarItem>
       )}
     </>
   );

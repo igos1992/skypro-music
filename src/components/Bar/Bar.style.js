@@ -1,12 +1,14 @@
-.bar {
-  position: absolute;
+import { styled } from 'styled-components';
+
+export const Bar = styled.div`
+position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   background: rgba(28, 28, 28, 0.5);
-}
+`;
 
-.bar__content {
+export const BarContent = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -14,16 +16,16 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-}
+`;
 
-.bar__player-progress {
-  width: 100%;
+export const BarPlayerProgress = styled.div`
+width: 100%;
   height: 5px;
   background: #2e2e2e;
-}
+`;
 
-.bar__player-block {
-  height: 73px;
+export const BarPlayerBlock = styled.div`
+height: 73px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,10 +36,10 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-}
+`;
 
-.bar__player {
-  display: -webkit-box;
+export const BarPlayer = styled.div`
+display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
@@ -50,20 +52,20 @@
   -webkit-box-pack: start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-}
+`;
 
-.player__track-play {
-  display: -webkit-box;
+export const PlayerTrackPlay = styled.div`
+display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-}
+`;
 
-.track-play__contain {
-  width: auto;
+export const TrackPlayContain = styled.div`
+width: auto;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: auto 1fr;
@@ -72,83 +74,83 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
+`;
 
-.skeleton__track-play__image {
-  width: 51px;
+export const SkeletonTrackPlayImage = styled.div`
+width: 51px;
   height: 51px;
   background: #313131;
   margin-right: 12px;
   grid-area: image;
-}
+`;
 
-.track-play__image {
-  width: 51px;
-  height: 51px;
-  background-color: #313131;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-right: 12px;
-  grid-row: 1;
-  -ms-grid-row-span: 2;
-  grid-column: 1;
-  grid-area: image;
-  cursor: pointer;
-}
+export const TrackPlayImage = styled.div`
+width: 51px;
+height: 51px;
+background-color: #313131;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+justify-content: center;
+margin-right: 12px;
+grid-row: 1;
+-ms-grid-row-span: 2;
+grid-column: 1;
+grid-area: image;
+cursor: pointer;
+`;
 
-.track-play__svg {
-  width: 18px;
+export const TrackPlaySvg = styled.svg`
+width: 18px;
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
-}
+`;
 
-.skeleton__track-play__author {
-  width: 59px;
+export const SkeletonTrackPlayAuthor = styled.div`
+width: 59px;
   height: 15px;
   background: #313131;
-}
+`;
 
-.track-play__author {
-  grid-row: 1;
+export const TrackPlayAuthor = styled.div`
+grid-row: 1;
   grid-column: 2;
   grid-area: author;
   min-width: 49px;
-}
+`;
 
-.track-play__author-link {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  white-space: nowrap;
-}
+export const TrackPlayAuthorLink = styled.a`
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #ffffff;
+white-space: nowrap;
+`;
 
-.skeleton__track-play__album {
-  width: 59px;
+export const SkeletonTrackPlayAlbum = styled.div`
+width: 59px;
   height: 15px;
   background: #313131;
-}
+`;
 
-.track-play__album {
-  grid-row: 2;
+export const TrackPlayAlbum = styled.div`
+grid-row: 2;
   grid-column: 2;
   grid-area: album;
   min-width: 49px;
-}
+`;
 
-.track-play__album-link {
-  font-style: normal;
+export const TrackPlayAlbumLink = styled.a`
+font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 24px;
   color: #ffffff;
-}
+`;

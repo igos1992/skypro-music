@@ -1,16 +1,17 @@
 import CenterBlockSearch from './Center Block Search/CenterBlockSearch';
 import CenterBlockFilter from './Center Block Filter/CenterBlockFilter';
 import CenterBlockContent from './Center Block Content/CenterBlockContent';
-import './MainCenterBlock.css';
+import * as S from './MainCenterBlock.style';
+
 
 function MainCenterBlock() {
   return (
-    <div className="main__centerblock centerblock">
+    <S.MainCenterblock>
       <CenterBlockSearch />
-      <h2 className="centerblock__h2">Треки</h2>
+      <S.CenterblockH2>Треки</S.CenterblockH2>
       <CenterBlockFilter />
       <CenterBlockContent />
-    </div>
+    </S.MainCenterblock>
   );
 }
 
