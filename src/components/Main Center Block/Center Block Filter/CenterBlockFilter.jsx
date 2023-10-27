@@ -1,8 +1,17 @@
-import { useState } from 'react';
-import ArrayMusic from '../../Array/ArrayMusic';
+import { useState, useEffect } from 'react';
 import * as S from './CenterBlockFilter.style';
+import { getTodosMusicAll } from '../../../api';
 
 function CenterBlockFilter() {
+
+  const [arrayMusicAll, setArrayMusicAll] = useState([])
+
+  useEffect(() => {
+    getTodosMusicAll().then((arrayMusicAll) => {
+      console.log(arrayMusicAll);
+      setArrayMusicAll(arrayMusicAll)
+    })
+  }, [])
 
   const [activeFilter, setActiveFilter] = useState(null);
   const toggleVisibleFilter = (filter) => {
@@ -20,13 +29,13 @@ function CenterBlockFilter() {
         {activeFilter === "author" &&
           <>
             <S.FilterLength>
-              {ArrayMusic.length}
+              {arrayMusicAll.length}
             </S.FilterLength>
             <S.FilterMenu>
               <S.FilterList>
-                {ArrayMusic.map((item) => (
+                {arrayMusicAll.map((item) => (
                   <li key={item.id}>
-                    <S.TextDecoration href='#'>{item.trackName}</S.TextDecoration>
+                    <S.TextDecoration href='#'>{item.name}</S.TextDecoration>
                   </li>
                 ))}
               </S.FilterList>
@@ -41,13 +50,13 @@ function CenterBlockFilter() {
         {activeFilter === "year" &&
           <>
             <S.FilterLength >
-              {ArrayMusic.length}
+              {arrayMusicAll.length}
             </S.FilterLength>
             <S.FilterMenuYear>
               <S.FilterList>
-                {ArrayMusic.map((item) => (
+                {arrayMusicAll.map((item) => (
                   <li key={item.id} >
-                    <S.TextDecoration href='#'>{item.yearOfRelease}</S.TextDecoration>
+                    <S.TextDecoration href='#'>{item.release_date}</S.TextDecoration>
                   </li>
                 ))}
               </S.FilterList>
@@ -62,11 +71,11 @@ function CenterBlockFilter() {
         {activeFilter === "genre" &&
           <>
             <S.FilterLength>
-              {ArrayMusic.length}
+              {arrayMusicAll.length}
             </S.FilterLength>
             <S.FilterMenu>
               <S.FilterList>
-                {ArrayMusic.map((item) => (
+                {arrayMusicAll.map((item) => (
                   <li key={item.id}>
                     <S.TextDecoration href='#'>{item.genre}</S.TextDecoration>
                   </li>

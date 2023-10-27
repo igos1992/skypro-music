@@ -17,7 +17,6 @@ display: flex;
 flex-direction: column;
 -webkit-box-pack: start;
 -ms-flex-pack: start;
-justify-content: center;
 `;
 
 export const SidebarList = styled.div`

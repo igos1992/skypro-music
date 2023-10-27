@@ -37,7 +37,7 @@ export const VolumeImage = styled.div`
 export const VolumeSvg = styled.svg`
   width: 13px;
   height: 18px;
-  fill: transparent;
+  fill: transparent;.
 `
 
 export const VolumeProgress = styled.div`

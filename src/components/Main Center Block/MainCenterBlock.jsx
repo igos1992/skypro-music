@@ -4,13 +4,24 @@ import CenterBlockContent from './Center Block Content/CenterBlockContent';
 import * as S from './MainCenterBlock.style';
 
 
-function MainCenterBlock() {
+function MainCenterBlock({
+  loading,
+  arrayMusicAll,
+  addTodoError,
+  handleCurrentMusic,
+  setCurrentMusic
+}) {
   return (
     <S.MainCenterblock>
       <CenterBlockSearch />
       <S.CenterblockH2>Треки</S.CenterblockH2>
       <CenterBlockFilter />
-      <CenterBlockContent />
+      <CenterBlockContent
+        loading={loading}
+        arrayMusicAll={arrayMusicAll}
+        addTodoError={addTodoError}
+        handleCurrentMusic={handleCurrentMusic}
+        setCurrentMusic={setCurrentMusic} />
     </S.MainCenterblock>
   );
 }
