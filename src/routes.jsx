@@ -7,13 +7,34 @@ import { FavoritesPage } from './pages/FavoritesPage/FavoritesPage';
 import { ProfileCollectionPages } from './pages/ArrayCollectionPages/ProfileCollectionPages/ProfileCollectionPages';
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 
-const AppRoutes = ({ handleLogin, handleLogout }) => {
+const AppRoutes = ({
+  handleLogin,
+  handleLogout,
+  loading,
+  arrayMusicAll,
+  addTodoError,
+  handleCurrentMusic,
+  currentMusic,
+  setCurrentMusic
+}) => {
   return (
     <Routes>
       <Route path="/AuthorizationLoginPage" element={<AuthorizationLoginPage handleLogin={handleLogin} />} />
       <Route path="/RegistrationPage" element={<RegistrationPage />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<MainPage handleLogout={handleLogout} />} />
+      <Route element={<ProtectedRoute
+
+      />}>
+        <Route
+          path="/"
+          element={<MainPage
+            loading={loading}
+            arrayMusicAll={arrayMusicAll}
+            addTodoError={addTodoError}
+            handleLogout={handleLogout}
+            handleCurrentMusic={handleCurrentMusic}
+            currentMusic={currentMusic}
+            setCurrentMusic={setCurrentMusic}
+          />} />
         <Route path="/FavoritesPage" element={<FavoritesPage />} />
         <Route path="/ProfileCollectionPages/:id" element={<ProfileCollectionPages />} />
         <Route path="*" element={<NotFound />} />

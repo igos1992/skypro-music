@@ -53,6 +53,7 @@ body {
   height: 100%;
   font-family: "StratosSkyeng", sans-serif;
   color: #ffffff;
+  
 }
 
 body {

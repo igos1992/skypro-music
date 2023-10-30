@@ -5,9 +5,17 @@ import Bar from '../../components/Bar/Bar';
 import Footer from '../../components/Footer/Footer';
 import * as S from './MainPage.Style';
 import GlobalStyle from '../../App.CreateGlobalStyle';
-import { Outlet } from 'react-router-dom';
 
-export function MainPage() {
+export function MainPage(
+  {
+    loading,
+    arrayMusicAll,
+    addTodoError,
+    handleCurrentMusic,
+    currentMusic,
+    setCurrentMusic
+  }
+) {
   return (
     <>
       <GlobalStyle />
@@ -16,12 +24,18 @@ export function MainPage() {
           <S.Container>
             <S.Main>
               <MainNavMenu />
-              <MainCenterBlock>
-                <Outlet />
+              <MainCenterBlock
+                loading={loading}
+                arrayMusicAll={arrayMusicAll}
+                addTodoError={addTodoError}
+                handleCurrentMusic={handleCurrentMusic}
+                setCurrentMusic={setCurrentMusic}
+              >
               </MainCenterBlock>
               <MainSidebar />
             </S.Main>
-            <Bar />
+            {currentMusic ? <Bar currentMusic={currentMusic} /> : null}
+
             <Footer />
           </S.Container>
         </S.Wrapper>

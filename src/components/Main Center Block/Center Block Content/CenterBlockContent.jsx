@@ -1,82 +1,79 @@
-import { useEffect, useState } from "react";
-import ArrayMusic from '../../Array/ArrayMusic';
-import * as S from './CenterBlockContent.style'
+import * as S from './CenterBlockContent.style';
+import { ContentTitle } from '../ContentTitle/ContentTitle'
 
-function CenterBlockContent() {
+function CenterBlockContent({
+  loading,
+  arrayMusicAll,
+  addTodoError,
+  handleCurrentMusic
+}) {
 
-  const [loading, setLoading] = useState(true);
+  function convertTime(time) {
+    const min = Math.floor(time / 60);
+    let sec = Math.floor(time % 60);
+    if (sec < 10) {
+      sec = `0${sec}`
+    }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000)
-  })
+    return `${min}:${sec}`;
+  }
 
   return (
-
     <S.CenterBlockContent>
-      <S.ContentTitle>
-        <S.Col01>ТРЕК</S.Col01>
-        <S.Col02>ИСПОЛНИТЕЛЬ</S.Col02>
-        <S.Col03>АЛЬБОМ</S.Col03>
-        <S.Col04>
-          <S.PlayListTitleSvg alt="time">
-            <use xlinkHref="img/icon/sprite.svg#icon-watch" />
-          </S.PlayListTitleSvg>
-        </S.Col04>
-      </S.ContentTitle>
+      <ContentTitle />
       <S.ContentPlaylist>
-        {ArrayMusic.map((music) => (
+        <S.SpanErrorBlock>{addTodoError}</S.SpanErrorBlock>
+        {arrayMusicAll.map((music) => (
           <S.PlayListItem key={music.id}>
             <S.PlayListTrack>
               <S.TrackTitle>
                 {loading ? (
-                  <S.SkeletonTitleImage />
-                ) : (
                   <S.TrackTitleImage>
                     <S.TrackTitleSvg alt="music">
                       <use xlinkHref="img/icon/sprite.svg#icon-note" />
                     </S.TrackTitleSvg>
                   </S.TrackTitleImage>
+                ) : (
+                  <S.SkeletonTitleImage />
                 )
                 }
                 {loading ? (
-                  <S.SkeletonTitleText />
-                ) : (
                   <S.TrackTitleText>
-                    <S.TrackTitleLink href="http://">
-                      {music.trackName}
+                    <S.TrackTitleLink onClick={() => handleCurrentMusic(music)}>
+                      {music.name}
                       <S.TrackTitleSpan>{music.addition}</S.TrackTitleSpan>
                     </S.TrackTitleLink>
                   </S.TrackTitleText>
+                ) : (
+                  <S.SkeletonTitleText />
                 )}
               </S.TrackTitle>
               {loading ? (
-                <S.SkeletonAuthor />
-              ) : (
                 <S.TrackAuthor>
                   <S.TrackAuthorLink href="http://">
-                    {music.trackAuthor}
+                    {music.author}
                   </S.TrackAuthorLink>
                 </S.TrackAuthor>
+              ) : (
+                <S.SkeletonAuthor />
               )}
               {loading ? (
-                <S.SkeletonAlbum />
-              ) : (
                 <S.TrackAlbum>
                   <S.TrackAlbumLink href="http://">
                     {music.album}
                   </S.TrackAlbumLink>
                 </S.TrackAlbum>
+              ) : (
+                <S.SkeletonAlbum />
               )}
               <S.TrackTime>
                 <S.TrackTimeSvg alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like" />
                 </S.TrackTimeSvg>
                 {loading ? (
-                  <S.TrackTimeText>0:00</S.TrackTimeText>
+                  <S.TrackTimeTextSpan>{convertTime(music.duration_in_seconds)}</S.TrackTimeTextSpan>
                 ) : (
-                  <S.TrackTimeTextSpan>{music.time}</S.TrackTimeTextSpan>
+                  <S.TrackTimeText>0:00</S.TrackTimeText>
                 )}
               </S.TrackTime>
             </S.PlayListTrack>
