@@ -18,7 +18,11 @@ display: flex;
 -webkit-box-direction: normal;
 -ms-flex-direction: column;
 flex-direction: column;
-overflow-y: auto;
+height: 1080px;
+overflow-y: scroll;
+&::-webkit-scrollbar {
+  width: 0px;
+}
 `;
 
 export const SpanErrorBlock = styled.span`

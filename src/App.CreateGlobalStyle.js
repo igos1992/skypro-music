@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -53,7 +53,8 @@ body {
   height: 100%;
   font-family: "StratosSkyeng", sans-serif;
   color: #ffffff;
-  
+  background-color: #383838;
+  overflow-y: hidden
 }
 
 body {
@@ -69,8 +70,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-`;
+`
 
-
-
-export default GlobalStyle;
+export default GlobalStyle

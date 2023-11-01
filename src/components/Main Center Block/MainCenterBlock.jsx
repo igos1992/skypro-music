@@ -21,7 +21,8 @@ function MainCenterBlock({
         arrayMusicAll={arrayMusicAll}
         addTodoError={addTodoError}
         handleCurrentMusic={handleCurrentMusic}
-        setCurrentMusic={setCurrentMusic} />
+        setCurrentMusic={setCurrentMusic}
+      />
     </S.MainCenterblock>
   );
 }
