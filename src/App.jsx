@@ -16,7 +16,6 @@ function App() {
   const [addTodoError, setAddTodoError] = useState(null);
   const [currentMusic, setCurrentMusic] = useState(null);
 
-
   useEffect(() => {
     getTodosMusicAll()
       .then((arrayMusicAll) => {
@@ -39,7 +38,8 @@ function App() {
 
   return (
     <AppRoutes
-      handleLogin={handleLogin} handleLogout={handleLogout}
+      handleLogin={handleLogin}
+      handleLogout={handleLogout}
       loading={loading}
       arrayMusicAll={arrayMusicAll}
       addTodoError={addTodoError}

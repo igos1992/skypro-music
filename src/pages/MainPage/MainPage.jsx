@@ -35,7 +35,6 @@ export function MainPage(
               <MainSidebar />
             </S.Main>
             {currentMusic ? <Bar currentMusic={currentMusic} /> : null}
-
             <Footer />
           </S.Container>
         </S.Wrapper>

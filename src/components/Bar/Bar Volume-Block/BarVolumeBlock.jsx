@@ -1,6 +1,6 @@
 import * as S from './BarVolumeBlock.style';
 
-function BarVolumeBlock() {
+function BarVolumeBlock({ setVolumeChange, volumeChange, audioRef }) {
   return (
     <S.BarVolumeBlock>
       <S.VolumeContent>
@@ -11,6 +11,12 @@ function BarVolumeBlock() {
         </S.VolumeImage>
         <S.VolumeProgress>
           <S.VolumeProgressLine
+            volume={volumeChange}
+            onChange={(event) => {
+              let volumeRange = event.target.value / 100;
+              audioRef.current.volume = volumeRange;
+              setVolumeChange(volumeRange)
+            }}
             type="range"
             name="range"
           />
