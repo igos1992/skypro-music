@@ -3,6 +3,7 @@ import { createContext } from "react";
 
 export const UserContext = createContext({
   userData: '',
+  changingUserData: () => {},
   changingUserInformation: () => { }
 })
 
@@ -10,7 +11,7 @@ export const UserContext = createContext({
 export const useUserLoginLogout = () => {
   const userData = useContext(UserContext);
   if (!userData) {
-    return null
+    return
   }
   console.log(userData);
   return userData

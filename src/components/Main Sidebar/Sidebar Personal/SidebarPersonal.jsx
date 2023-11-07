@@ -9,10 +9,8 @@ function SidebarPersonal() {
   console.log(userData);
   return (
     <S.SidebarPersonal>
-
       <S.SidebarPersonalName>
         {userData}
-        {/* Sergey.Ivanov */}
       </S.SidebarPersonalName>
       <S.SidebarIcon
         onClick={changingUserInformation}

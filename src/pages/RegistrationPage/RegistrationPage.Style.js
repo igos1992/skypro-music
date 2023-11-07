@@ -127,7 +127,7 @@ height: 10px;
 //         justify-content: center;
 // `;
 
-export const InputSubmit = styled.input`
+export const InputSubmit = styled.button`
   width: 278px;
   height: 52px;
   background-color: #580ea2;
@@ -148,6 +148,9 @@ export const InputSubmit = styled.input`
   &:active {
     background-color: #271a58;
   }
+  &:disabled {
+    background-color: #53f20a;
+  }
 `
 
 export const FillInTheField = styled.div`
@@ -164,3 +167,5 @@ export const Error = styled.div`
   margin-top: 20px;
   text-align: left;
 `;
+
+

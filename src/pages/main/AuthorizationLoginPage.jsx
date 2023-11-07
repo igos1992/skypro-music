@@ -2,17 +2,15 @@ import { useForm } from 'react-hook-form';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './AuthorizationLoginPage.Style';
 import { postTodosUserLoginUp } from '../../api';
-import { useState } from 'react';
-import { useUserLoginLogout } from '../../components/Usercontext/Usercontext';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../components/Usercontext/Usercontext';
 
 
 export function AuthorizationLoginPage() {
 
+  const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
-
-  const { changingUserInformation } = useUserLoginLogout();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
@@ -37,6 +35,7 @@ export function AuthorizationLoginPage() {
         console.log(response);
 
         localStorage.setItem('user', response.username);
+        changingUserData(localStorage.getItem('user'))
         console.log(localStorage.getItem('user'))
         navigate('/MainPage');
       }).catch((error) => {
@@ -63,11 +62,11 @@ export function AuthorizationLoginPage() {
                 placeholder="Почта"
                 value={email}
                 {...register('login', {
-                  required: '* Поле обязательно к заполнению'
+                  required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setEmail(event.target.value);
+                  }
                 })}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
               />
               <S.FillInTheField>
                 {errors.login && <p>{errors.login.message || 'Error!'}</p>}
@@ -78,12 +77,12 @@ export function AuthorizationLoginPage() {
                 placeholder="Пароль"
                 value={password}
                 {...register('password', {
-                  required: '* Поле обязательно к заполнению'
+                  required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setPassword(event.target.value);
+                  }
                 }
                 )}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
               />
               <S.FillInTheField>
                 {errors.password && <p>{errors.password.message || 'Error!'}</p>}
@@ -91,9 +90,10 @@ export function AuthorizationLoginPage() {
 
               {error && <S.Error>{error}</S.Error>}
 
-              <S.ModalInputEnter type="submit" onClick={changingUserInformation}
-                value={'Войти'}
-              />
+              <S.ModalInputEnter type="submit">
+                Войти
+                </S.ModalInputEnter>
+                
               <S.ModalBtnSignup>
                 <S.AModalBtnSignup to="/RegistrationPage">Зарегистрироваться</S.AModalBtnSignup>
               </S.ModalBtnSignup>

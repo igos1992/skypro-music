@@ -1,3 +1,16 @@
+# skypro-music
+
+Аналог популярного музыкально приложения
+
+## Первоначальная оценка
+
+20 часов
+
+## Фактически затраченное время
+
+34 часа 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

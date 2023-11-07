@@ -8,23 +8,12 @@ function App() {
   const [user, setUser] = useState(localStorage.getItem('user'));
 
   const changingUserInformation = () => {
-    if (user === '') {
-      setUser(localStorage.getItem('user'))
-    }
+   
     setUser(localStorage.removeItem('user'))
   }
-  // const handleLogin = () => {
-  //   localStorage.setItem('user', {user});
-  //   console.log(localStorage.getItem('user'))
-  // }
-  // const handleLogout = () => {
-  //   localStorage.removeItem('user');
 
-  // }
   console.log(localStorage.getItem('user'))
   console.log(user)
-
-
 
   const [loading, setLoading] = useState(false);
   const [arrayMusicAll, setArrayMusicAll] = useState([]);
@@ -56,6 +45,7 @@ function App() {
       value={{
         userData: user,
         changingUserInformation,
+        changingUserData: setUser
       }}>
       <AppRoutes
         loading={loading}

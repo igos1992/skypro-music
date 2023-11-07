@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './RegistrationPage.Style';
 import { useForm } from 'react-hook-form';
 import { postTodosUserSignUp } from '../../api'
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../components/Usercontext/Usercontext';
 
 export function RegistrationPage() {
 
+  const { changingUserData } = useContext(UserContext)
 
   const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [username, setUsername] = useState("");
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate();
 
+  
+ 
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
   useEffect(() => {
     setError(null);
-  }, [email, password, repeatPassword]);
+  }, [email, password, repeatPassword, username]);
 
   const {
     register,
@@ -44,19 +48,17 @@ export function RegistrationPage() {
       })
         .then((response) => {
           console.log(response);
-
           localStorage.setItem("user", response.username);
+          changingUserData(localStorage.getItem('user'))
           console.log(localStorage.getItem('user'))
           setOffButton(true)
           navigate('/MainPage');
-
         }).catch((error) => {
           console.log(error)
           setError(error.message);
-          setOffButton(false)
         })
         .finally(() => {
-          
+          setOffButton(false)
         }
         )
     }
@@ -75,16 +77,15 @@ export function RegistrationPage() {
                 </S.ModalLogo>
               </a>
               <S.ModalInput
-                type="text"
+                type="email"
                 placeholder="Почта"
                 value={email}
                 {...register('login', {
-                  required: '* Поле обязательно к заполнению'
+                  required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setEmail(event.target.value);
+                  }
                 })}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
-
               />
               <S.FillInTheField>
                 {errors.login && <p>{errors.login.message || 'Error!'}</p>}
@@ -95,11 +96,11 @@ export function RegistrationPage() {
                 placeholder="Имя"
                 value={username}
                 {...register('name', {
-                  required: '* Поле обязательно к заполнению'
+                  required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setUsername(event.target.value);
+                  }
                 })}
-                onChange={(event) => {
-                  setUsername(event.target.value);
-                }}
               />
               <S.FillInTheField>
                 {errors.name && <p>{errors.name.message || 'Error!'}</p>}
@@ -110,13 +111,11 @@ export function RegistrationPage() {
                 placeholder="Пароль"
                 value={password}
                 {...register('password', {
-                  required: '* Поле обязательно к заполнению'
-                }
-                )}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-
+                  required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setPassword(event.target.value)
+                  }
+                })}
               />
 
               <S.FillInTheField>
@@ -128,23 +127,28 @@ export function RegistrationPage() {
                 placeholder="Повторите пароль"
                 {...register('repeatPassword', {
                   required: '* Поле обязательно к заполнению',
+                  onChange: (event) => {
+                    setRepeatPassword(event.target.value);
+                  }
                 })}
-                onChange={(event) => {
-                  setRepeatPassword(event.target.value);
-                }}
+              // onChange={(event) => {
+              //   setRepeatPassword(event.target.value);
+              // }}
               />
               <S.FillInTheField>
                 {errors.repeatPassword && <p>{errors.repeatPassword.message || 'Error!'}</p>}
               </S.FillInTheField>
 
               {error && <S.Error>{error}</S.Error>}
+          
+              <S.InputSubmit type="submit" disabled={offButton}  
+              // {...register("repeatPassword", {
+              //   disabled: false
+              // })}
+              >
+                Зарегистрироваться
+                </S.InputSubmit>
 
-              <S.InputSubmit
-                type="submit"
-                value={"Зарегистрироваться"}
-                disabled={offButton}
-              
-              />
 
             </S.ModalFormLogin>
           </S.ModalBlock>
