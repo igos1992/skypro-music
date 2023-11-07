@@ -1,14 +1,74 @@
+import { useEffect, useState } from 'react';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './RegistrationPage.Style';
+import { useForm } from 'react-hook-form';
+import { postTodosUserSignUp } from '../../api'
+import { useNavigate } from 'react-router-dom';
 
 export function RegistrationPage() {
+
+
+  const [error, setError] = useState(null);
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [offButton, setOffButton] = useState(false);
+  const navigate = useNavigate();
+
+
+  // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
+  useEffect(() => {
+    setError(null);
+  }, [email, password, repeatPassword]);
+
+  const {
+    register,
+    formState: {
+      errors,
+    },
+    handleSubmit
+  } = useForm({
+    mode: "onBlur"
+  });
+
+  const onSubmit = () => {
+    if (password !== repeatPassword) {
+      setError("Пароли не совпадают");
+      setOffButton(false)
+    } else {
+      postTodosUserSignUp({
+        email: email,
+        password: password,
+        username: username
+      })
+        .then((response) => {
+          console.log(response);
+
+          localStorage.setItem("user", response.username);
+          console.log(localStorage.getItem('user'))
+          setOffButton(true)
+          navigate('/MainPage');
+
+        }).catch((error) => {
+          console.log(error)
+          setError(error.message);
+          setOffButton(false)
+        })
+        .finally(() => {
+          
+        }
+        )
+    }
+  }
+
   return (
     <>
       <GlobalStyle />
       <S.Wrapper>
         <S.ContainerSignup>
           <S.ModalBlock>
-            <S.ModalFormLogin>
+            <S.ModalFormLogin onSubmit={handleSubmit(onSubmit)}>
               <a href="../">
                 <S.ModalLogo>
                   <S.Img src="../img/logo_modal.png" alt="logo" />
@@ -16,22 +76,76 @@ export function RegistrationPage() {
               </a>
               <S.ModalInput
                 type="text"
-                name="login"
                 placeholder="Почта"
+                value={email}
+                {...register('login', {
+                  required: '* Поле обязательно к заполнению'
+                })}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+
               />
+              <S.FillInTheField>
+                {errors.login && <p>{errors.login.message || 'Error!'}</p>}
+              </S.FillInTheField>
+
+              <S.ModalInput
+                type="text"
+                placeholder="Имя"
+                value={username}
+                {...register('name', {
+                  required: '* Поле обязательно к заполнению'
+                })}
+                onChange={(event) => {
+                  setUsername(event.target.value);
+                }}
+              />
+              <S.FillInTheField>
+                {errors.name && <p>{errors.name.message || 'Error!'}</p>}
+              </S.FillInTheField>
+
               <S.ModalInput
                 type="password"
-                name="password"
                 placeholder="Пароль"
+                value={password}
+                {...register('password', {
+                  required: '* Поле обязательно к заполнению'
+                }
+                )}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+
               />
+
+              <S.FillInTheField>
+                {errors.password && <p>{errors.password.message || 'Error!'}</p>}
+              </S.FillInTheField>
+
               <S.ModalInput
                 type="password"
-                name="password"
                 placeholder="Повторите пароль"
+                {...register('repeatPassword', {
+                  required: '* Поле обязательно к заполнению',
+                })}
+                onChange={(event) => {
+                  setRepeatPassword(event.target.value);
+                }}
               />
-              <S.ModalBtnSignupEnt>
-                <S.AModalBtnSignupEnt href="../index.html">Зарегистрироваться</S.AModalBtnSignupEnt>
-              </S.ModalBtnSignupEnt>
+              <S.FillInTheField>
+                {errors.repeatPassword && <p>{errors.repeatPassword.message || 'Error!'}</p>}
+              </S.FillInTheField>
+
+              {error && <S.Error>{error}</S.Error>}
+
+              <S.InputSubmit
+                type="submit"
+                value={"Зарегистрироваться"}
+                disabled={offButton}
+              
+              />
+
             </S.ModalFormLogin>
           </S.ModalBlock>
         </S.ContainerSignup>

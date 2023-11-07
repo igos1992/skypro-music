@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const SidebarPersonal = styled.div`
@@ -26,7 +27,7 @@ color: #ffffff;
 margin-right: 16px;
 `;
 
-export const SidebarIcon = styled.div`
+export const SidebarIcon = styled(NavLink)`
 width: 43px;
 height: 43px;
 background-color: #313131;

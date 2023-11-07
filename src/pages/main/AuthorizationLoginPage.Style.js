@@ -25,7 +25,6 @@ opacity: 1;
 
 export const ModalFormLogin = styled.form`
 width: 366px;
-height: 439px;
 background-color: #ffffff;
 border-radius: 12px;
 display: -webkit-box;
@@ -101,7 +100,7 @@ padding: 8px 1px;
 }
 `;
 
-export const ModalBtnEnter = styled(NavLink)`
+export const ModalInputEnter = styled.input`
 width: 278px;
 height: 52px;
 background-color: #580ea2;
@@ -118,6 +117,7 @@ align-items: center;
 -webkit-box-pack: center;
 -ms-flex-pack: center;
 justify-content: center;
+cursor: pointer;
 &:hover{
   background-color: #3f007d;
 }
@@ -179,5 +179,19 @@ align-items: center;
 -webkit-box-pack: center;
 -ms-flex-pack: center;
 justify-content: center;
+`;
+export const FillInTheField = styled.div`
+color: red;
+margin-top: -25px;
+margin-bottom: 20px;
+`
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
 `;
 

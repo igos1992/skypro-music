@@ -26,7 +26,7 @@ function Bar({ currentMusic }) {
   const [volumeChange, setVolumeChange] = useState(0)
 
   const audioRef = useRef(null);
-  const audio = document.querySelector("audio");
+
 
   const handleStart = () => {
     audioRef.current.play();
@@ -41,7 +41,7 @@ function Bar({ currentMusic }) {
   useEffect(() => {
     handleStart();
 
-    if (!audio) {
+    if (!currentTime) {
 
       audioRef.current.addEventListener("timeupdate", () => {
         setCurrentTime(audioRef.current.currentTime);
