@@ -118,18 +118,22 @@ align-items: center;
 -ms-flex-pack: center;
 justify-content: center;
 cursor: pointer;
-&:hover{
-  background-color: #3f007d;
-}
-&:active {
-  background-color: #271a58;
-}
 font-style: normal;
 font-weight: 400;
 font-size: 18px;
 line-height: 24px;
 letter-spacing: -0.05px;
 color: #ffffff;
+&:hover{
+  background-color: #3f007d;
+}
+&:active {
+  background-color: #271a58;
+}
+&:disabled {
+  background-color: #303030;
+}
+
 `;
 
 export const ModalBtnSignup = styled.button`
@@ -179,7 +183,9 @@ align-items: center;
 -webkit-box-pack: center;
 -ms-flex-pack: center;
 justify-content: center;
+
 `;
+
 export const FillInTheField = styled.div`
 color: red;
 margin-top: -25px;

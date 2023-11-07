@@ -13,6 +13,7 @@ export function AuthorizationLoginPage() {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate()
 
   const {
@@ -27,6 +28,7 @@ export function AuthorizationLoginPage() {
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data));
+    setOffButton(true)
     postTodosUserLoginUp({
       email: email,
       password: password
@@ -41,7 +43,10 @@ export function AuthorizationLoginPage() {
       }).catch((error) => {
         console.log(error)
         setError(error.message);
-      })
+      }) .finally(() => {
+        setOffButton(false)
+      }
+      )
       ;
   }
 
@@ -90,12 +95,12 @@ export function AuthorizationLoginPage() {
 
               {error && <S.Error>{error}</S.Error>}
 
-              <S.ModalInputEnter type="submit">
+              <S.ModalInputEnter type="submit" disabled={offButton}>
                 Войти
                 </S.ModalInputEnter>
                 
               <S.ModalBtnSignup>
-                <S.AModalBtnSignup to="/RegistrationPage">Зарегистрироваться</S.AModalBtnSignup>
+                <S.AModalBtnSignup to="/RegistrationPage" >Зарегистрироваться</S.AModalBtnSignup>
               </S.ModalBtnSignup>
             </S.ModalFormLogin>
           </S.ModalBlock>

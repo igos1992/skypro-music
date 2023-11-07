@@ -9,7 +9,6 @@ import { UserContext } from '../../components/Usercontext/Usercontext';
 export function RegistrationPage() {
 
   const { changingUserData } = useContext(UserContext)
-
   const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -18,10 +17,6 @@ export function RegistrationPage() {
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate();
 
-  
- 
-
-  // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
   useEffect(() => {
     setError(null);
   }, [email, password, repeatPassword, username]);
@@ -37,9 +32,9 @@ export function RegistrationPage() {
   });
 
   const onSubmit = () => {
+    setOffButton(true)
     if (password !== repeatPassword) {
       setError("Пароли не совпадают");
-      setOffButton(false)
     } else {
       postTodosUserSignUp({
         email: email,
@@ -51,7 +46,6 @@ export function RegistrationPage() {
           localStorage.setItem("user", response.username);
           changingUserData(localStorage.getItem('user'))
           console.log(localStorage.getItem('user'))
-          setOffButton(true)
           navigate('/MainPage');
         }).catch((error) => {
           console.log(error)
@@ -63,6 +57,8 @@ export function RegistrationPage() {
         )
     }
   }
+
+  console.log(offButton);
 
   return (
     <>
@@ -131,9 +127,6 @@ export function RegistrationPage() {
                     setRepeatPassword(event.target.value);
                   }
                 })}
-              // onChange={(event) => {
-              //   setRepeatPassword(event.target.value);
-              // }}
               />
               <S.FillInTheField>
                 {errors.repeatPassword && <p>{errors.repeatPassword.message || 'Error!'}</p>}
@@ -141,14 +134,9 @@ export function RegistrationPage() {
 
               {error && <S.Error>{error}</S.Error>}
           
-              <S.InputSubmit type="submit" disabled={offButton}  
-              // {...register("repeatPassword", {
-              //   disabled: false
-              // })}
-              >
+              <S.InputSubmit type="submit" disabled={offButton}>
                 Зарегистрироваться
                 </S.InputSubmit>
-
 
             </S.ModalFormLogin>
           </S.ModalBlock>

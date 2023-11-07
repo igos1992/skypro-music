@@ -149,7 +149,7 @@ export const InputSubmit = styled.button`
     background-color: #271a58;
   }
   &:disabled {
-    background-color: #53f20a;
+    background-color: #303030;
   }
 `
 
