@@ -4,7 +4,7 @@ import * as S from './RegistrationPage.Style';
 import { useForm } from 'react-hook-form';
 import { postTodosUserSignUp } from '../../api'
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../components/Usercontext/Usercontext';
+import { UserContext } from '../../Usercontext/Usercontext';
 
 export function RegistrationPage() {
 
@@ -35,6 +35,7 @@ export function RegistrationPage() {
     setOffButton(true)
     if (password !== repeatPassword) {
       setError("Пароли не совпадают");
+      setOffButton(false)
     } else {
       postTodosUserSignUp({
         email: email,
@@ -46,7 +47,7 @@ export function RegistrationPage() {
           localStorage.setItem("user", response.username);
           changingUserData(localStorage.getItem('user'))
           console.log(localStorage.getItem('user'))
-          navigate('/MainPage');
+          navigate('/');
         }).catch((error) => {
           console.log(error)
           setError(error.message);

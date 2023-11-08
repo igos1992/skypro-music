@@ -4,7 +4,7 @@ import * as S from './AuthorizationLoginPage.Style';
 import { postTodosUserLoginUp } from '../../api';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../components/Usercontext/Usercontext';
+import { UserContext } from '../../Usercontext/Usercontext';
 
 
 export function AuthorizationLoginPage() {
@@ -39,7 +39,7 @@ export function AuthorizationLoginPage() {
         localStorage.setItem('user', response.username);
         changingUserData(localStorage.getItem('user'))
         console.log(localStorage.getItem('user'))
-        navigate('/MainPage');
+        navigate('/');
       }).catch((error) => {
         console.log(error)
         setError(error.message);

@@ -1,4 +1,4 @@
-import { useUserLoginLogout } from '../../Usercontext/Usercontext';
+import { useUserLoginLogout } from '../../../Usercontext/Usercontext';
 import * as S from './NavMenu.style';
 
 
@@ -10,7 +10,7 @@ function NavMenu() {
     <S.NavMenu>
       <S.MenuList>
         <S.MenuItem>
-          <S.MenuLink to="/MainPage">
+          <S.MenuLink to="/">
             Главное
           </S.MenuLink>
         </S.MenuItem>
@@ -20,7 +20,7 @@ function NavMenu() {
           </S.MenuLink>
         </S.MenuItem>
         <S.MenuItem>
-          <S.MenuLink onClick={changingUserInformation} to="/">
+          <S.MenuLink onClick={changingUserInformation} to="/login">
             Выйти
           </S.MenuLink>
         </S.MenuItem>

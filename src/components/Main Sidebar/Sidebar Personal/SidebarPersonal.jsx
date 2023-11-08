@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserContext, useUserLoginLogout } from '../../Usercontext/Usercontext';
+import { UserContext, useUserLoginLogout } from '../../../Usercontext/Usercontext';
 import * as S from './SidebarPersonal.style';
 
 function SidebarPersonal() {
@@ -14,7 +14,7 @@ function SidebarPersonal() {
       </S.SidebarPersonalName>
       <S.SidebarIcon
         onClick={changingUserInformation}
-        to="/">
+        to="/login">
         <svg alt="logout">
           <use xlinkHref="img/icon/sprite.svg#logout" />
         </svg>

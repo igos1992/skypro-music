@@ -18,12 +18,12 @@ const AppRoutes = ({
 
   return (
     <Routes>
-      <Route path="/" element={<AuthorizationLoginPage />} />
+      <Route path="/login" element={<AuthorizationLoginPage />} />
       <Route path="/RegistrationPage" element={<RegistrationPage />} />
       <Route element={<ProtectedRoute
       />}>
         <Route
-          path="/MainPage"
+          path="/"
           element={<MainPage
             loading={loading}
             arrayMusicAll={arrayMusicAll}
