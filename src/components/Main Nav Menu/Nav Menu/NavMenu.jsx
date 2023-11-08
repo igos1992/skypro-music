@@ -1,6 +1,11 @@
+import { useUserLoginLogout } from '../../../Usercontext/Usercontext';
 import * as S from './NavMenu.style';
 
-function NavMenu({ handleLogout }) {
+
+
+function NavMenu() {
+
+  const { changingUserInformation } = useUserLoginLogout();
   return (
     <S.NavMenu>
       <S.MenuList>
@@ -15,7 +20,7 @@ function NavMenu({ handleLogout }) {
           </S.MenuLink>
         </S.MenuItem>
         <S.MenuItem>
-          <S.MenuLink onClick={handleLogout} to="/AuthorizationLoginPage">
+          <S.MenuLink onClick={changingUserInformation} to="/login">
             Выйти
           </S.MenuLink>
         </S.MenuItem>

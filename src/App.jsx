@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import AppRoutes from './routes';
 import { getTodosMusicAll } from './api';
+import { UserContext } from './Usercontext/Usercontext';
 
 function App() {
 
-  const handleLogin = () => {
-    localStorage.setItem('user', 'user');
+  const [user, setUser] = useState(localStorage.getItem('user'));
+
+  const changingUserInformation = () => {
+   
+    setUser(localStorage.removeItem('user'))
   }
-  const handleLogout = () => {
-    localStorage.setItem('user', '');
-  }
+
+  console.log(localStorage.getItem('user'))
+  console.log(user)
 
   const [loading, setLoading] = useState(false);
   const [arrayMusicAll, setArrayMusicAll] = useState([]);
@@ -37,16 +41,21 @@ function App() {
   }
 
   return (
-    <AppRoutes
-      handleLogin={handleLogin}
-      handleLogout={handleLogout}
-      loading={loading}
-      arrayMusicAll={arrayMusicAll}
-      addTodoError={addTodoError}
-      currentMusic={currentMusic}
-      setCurrentMusic={setCurrentMusic}
-      handleCurrentMusic={handleCurrentMusic}
-    />
+    <UserContext.Provider
+      value={{
+        userData: user,
+        changingUserInformation,
+        changingUserData: setUser
+      }}>
+      <AppRoutes
+        loading={loading}
+        arrayMusicAll={arrayMusicAll}
+        addTodoError={addTodoError}
+        currentMusic={currentMusic}
+        setCurrentMusic={setCurrentMusic}
+        handleCurrentMusic={handleCurrentMusic}
+      />
+    </UserContext.Provider>
   )
 }
 

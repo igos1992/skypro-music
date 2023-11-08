@@ -1,10 +1,20 @@
+import { useContext } from 'react';
+import { UserContext, useUserLoginLogout } from '../../../Usercontext/Usercontext';
 import * as S from './SidebarPersonal.style';
 
 function SidebarPersonal() {
+
+  const { changingUserInformation } = useUserLoginLogout();
+  const { userData } = useContext(UserContext)
+  console.log(userData);
   return (
     <S.SidebarPersonal>
-      <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
-      <S.SidebarIcon>
+      <S.SidebarPersonalName>
+        {userData}
+      </S.SidebarPersonalName>
+      <S.SidebarIcon
+        onClick={changingUserInformation}
+        to="/login">
         <svg alt="logout">
           <use xlinkHref="img/icon/sprite.svg#logout" />
         </svg>

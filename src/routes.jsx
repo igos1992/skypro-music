@@ -8,21 +8,19 @@ import { ProfileCollectionPages } from './pages/ArrayCollectionPages/ProfileColl
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 
 const AppRoutes = ({
-  handleLogin,
-  handleLogout,
   loading,
   arrayMusicAll,
   addTodoError,
   handleCurrentMusic,
   currentMusic,
-  setCurrentMusic
+  setCurrentMusic,
 }) => {
+
   return (
     <Routes>
-      <Route path="/AuthorizationLoginPage" element={<AuthorizationLoginPage handleLogin={handleLogin} />} />
+      <Route path="/login" element={<AuthorizationLoginPage />} />
       <Route path="/RegistrationPage" element={<RegistrationPage />} />
       <Route element={<ProtectedRoute
-
       />}>
         <Route
           path="/"
@@ -30,7 +28,6 @@ const AppRoutes = ({
             loading={loading}
             arrayMusicAll={arrayMusicAll}
             addTodoError={addTodoError}
-            handleLogout={handleLogout}
             handleCurrentMusic={handleCurrentMusic}
             currentMusic={currentMusic}
             setCurrentMusic={setCurrentMusic}
