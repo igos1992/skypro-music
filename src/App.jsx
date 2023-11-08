@@ -1,52 +1,48 @@
 import { useEffect, useState } from 'react';
 import AppRoutes from './routes';
+import { useDispatch } from 'react-redux';
+import { UserContext } from './Usercontext/Usercontext';
 import { getTodosMusicAll } from './api';
+import { setAllTracks } from './redux/music/playerBarSlice';
+
 
 function App() {
 
-  const handleLogin = () => {
-    localStorage.setItem('user', 'user');
-  }
-  const handleLogout = () => {
-    localStorage.setItem('user', '');
-  }
-
+  const [user, setUser] = useState(localStorage.getItem('user'));
   const [loading, setLoading] = useState(false);
-  const [arrayMusicAll, setArrayMusicAll] = useState([]);
   const [addTodoError, setAddTodoError] = useState(null);
-  const [currentMusic, setCurrentMusic] = useState(null);
+  const dispatch = useDispatch();
+
+  const changingUserInformation = () => {
+    setUser(localStorage.removeItem('user'))
+  }
 
   useEffect(() => {
     getTodosMusicAll()
-      .then((arrayMusicAll) => {
-        setArrayMusicAll(arrayMusicAll)
+      .then((allTracks) => {
+        dispatch(setAllTracks(allTracks))
       })
       .catch((error) => {
         setAddTodoError(`Не удалось загрузить плейлист, попробуйте позже: ${error.message}`)
       })
-
     const timer = setTimeout(() => {
       setLoading(true);
     }, 3000);
     return () => clearTimeout(timer);
-
   }, []);
 
-  const handleCurrentMusic = (music) => {
-    setCurrentMusic(music)
-  }
-
   return (
-    <AppRoutes
-      handleLogin={handleLogin}
-      handleLogout={handleLogout}
-      loading={loading}
-      arrayMusicAll={arrayMusicAll}
-      addTodoError={addTodoError}
-      currentMusic={currentMusic}
-      setCurrentMusic={setCurrentMusic}
-      handleCurrentMusic={handleCurrentMusic}
-    />
+    <UserContext.Provider
+      value={{
+        userData: user,
+        changingUserInformation,
+        changingUserData: setUser
+      }}>
+      <AppRoutes
+        loading={loading}
+        addTodoError={addTodoError}
+      />
+    </UserContext.Provider>
   )
 }
 

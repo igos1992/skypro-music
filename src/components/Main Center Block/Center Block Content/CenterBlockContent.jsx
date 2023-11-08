@@ -1,12 +1,24 @@
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as S from './CenterBlockContent.style';
-import { ContentTitle } from '../ContentTitle/ContentTitle'
+import { ContentTitle } from '../ContentTitle/ContentTitle';
+import { setCurrentTrack } from '../../../redux/music/playerBarSlice';
+import { selectCurrentTrack, selectAllTracks, selectPulsatingPoint } from '../../../redux/music/playerBarSlice';
+
 
 function CenterBlockContent({
   loading,
-  arrayMusicAll,
   addTodoError,
-  handleCurrentMusic
 }) {
+
+  const dispatch = useDispatch();
+  const handleCurrentTrack = (music) => {
+    dispatch(setCurrentTrack(music))
+  }
+
+  const CurrentTrack = useSelector(selectCurrentTrack);
+  const allTracks = useSelector(selectAllTracks);
+  const pulsatingPoint = useSelector(selectPulsatingPoint);
 
   function convertTime(time) {
     let min = Math.floor(time / 60);
@@ -14,7 +26,6 @@ function CenterBlockContent({
     if (sec < 10) {
       sec = `0${sec}`
     }
-
     return `${min}:${sec}`;
   }
 
@@ -23,15 +34,20 @@ function CenterBlockContent({
       <ContentTitle />
       <S.ContentPlaylist>
         <S.SpanErrorBlock>{addTodoError}</S.SpanErrorBlock>
-        {arrayMusicAll.map((music) => (
+        {allTracks.map((music) => (
           <S.PlayListItem key={music.id}>
             <S.PlayListTrack>
               <S.TrackTitle>
                 {loading ? (
-                  <S.TrackTitleImage>
-                    <S.TrackTitleSvg alt="music">
-                      <use xlinkHref="img/icon/sprite.svg#icon-note" />
-                    </S.TrackTitleSvg>
+                  <S.TrackTitleImage >
+                    {CurrentTrack && CurrentTrack.id === music.id ? (
+                      <S.PointPlaying $playing={pulsatingPoint} />
+                    ) : (
+                      <S.TrackTitleSvg alt="music">
+                        <use xlinkHref="img/icon/sprite.svg#icon-note" />
+                      </S.TrackTitleSvg>
+                    )
+                    }
                   </S.TrackTitleImage>
                 ) : (
                   <S.SkeletonTitleImage />
@@ -39,7 +55,7 @@ function CenterBlockContent({
                 }
                 {loading ? (
                   <S.TrackTitleText>
-                    <S.TrackTitleLink onClick={() => handleCurrentMusic(music)}>
+                    <S.TrackTitleLink onClick={() => handleCurrentTrack(music)} >
                       {music.name}
                       <S.TrackTitleSpan>{music.addition}</S.TrackTitleSpan>
                     </S.TrackTitleLink>
