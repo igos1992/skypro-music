@@ -8,7 +8,6 @@ function CenterBlockFilter() {
 
   useEffect(() => {
     getTodosMusicAll().then((arrayMusicAll) => {
-      console.log(arrayMusicAll);
       setArrayMusicAll(arrayMusicAll)
     })
   }, [])

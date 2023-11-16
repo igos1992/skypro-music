@@ -6,7 +6,6 @@ function SidebarPersonal() {
 
   const { changingUserInformation } = useUserLoginLogout();
   const { userData } = useContext(UserContext)
-  console.log(userData);
   return (
     <S.SidebarPersonal>
       <S.SidebarPersonalName>

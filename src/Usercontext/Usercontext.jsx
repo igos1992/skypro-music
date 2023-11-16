@@ -3,20 +3,14 @@ import { createContext } from "react";
 
 export const UserContext = createContext({
   userData: '',
-  changingUserData: () => {},
+  changingUserData: () => { },
   changingUserInformation: () => { }
 })
-
 
 export const useUserLoginLogout = () => {
   const userData = useContext(UserContext);
   if (!userData) {
     return
   }
-  console.log(userData);
   return userData
-
 }
-
-
-
