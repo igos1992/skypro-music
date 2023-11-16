@@ -34,20 +34,17 @@ export function AuthorizationLoginPage() {
       password: password
     })
       .then((response) => {
-        console.log(response);
-
+        // console.log(response);
         localStorage.setItem('user', response.username);
         changingUserData(localStorage.getItem('user'))
         console.log(localStorage.getItem('user'))
         navigate('/');
       }).catch((error) => {
-        console.log(error)
+        // console.log(error)
         setError(error.message);
-      }) .finally(() => {
+      }).finally(() => {
         setOffButton(false)
-      }
-      )
-      ;
+      });
   }
 
   return (
@@ -97,8 +94,8 @@ export function AuthorizationLoginPage() {
 
               <S.ModalInputEnter type="submit" disabled={offButton}>
                 Войти
-                </S.ModalInputEnter>
-                
+              </S.ModalInputEnter>
+
               <S.ModalBtnSignup>
                 <S.AModalBtnSignup to="/RegistrationPage" >Зарегистрироваться</S.AModalBtnSignup>
               </S.ModalBtnSignup>

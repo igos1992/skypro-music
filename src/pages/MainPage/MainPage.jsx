@@ -5,6 +5,8 @@ import Bar from '../../components/Bar/Bar';
 import Footer from '../../components/Footer/Footer';
 import * as S from './MainPage.Style';
 import GlobalStyle from '../../App.CreateGlobalStyle';
+import { selectCurrentTrack } from '../../redux/music/playerBarSlice';
+import { useSelector } from 'react-redux';
 
 export function MainPage(
   {
@@ -12,10 +14,11 @@ export function MainPage(
     arrayMusicAll,
     addTodoError,
     handleCurrentMusic,
-    currentMusic,
-    setCurrentMusic
   }
 ) {
+
+  const CurrentTrack = useSelector(selectCurrentTrack)
+
   return (
     <>
       <GlobalStyle />
@@ -29,12 +32,11 @@ export function MainPage(
                 arrayMusicAll={arrayMusicAll}
                 addTodoError={addTodoError}
                 handleCurrentMusic={handleCurrentMusic}
-                setCurrentMusic={setCurrentMusic}
               >
               </MainCenterBlock>
               <MainSidebar />
             </S.Main>
-            {currentMusic ? <Bar currentMusic={currentMusic} /> : null}
+            {CurrentTrack && (<Bar />)}
             <Footer />
           </S.Container>
         </S.Wrapper>

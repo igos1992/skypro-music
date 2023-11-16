@@ -127,7 +127,3 @@ export const PlayerBtnShuffleSvg = styled.svg`
   fill: transparent;
   stroke: #696969;
 `
-
-export const Audio = styled.audio`
-
-`
