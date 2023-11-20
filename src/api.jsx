@@ -55,7 +55,7 @@ export function postTodosUserLoginUp({ email, password }) {
       "content-type": "application/json",
     }
   })
-    
+
     .then((response) => {
       if (response.status === 400) {
         return response.json().then((errorResponse) => {

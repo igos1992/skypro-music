@@ -6,35 +6,25 @@ import { MainPage } from './pages/MainPage/MainPage';
 import { FavoritesPage } from './pages/FavoritesPage/FavoritesPage';
 import { ProfileCollectionPages } from './pages/ArrayCollectionPages/ProfileCollectionPages/ProfileCollectionPages';
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
+import MainLayout from "./components/Layouts/MainLayout";
 
 const AppRoutes = ({
   loading,
   arrayMusicAll,
   addTodoError,
-  handleCurrentMusic,
-  currentMusic,
-  setCurrentMusic,
 }) => {
 
   return (
     <Routes>
       <Route path="/login" element={<AuthorizationLoginPage />} />
       <Route path="/RegistrationPage" element={<RegistrationPage />} />
-      <Route element={<ProtectedRoute
-      />}>
-        <Route
-          path="/"
-          element={<MainPage
-            loading={loading}
-            arrayMusicAll={arrayMusicAll}
-            addTodoError={addTodoError}
-            handleCurrentMusic={handleCurrentMusic}
-            currentMusic={currentMusic}
-            setCurrentMusic={setCurrentMusic}
-          />} />
-        <Route path="/FavoritesPage" element={<FavoritesPage />} />
-        <Route path="/ProfileCollectionPages/:id" element={<ProfileCollectionPages />} />
-        <Route path="*" element={<NotFound />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<MainPage loading={loading} arrayMusicAll={arrayMusicAll} addTodoError={addTodoError} />} />
+          <Route path="FavoritesPage" element={<FavoritesPage />} />
+          <Route path="ProfileCollectionPages/:id" element={<ProfileCollectionPages />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Route>
     </Routes>
   );

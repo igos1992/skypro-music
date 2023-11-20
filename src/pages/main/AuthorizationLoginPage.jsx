@@ -1,13 +1,23 @@
 import { useForm } from 'react-hook-form';
 import GlobalStyle from '../../App.CreateGlobalStyle';
+// import { useDispatch } from 'react-redux';
 import * as S from './AuthorizationLoginPage.Style';
 import { postTodosUserLoginUp } from '../../api';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../Usercontext/Usercontext';
+import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+// import {
+//   // fetchUsersRefreshToken, 
+//   fetchUsersToken
+// } from '../../redux/music/usersTokenSlice';
+
 
 
 export function AuthorizationLoginPage() {
+
+  const [getToken, { data }] = useGetTokenMutation()
+
 
   const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
@@ -15,6 +25,7 @@ export function AuthorizationLoginPage() {
   const [password, setPassword] = useState("");
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate()
+  // const dispatch = useDispatch()
 
   const {
     register,
@@ -26,8 +37,7 @@ export function AuthorizationLoginPage() {
     mode: "onBlur"
   });
 
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+  const onSubmit = () => {
     setOffButton(true)
     postTodosUserLoginUp({
       email: email,
@@ -37,7 +47,7 @@ export function AuthorizationLoginPage() {
         // console.log(response);
         localStorage.setItem('user', response.username);
         changingUserData(localStorage.getItem('user'))
-        console.log(localStorage.getItem('user'))
+        // console.log(localStorage.getItem('user'))
         navigate('/');
       }).catch((error) => {
         // console.log(error)
@@ -45,7 +55,21 @@ export function AuthorizationLoginPage() {
       }).finally(() => {
         setOffButton(false)
       });
+      getToken({ email, password })
+      
+
+    // fetchUsersToken({
+    //   email: email,
+    //   password: password
+    // })
+
+    // dispatch(fetchUsersRefreshToken())
+
+    // console.log(fetchUsersToken());
+
   }
+
+  console.log(data);
 
   return (
     <>
