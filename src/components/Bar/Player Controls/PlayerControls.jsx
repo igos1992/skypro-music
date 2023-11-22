@@ -35,9 +35,9 @@ function PlayerControls({
           alt="play"
           onClick={isPlaying ? handleStop : handleStart}>
           {isPlaying ? (
-            <use xlinkHref="img/icon/sprite.svg#icon-pause" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-pause" />
           ) : (
-            <use xlinkHref="img/icon/sprite.svg#icon-play" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-play" />
           )}
         </S.PlayerBtnPlaySvg>
       </S.PlayerBtnPlay>

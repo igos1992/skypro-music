@@ -1,20 +1,14 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-// const initialState = {
-//   access: "",
-//   refresh: "",
-// };
-
-export const fetchUsersToken = () => createApi({
+export const fetchUsersToken = createApi({
   reducerPath: 'fetchUsersToken',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://skypro-music-api.skyeng.tech/'
+    baseUrl: 'https://skypro-music-api.skyeng.tech'
   }),
   endpoints: (builder) => ({
     getToken: builder.mutation({
       query: ({ email, password }) => ({
-        url: 'user/login/',
+        url: '/user/token/',
         method: "POST",
         body: JSON.stringify({
           email,
@@ -24,148 +18,64 @@ export const fetchUsersToken = () => createApi({
           "content-type": "application/json",
         },
       })
+    }),
+    getTokenRefresh: builder.mutation({
+      query: () => ({
+        url: '/user/token/refresh/',
+        method: "POST",
+        body: JSON.stringify({
+          refresh: sessionStorage.getItem('refresh')
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
     })
   })
 })
 
-export const { useGetTokenMutation } = fetchUsersToken;
-
-export default fetchUsersToken.reducer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function saveToken(token) {
-//   localStorage.setItem('tokenData', JSON.stringify(token));
-// }
-
-// export const fetchUsersToken = createAsyncThunk(
-//   'usersToken/fetchUsersToken',
-//   async ({ email, password }) => {
-//     const response = await fetch('https://skypro-music-api.skyeng.tech/user/token/', {
-//       method: "POST",
-//       body: JSON.stringify({
-//         email,
-//         password,
-//       }),
-//       headers: {
-//         "content-type": "application/json",
-//       },
-//     })
-
-
-//       const data = await response.json()
-
-//       return data
-//   }
-// )
-
-// export const fetchUsersRefreshToken = createAsyncThunk(
-//   'usersToken/fetchUsersToken',
-//   async ({ refresh }) => {
-//     const response = await fetch('https://skypro-music-api.skyeng.tech/user/token/refresh/', {
-//       method: "POST",
-//       body: JSON.stringify({
-//         refresh
-//       }),
-//       headers: {
-//         "content-type": "application/json",
-//       },
-//     })
-//     if (response === 200) {
-//       const data = await response.json()
-//       saveToken(JSON.stringify(data));
-//       console.log(data)
-//       return Promise.resolve()
-//     }
-//     return Promise.reject();
-//   }
-// // )
-
-// const usersTokenSlice = createSlice({
-//   name: 'usersToken',
-//   initialState,
-//   extraReducers: (builder) => {
-//     builder.addCase(fetchUsersToken.fulfilled, (state) => {
-
-//       console.log(state);
-
-
-//     });
-//     // builder.addCase(fetchUsersToken.rejected, (action) => {
-
-//     //   console.log(action);
-
-//     //   // console.log(state.access = localStorage.setItem('user', action.payload.access));
-//     // });
-//   }
-
-
-
-//   // {
-
-//   //   [fetchUsersToken.pending]: (state) => {
-//   //     state.error = null
-//   //   },
-//   //   [fetchUsersToken.fulfilled]: (state, action) => {
-//   //     state.access = action.payload,
-//   //       state.refresh = action.payload.
-//   //         console.log(state.access = action.payload);
-//   //   },
-//   //   // [fetchUsersToken.rejected]: (state) => {
-
-//   //   // }
-//   // }
-// })
-
-
-// export default usersTokenSlice.reducer
+export const fetchFavoriteTracks = createApi({
+  reducerPath: 'fetchFavoriteTracks',
+  tagTypes: ['FavoriteTrack'],
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://skypro-music-api.skyeng.tech'
+  }),
+  endpoints: (builder) => ({
+    getFavoriteTracksAll: builder.query({
+      query: () => ({
+        url: 'catalog/track/favorite/all/',
+        method: "GET",
+        headers: {
+          Authorization: sessionStorage.getItem('access'),
+        },
+      }),
+      providesTags: (result) => result
+        ? [
+          ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
+          { type: 'FavoriteTrack', id: 'LIST' },
+        ]
+        : [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
+    addFavoriteTrackID: builder.mutation({
+      query: (body) => ({
+        url: 'catalog/track/<id>/favorite/',
+        method: "POST",
+        body,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('access')}`,
+        },
+      }),
+      invalidatesTags: [{ type: 'FavoriteTrack', id: 'LIST' }]
+    })
+  })
+})
+
+export const {
+  useGetTokenMutation,
+  useGetTokenRefreshMutation,
+} = fetchUsersToken;
+
+export const {
+  useGetFavoriteTracksAllQuery,
+  useAddFavoriteTrackIDMutation
+} = fetchFavoriteTracks

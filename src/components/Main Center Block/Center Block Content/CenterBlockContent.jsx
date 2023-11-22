@@ -1,20 +1,41 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+// import { useParams } from "react-router-dom";
 import * as S from './CenterBlockContent.style';
 import { ContentTitle } from '../ContentTitle/ContentTitle';
 import { setCurrentTrack } from '../../../redux/music/playerBarSlice';
 import { selectCurrentTrack, selectAllTracks, selectPulsatingPoint } from '../../../redux/music/playerBarSlice';
-
+// import { useAddFavoriteTrackIDMutation } from '../../../redux/music/usersTokenSlice';
 
 function CenterBlockContent({
   loading,
   addTodoError,
 }) {
-
   const dispatch = useDispatch();
   const handleCurrentTrack = (music) => {
     dispatch(setCurrentTrack(music))
   }
+  // const userInfo = useParams();
+
+
+  // const [AddTrackID, { data }] = useAddFavoriteTrackIDMutation()
+  // console.log(AddTrackID);
+  // console.log(data);
+
+  // const addTrackLikedFavorite = async () => {
+  //   if (data?.stared_user?.find((user) => user.id === userInfo.id) ||
+  //     location.pathname === '/FavoritesPage') {
+      
+  //     alert('Пока')
+  //     return AddTrackID()
+  //   }
+  //   // AddTrackID()
+  //   alert('Привет')
+
+  //   console.log(AddTrackID())
+  //   console.log(data);
+
+  // }
 
   const CurrentTrack = useSelector(selectCurrentTrack);
   const allTracks = useSelector(selectAllTracks);
@@ -84,7 +105,9 @@ function CenterBlockContent({
               )}
               <S.TrackTime>
                 <S.TrackTimeSvg alt="time">
+
                   <use xlinkHref="img/icon/sprite.svg#icon-like" />
+
                 </S.TrackTimeSvg>
                 {loading ? (
                   <S.TrackTimeTextSpan>{convertTime(music.duration_in_seconds)}</S.TrackTimeTextSpan>
