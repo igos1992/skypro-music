@@ -93,7 +93,6 @@ function Bar() {
       audioRef.current.addEventListener("loadedmetadata", () => {
         setTrackTime(Math.floor(audioRef.current.duration));
       });
-
       return () => {
         audioRef.current.removeEventListener("timeupdate", () => {
           setCurrentTime(Math.floor(audioRef.current.currentTime));

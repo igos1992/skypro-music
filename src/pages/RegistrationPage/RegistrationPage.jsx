@@ -59,7 +59,7 @@ export function RegistrationPage() {
     }
   }
 
-  console.log(offButton);
+  // console.log(offButton);
 
   return (
     <>

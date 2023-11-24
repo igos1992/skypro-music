@@ -42,7 +42,6 @@ export function postTodosUserSignUp({ email, password, username }) {
     })
 }
 
-
 export function postTodosUserLoginUp({ email, password }) {
   return fetch('https://skypro-music-api.skyeng.tech/user/login/', {
     method: 'POST',
@@ -55,7 +54,6 @@ export function postTodosUserLoginUp({ email, password }) {
       "content-type": "application/json",
     }
   })
-    
     .then((response) => {
       if (response.status === 400) {
         return response.json().then((errorResponse) => {

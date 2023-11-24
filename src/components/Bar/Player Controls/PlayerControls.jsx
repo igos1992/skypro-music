@@ -35,9 +35,9 @@ function PlayerControls({
           alt="play"
           onClick={isPlaying ? handleStop : handleStart}>
           {isPlaying ? (
-            <use xlinkHref="img/icon/sprite.svg#icon-pause" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-pause" />
           ) : (
-            <use xlinkHref="img/icon/sprite.svg#icon-play" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-play" />
           )}
         </S.PlayerBtnPlaySvg>
       </S.PlayerBtnPlay>
@@ -53,9 +53,9 @@ function PlayerControls({
           alt="repeat"
           onClick={() => setIsLoop(!isLoop)}>
           {isLoop ? (
-            <use xlinkHref="img/icon/sprite.svg#icon-repeatWhite" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-repeatWhite" />
           ) : (
-            <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
+            <use xlinkHref="../img/icon/sprite.svg#icon-repeat" />
           )}
         </S.PlayerBtnRepeatSvg>
       </S.PlayerBtnRepeat>
@@ -66,10 +66,10 @@ function PlayerControls({
             shuffle
               ? (
                 <use
-                  xlinkHref="img/icon/sprite.svg#icon-shuffleWhite"
+                  xlinkHref="../img/icon/sprite.svg#icon-shuffleWhite"
                 />
               ) : (
-                <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                <use xlinkHref="../img/icon/sprite.svg#icon-shuffle" />
               )
           }
 

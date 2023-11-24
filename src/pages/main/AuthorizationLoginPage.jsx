@@ -5,16 +5,20 @@ import { postTodosUserLoginUp } from '../../api';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../Usercontext/Usercontext';
-
+import {
+  useGetTokenMutation,
+} from '../../redux/music/usersTokenSlice';
 
 export function AuthorizationLoginPage() {
 
+  const [getToken] = useGetTokenMutation()
   const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate()
+
 
   const {
     register,
@@ -26,8 +30,21 @@ export function AuthorizationLoginPage() {
     mode: "onBlur"
   });
 
-  const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+  const responseToken = async () => {
+    await getToken({ email, password })
+    .unwrap()
+      .then((token) => {
+        // console.log("token", token);
+        localStorage.setItem('access', token?.access)
+        localStorage.setItem('refresh', token?.refresh)
+
+        console.log(localStorage.getItem('access'));
+        console.log(localStorage.getItem('refresh'));
+      })
+  };
+
+
+  const onSubmit = () => {
     setOffButton(true)
     postTodosUserLoginUp({
       email: email,
@@ -37,7 +54,7 @@ export function AuthorizationLoginPage() {
         // console.log(response);
         localStorage.setItem('user', response.username);
         changingUserData(localStorage.getItem('user'))
-        console.log(localStorage.getItem('user'))
+        // console.log(localStorage.getItem('user'))
         navigate('/');
       }).catch((error) => {
         // console.log(error)
@@ -45,8 +62,13 @@ export function AuthorizationLoginPage() {
       }).finally(() => {
         setOffButton(false)
       });
+    // getToken({ email, password })
+    responseToken()
   }
-
+  
+  // console.log(localStorage.getItem('access'));
+  // console.log(localStorage.getItem('refresh'));
+  
   return (
     <>
       <GlobalStyle />
