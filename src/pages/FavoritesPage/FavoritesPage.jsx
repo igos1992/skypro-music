@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  useDeleteFavoriteTrackIDMutation,
   useGetFavoriteTracksAllQuery,
-  //  useGetTokenRefreshMutation
 } from '../../redux/music/usersTokenSlice';
 import {
   // selectAllTracks, 
-  selectCurrentTrack, selectPulsatingPoint, setCurrentTrack
+  selectCurrentTrack, selectPulsatingPoint, 
+  setAllTracks,
+   setCurrentTrack
 } from '../../redux/music/playerBarSlice';
 import * as S from './FavoritesPage.style';
 // import { useEffect } from 'react';
 import { ContentTitle } from '../../components/Main Center Block/ContentTitle/ContentTitle';
+import { UserContext } from '../../Usercontext/Usercontext';
+import { useContext, useEffect } from 'react';
 
 export const FavoritesPage = ({ addTodoError }) => {
 
@@ -31,39 +35,18 @@ export const FavoritesPage = ({ addTodoError }) => {
   // const allTracks = useSelector(selectAllTracks);
 
   const { data = [] } = useGetFavoriteTracksAllQuery()
-
-
-
+  useEffect(() => {
+    dispatch(setAllTracks(data))
+  }, [data]);
   console.log(data);
-  // const [getTokenRefresh, { data }] = useGetTokenRefreshMutation()
 
-  // useEffect(() => {
-  //   console.log(error);
+  const { staredUser } = useContext(UserContext)
 
-  //   if (error) {
-  //     console.log(error);
-  //      responseTokenRefresh()
-  //   }
+  const [deleteFavoriteTrackID] = useDeleteFavoriteTrackIDMutation()
 
-  // }, [error])
-
-  // const responseTokenRefresh = async () => {
-  //   await getTokenRefresh()
-  //     .then((token) => {
-  //         console.log("token", token)
-  //         localStorage.setItem('access', token?.access)      
-  //     })
-  // };
-
-  // console.log(getTokenRefresh());
-  // console.log(data);
-  // console.log(localStorage.getItem('access'));
-  // console.log(localStorage.getItem('refresh'));
-
-  // function addTrackLikedFavorite () {
-
-  // }
-
+  function deleteTrackFavorite(id) {
+    deleteFavoriteTrackID(id)
+  }
 
   return (
     <>
@@ -71,10 +54,7 @@ export const FavoritesPage = ({ addTodoError }) => {
       <ContentTitle />
       <S.ContentPlaylist>
         <S.SpanErrorBlock>{addTodoError}</S.SpanErrorBlock>
-        {
-          data
-            ?
-            <>
+        {/* <S.CenterBlock> В этом плейлисте нет треков </S.CenterBlock> */}
               {
                 data.map((music) => (
                   <S.PlayListItem key={music.id}>
@@ -117,8 +97,16 @@ export const FavoritesPage = ({ addTodoError }) => {
                       </S.TrackAlbum>
 
                       <S.TrackTime>
-                        <S.TrackTimeSvg alt="time">
-                          <use xlinkHref="img/icon/sprite.svg#icon-like" />
+                        <S.TrackTimeSvg alt="time" onClick={() => deleteTrackFavorite(music.id)}>
+
+                          {music?.stared_user?.find((user) => user.id === staredUser.id) ? (
+                            <use xlinkHref="/img/icon/sprite.svg#icon-like" />
+
+                          ) : (
+
+                            <use xlinkHref="/img/icon/sprite.svg#icon-like-active" />
+                          )}
+
                         </S.TrackTimeSvg>
 
                         <S.TrackTimeTextSpan>{convertTime(music.duration_in_seconds)}</S.TrackTimeTextSpan>
@@ -127,11 +115,7 @@ export const FavoritesPage = ({ addTodoError }) => {
                     </S.PlayListTrack>
                   </S.PlayListItem>
                 ))
-              }
-            </>
-
-            :
-            <S.CenterBlock> В этом плейлисте нет треков </S.CenterBlock>
+           
         }
       </S.ContentPlaylist>
     </>

@@ -12,7 +12,8 @@ import {
 export function AuthorizationLoginPage() {
 
   const [getToken] = useGetTokenMutation()
-  const { changingUserData } = useContext(UserContext)
+  const { changingUserData, 
+  } = useContext(UserContext)
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,8 +39,8 @@ export function AuthorizationLoginPage() {
         localStorage.setItem('access', token?.access)
         localStorage.setItem('refresh', token?.refresh)
 
-        console.log(localStorage.getItem('access'));
-        console.log(localStorage.getItem('refresh'));
+        // console.log(localStorage.getItem('access'));
+        // console.log(localStorage.getItem('refresh'));
       })
   };
 
@@ -51,10 +52,10 @@ export function AuthorizationLoginPage() {
       password: password
     })
       .then((response) => {
-        // console.log(response);
-        localStorage.setItem('user', response.username);
-        changingUserData(localStorage.getItem('user'))
-        // console.log(localStorage.getItem('user'))
+        console.log(response);
+        localStorage.setItem('user', JSON.stringify(response));
+        changingUserData(JSON.parse(localStorage.getItem('user')))
+
         navigate('/');
       }).catch((error) => {
         // console.log(error)
@@ -62,7 +63,6 @@ export function AuthorizationLoginPage() {
       }).finally(() => {
         setOffButton(false)
       });
-    // getToken({ email, password })
     responseToken()
   }
   

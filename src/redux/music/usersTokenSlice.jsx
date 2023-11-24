@@ -41,6 +41,25 @@ export const fetchUsersToken = createApi({
   })
 })
 
+// export const getListAllMusic = createApi({
+//   reducerPath: 'getListAllMusic',
+//   tagTypes: ['listAllMusic'],
+//   baseQuery: fetchBaseQuery({
+//     baseUrl: 'https://skypro-music-api.skyeng.tech'
+//   }),
+//   endpoints: (builder) => ({
+//     getAllMusic: builder.query({
+//       query: () => `/catalog/track/all/`
+//     }),
+//     providesTags: (result) => result
+//         ? [
+//           ...result.map(({ id }) => ({ type: 'listAllMusic', id })),
+//           { type: 'listAllMusic', id: 'LIST' },
+//         ]
+//         : [{ type: 'listAllMusic', id: 'LIST' }]
+//   })
+// })
+
 export const fetchFavoriteTracks = createApi({
   reducerPath: 'fetchFavoriteTracks',
   tagTypes: ['FavoriteTrack'],
@@ -48,6 +67,15 @@ export const fetchFavoriteTracks = createApi({
     baseUrl: 'https://skypro-music-api.skyeng.tech'
   }),
   endpoints: (builder) => ({
+    getAllMusic: builder.query({
+      query: () => `/catalog/track/all/`,
+      providesTags: (result) => result
+      ? [
+        ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
+        { type: 'FavoriteTrack', id: 'LIST' },
+      ]
+      : [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
     getFavoriteTracksAll: builder.query({
       query: () => ({
         url: 'catalog/track/favorite/all/',
@@ -57,11 +85,11 @@ export const fetchFavoriteTracks = createApi({
         },
       }),
       providesTags: (result) => result
-        ? [
-          ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
-          { type: 'FavoriteTrack', id: 'LIST' },
-        ]
-        : [{ type: 'FavoriteTrack', id: 'LIST' }]
+      ? [
+        ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
+        { type: 'FavoriteTrack', id: 'LIST' },
+      ]
+      : [{ type: 'FavoriteTrack', id: 'LIST' }]
     }),
     addFavoriteTrackID: builder.mutation({
       query: (id) => ({
@@ -91,8 +119,11 @@ export const {
   useGetTokenRefreshMutation,
 } = fetchUsersToken;
 
+// export const {useGetAllMusicQuery} = getListAllMusic
+
 export const {
   useGetFavoriteTracksAllQuery,
   useAddFavoriteTrackIDMutation,
-  useDeleteFavoriteTrackIDMutation
+  useDeleteFavoriteTrackIDMutation,
+  useGetAllMusicQuery
 } = fetchFavoriteTracks

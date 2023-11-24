@@ -1,21 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, 
+  // useEffect 
+} from 'react';
 import * as S from './CenterBlockFilter.style';
-import { getTodosMusicAll } from '../../../api';
+// import { getTodosMusicAll } from '../../../api';
+import { useGetAllMusicQuery } from '../../../redux/music/usersTokenSlice';
 
 function CenterBlockFilter() {
 
-  const [arrayMusicAll, setArrayMusicAll] = useState([])
+  // const [arrayMusicAll, setArrayMusicAll] = useState([])
+  const {data = []} = useGetAllMusicQuery()
 
-  useEffect(() => {
-    getTodosMusicAll().then((arrayMusicAll) => {
-      setArrayMusicAll(arrayMusicAll)
-    })
-  }, [])
+  // useEffect(() => {
+  //   getTodosMusicAll().then((arrayMusicAll) => {
+  //     setArrayMusicAll(arrayMusicAll)
+  //   })
+  // }, [])
 
   const [activeFilter, setActiveFilter] = useState(null);
   const toggleVisibleFilter = (filter) => {
     setActiveFilter(activeFilter === filter ? null : filter);
   };
+
+  
 
   return (
 
@@ -28,11 +34,11 @@ function CenterBlockFilter() {
         {activeFilter === "author" &&
           <>
             <S.FilterLength>
-              {arrayMusicAll.length}
+              {data.length}
             </S.FilterLength>
             <S.FilterMenu>
               <S.FilterList>
-                {arrayMusicAll.map((item) => (
+                {data.map((item) => (
                   <li key={item.id}>
                     <S.TextDecoration href='#'>{item.name}</S.TextDecoration>
                   </li>
@@ -49,11 +55,11 @@ function CenterBlockFilter() {
         {activeFilter === "year" &&
           <>
             <S.FilterLength >
-              {arrayMusicAll.length}
+              {data.length}
             </S.FilterLength>
             <S.FilterMenuYear>
               <S.FilterList>
-                {arrayMusicAll.map((item) => (
+                {data.map((item) => (
                   <li key={item.id} >
                     <S.TextDecoration href='#'>{item.release_date}</S.TextDecoration>
                   </li>
@@ -70,11 +76,11 @@ function CenterBlockFilter() {
         {activeFilter === "genre" &&
           <>
             <S.FilterLength>
-              {arrayMusicAll.length}
+              {data.length}
             </S.FilterLength>
             <S.FilterMenu>
               <S.FilterList>
-                {arrayMusicAll.map((item) => (
+                {data.map((item) => (
                   <li key={item.id}>
                     <S.TextDecoration href='#'>{item.genre}</S.TextDecoration>
                   </li>
