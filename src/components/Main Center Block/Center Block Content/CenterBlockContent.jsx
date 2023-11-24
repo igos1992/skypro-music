@@ -1,11 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-// import { useParams } from "react-router-dom";
+
 import * as S from './CenterBlockContent.style';
 import { ContentTitle } from '../ContentTitle/ContentTitle';
 import { setCurrentTrack } from '../../../redux/music/playerBarSlice';
 import { selectCurrentTrack, selectAllTracks, selectPulsatingPoint } from '../../../redux/music/playerBarSlice';
-// import { useAddFavoriteTrackIDMutation } from '../../../redux/music/usersTokenSlice';
+import {
+  useAddFavoriteTrackIDMutation,
+  useDeleteFavoriteTrackIDMutation, 
+  useGetFavoriteTracksAllQuery
+} from '../../../redux/music/usersTokenSlice';
 
 function CenterBlockContent({
   loading,
@@ -15,27 +19,35 @@ function CenterBlockContent({
   const handleCurrentTrack = (music) => {
     dispatch(setCurrentTrack(music))
   }
-  // const userInfo = useParams();
 
-
-  // const [AddTrackID, { data }] = useAddFavoriteTrackIDMutation()
-  // console.log(AddTrackID);
+  const [addFavoriteTrackID] = useAddFavoriteTrackIDMutation()
   // console.log(data);
 
-  // const addTrackLikedFavorite = async () => {
-  //   if (data?.stared_user?.find((user) => user.id === userInfo.id) ||
-  //     location.pathname === '/FavoritesPage') {
-      
-  //     alert('Пока')
-  //     return AddTrackID()
-  //   }
-  //   // AddTrackID()
-  //   alert('Привет')
+  const [deleteFavoriteTrackID] = useDeleteFavoriteTrackIDMutation()
 
-  //   console.log(AddTrackID())
-  //   console.log(data);
+  const { data } = useGetFavoriteTracksAllQuery()
 
-  // }
+  console.log(useGetFavoriteTracksAllQuery());
+  function addTrackFavorite(id) {
+    addFavoriteTrackID(id)
+  }
+  function deleteTrackFavorite(id) {
+    deleteFavoriteTrackID(id)
+  }
+
+  // let params = data.find((param) => param.stared_user)
+
+
+  const addTrackLikedFavorite = (id) => {
+   if (data?.stared_user) {
+    deleteTrackFavorite(id)
+   } else {
+    addTrackFavorite(id)
+   }
+         
+
+
+  }
 
   const CurrentTrack = useSelector(selectCurrentTrack);
   const allTracks = useSelector(selectAllTracks);
@@ -104,7 +116,9 @@ function CenterBlockContent({
                 <S.SkeletonAlbum />
               )}
               <S.TrackTime>
-                <S.TrackTimeSvg alt="time">
+                <S.TrackTimeSvg alt="time"
+                  onClick={() => addTrackLikedFavorite(music.id)}
+                >
 
                   <use xlinkHref="img/icon/sprite.svg#icon-like" />
 

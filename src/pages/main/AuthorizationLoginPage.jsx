@@ -7,14 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../Usercontext/Usercontext';
 import {
   useGetTokenMutation,
-  // useGetTokenRefreshMutation
 } from '../../redux/music/usersTokenSlice';
 
 export function AuthorizationLoginPage() {
 
-  const [getToken, { data }] = useGetTokenMutation()
-  // const [getTokenRefresh] = useGetTokenRefreshMutation()
-
+  const [getToken] = useGetTokenMutation()
   const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
@@ -35,14 +32,14 @@ export function AuthorizationLoginPage() {
 
   const responseToken = async () => {
     await getToken({ email, password })
-      .unwrap()
+    .unwrap()
       .then((token) => {
-        console.log("token", token);
-        sessionStorage.setItem('access', JSON.stringify(token?.access))
-        sessionStorage.setItem('refresh', JSON.stringify(token?.refresh))
+        // console.log("token", token);
+        localStorage.setItem('access', token?.access)
+        localStorage.setItem('refresh', token?.refresh)
 
-        console.log(sessionStorage.getItem('access'));
-        console.log(sessionStorage.getItem('refresh'));
+        console.log(localStorage.getItem('access'));
+        console.log(localStorage.getItem('refresh'));
       })
   };
 
@@ -68,16 +65,10 @@ export function AuthorizationLoginPage() {
     // getToken({ email, password })
     responseToken()
   }
-
-
-  // localStorage.setItem('access', JSON.stringify(data?.access))
+  
   // console.log(localStorage.getItem('access'));
-  // localStorage.setItem('refresh', JSON.stringify(data?.refresh))
   // console.log(localStorage.getItem('refresh'));
-
-  console.log(data);
-
-
+  
   return (
     <>
       <GlobalStyle />
