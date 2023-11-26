@@ -1,17 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import * as S from './Bar.style';
 import {
   selectAllTracks,
+  selectAllTracksFavorites,
   selectCurrentTrack,
   selectShuffle,
   selectToggleShuffleTrack,
+  setAllTracks,
+  setAllTracksFavorites,
   setCurrentTrack,
   setPulsatingPoint,
-} from '../../redux/music/playerBarSlice';
+  setToggleShuffleTrack,
+} from '../../redux/music/serviceQuery';
 import PlayerControls from './Player Controls/PlayerControls';
 import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
 import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
+import * as S from './Bar.style';
 
 function Bar() {
 
@@ -36,11 +40,28 @@ function Bar() {
   const audioRef = useRef(null);
   const dispatch = useDispatch()
   const allTracks = useSelector(selectAllTracks);
+  const favoritesTracks = useSelector(selectAllTracksFavorites)
+  const [activeArrayTrack, setActiveArrayTrack] = useState([])
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      // console.log(allTracks);
+      dispatch(setAllTracks(allTracks))
+      dispatch(setToggleShuffleTrack(allTracks))
+      setActiveArrayTrack(allTracks);
+    }
+    if (location.pathname === "/FavoritesPage") {
+      // console.log(favoritesTracks);
+      dispatch(setAllTracksFavorites(favoritesTracks));
+      dispatch(setToggleShuffleTrack(favoritesTracks))
+      setActiveArrayTrack(favoritesTracks)
+    }
+  }, [activeArrayTrack, favoritesTracks, allTracks])
 
   const toggleShuffleTrack = useSelector(selectToggleShuffleTrack) // Перемешанный массив
   const shuffle = useSelector(selectShuffle); // active / not active shuffle
-  const playingTrack = allTracks.find((element) => element.track_file === CurrentTrack.track_file); // Играющая песня
-  let indexOf = allTracks.indexOf(playingTrack); // Индекс играющей песни (обычный массив)
+  const playingTrack = activeArrayTrack.find((element) => element.track_file === CurrentTrack.track_file); // Играющая песня
+  let indexOf = activeArrayTrack.indexOf(playingTrack); // Индекс играющей песни (обычный массив)
   let indexShuffle = toggleShuffleTrack.indexOf(playingTrack); // Индекс играющей песни (перемешанный массив)
 
   function nextTrack(arrayTracks) {
@@ -51,13 +72,13 @@ function Bar() {
 
   function prevTrack() {
     if (indexOf > 0) {
-      return dispatch(setCurrentTrack(allTracks[indexOf - 1]))
+      return dispatch(setCurrentTrack(activeArrayTrack[indexOf - 1]))
     }
   }
 
   const handleNextTrack = () => {
     if (!shuffle) {
-      nextTrack(allTracks)
+      nextTrack(activeArrayTrack)
     } else {
       dispatch(setCurrentTrack(toggleShuffleTrack[++indexShuffle]))
     }
@@ -65,7 +86,7 @@ function Bar() {
 
   const handlePrevTrack = () => {
     if (!shuffle) {
-      prevTrack(allTracks)
+      prevTrack(activeArrayTrack)
     } else {
       dispatch(setCurrentTrack(toggleShuffleTrack[indexShuffle - 1]))
     }

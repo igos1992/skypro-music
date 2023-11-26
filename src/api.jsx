@@ -1,14 +1,3 @@
-// export async function getTodosMusicAll() {
-//   const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/', {
-//     method: 'GET',
-//   });
-//   if (!response.ok) {
-//     throw new Error("Ошибка сервера")
-//   }
-//   const data = await response.json();
-//   return data;
-// }
-
 export function postTodosUserSignUp({ email, password, username }) {
   return fetch('https://skypro-music-api.skyeng.tech/user/signup/', {
     method: 'POST',

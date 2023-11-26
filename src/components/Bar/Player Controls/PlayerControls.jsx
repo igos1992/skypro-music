@@ -6,7 +6,7 @@ import {
   setToggleShuffleTrack,
   selectToggleShuffleTrack,
   setShuffle
-} from '../../../redux/music/playerBarSlice';
+} from '../../../redux/music/serviceQuery';
 
 function PlayerControls({
   isPlaying,

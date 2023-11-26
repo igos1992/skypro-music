@@ -5,7 +5,8 @@ const initialState = {
   currentTrack: null,
   shuffle: false,
   shuffleAllTracks: [],
-  pulsatingPoint: false
+  pulsatingPoint: false,
+  favoriteArrayTrack: [],
 };
 
 const getShuffleAllTracks = (array) => {
@@ -18,9 +19,14 @@ const playerBarSlice = createSlice({
   initialState,
   reducers: {
 
-    // все треки
+    // все треки (массив главный)
     setAllTracks: (state, action) => {
       state.allTracks = action.payload;
+    },
+
+    // все треки (массив избранных треков)
+    setAllTracksFavorites: (state, action) => {
+      state.favoriteArrayTrack = action.payload;
     },
 
     // текущая дорожка
@@ -30,7 +36,7 @@ const playerBarSlice = createSlice({
 
     // переключение трека в случайном порядке
     setToggleShuffleTrack: (state) => {
-      state.shuffleAllTracks = getShuffleAllTracks(state.allTracks)
+      state.shuffleAllTracks = getShuffleAllTracks(state.allTracks || state.favoriteArrayTrack)
     },
 
     // Активная / не активная иконка shuffle
@@ -47,6 +53,7 @@ const playerBarSlice = createSlice({
 
 export const {
   setAllTracks,
+  setAllTracksFavorites,
   setCurrentTrack,
   setToggleShuffleTrack,
   setPulsatingPoint,
@@ -54,6 +61,7 @@ export const {
 } = playerBarSlice.actions;
 
 export const selectAllTracks = (store) => store.track.allTracks;
+export const selectAllTracksFavorites = (store) => store.track.favoriteArrayTrack;
 export const selectCurrentTrack = (store) => store.track.currentTrack;
 export const selectToggleShuffleTrack = (store) => store.track.shuffleAllTracks;
 export const selectShuffle = (store) => store.track.shuffle;

@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { setAuth } from '../../redux/music/authSlice';
+import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+import { UserContext } from '../../Usercontext/Usercontext';
+import { postTodosUserSignUp } from '../../api'
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './RegistrationPage.Style';
-import { useForm } from 'react-hook-form';
-import { postTodosUserSignUp } from '../../api'
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../Usercontext/Usercontext';
 
 export function RegistrationPage() {
 
+  const [getToken] = useGetTokenMutation()
   const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
@@ -16,6 +20,7 @@ export function RegistrationPage() {
   const [username, setUsername] = useState("");
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setError(null);
@@ -31,6 +36,21 @@ export function RegistrationPage() {
     mode: "onBlur"
   });
 
+  const responseToken = async () => {
+    await getToken({ email, password })
+      .unwrap()
+      .then((token) => {
+        // console.log("token", token);
+        dispatch(
+          setAuth({
+            access: token.access,
+            refresh: token.refresh,
+            user: JSON.parse(localStorage.getItem("user")),
+          })
+        );
+      })
+  };
+
   const onSubmit = () => {
     setOffButton(true)
     if (password !== repeatPassword) {
@@ -44,8 +64,8 @@ export function RegistrationPage() {
       })
         .then((response) => {
           console.log(response);
-          localStorage.setItem("user", response.username);
-          changingUserData(localStorage.getItem('user'))
+          localStorage.setItem('user', JSON.stringify(response));
+          changingUserData(JSON.parse(localStorage.getItem('user')))
           console.log(localStorage.getItem('user'))
           navigate('/');
         }).catch((error) => {
@@ -56,6 +76,7 @@ export function RegistrationPage() {
           setOffButton(false)
         }
         )
+      responseToken()
     }
   }
 
@@ -134,10 +155,10 @@ export function RegistrationPage() {
               </S.FillInTheField>
 
               {error && <S.Error>{error}</S.Error>}
-          
+
               <S.InputSubmit type="submit" disabled={offButton}>
                 Зарегистрироваться
-                </S.InputSubmit>
+              </S.InputSubmit>
 
             </S.ModalFormLogin>
           </S.ModalBlock>

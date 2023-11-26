@@ -1,25 +1,24 @@
 import { useForm } from 'react-hook-form';
-import GlobalStyle from '../../App.CreateGlobalStyle';
-import * as S from './AuthorizationLoginPage.Style';
-import { postTodosUserLoginUp } from '../../api';
 import { useContext, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import GlobalStyle from '../../App.CreateGlobalStyle';
 import { UserContext } from '../../Usercontext/Usercontext';
-import {
-  useGetTokenMutation,
-} from '../../redux/music/usersTokenSlice';
+import { setAuth } from '../../redux/music/authSlice';
+import { postTodosUserLoginUp } from '../../api';
+import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+import * as S from './AuthorizationLoginPage.Style';
 
 export function AuthorizationLoginPage() {
 
   const [getToken] = useGetTokenMutation()
-  const { changingUserData, 
-  } = useContext(UserContext)
+  const { changingUserData } = useContext(UserContext)
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [offButton, setOffButton] = useState(false);
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -33,17 +32,18 @@ export function AuthorizationLoginPage() {
 
   const responseToken = async () => {
     await getToken({ email, password })
-    .unwrap()
+      .unwrap()
       .then((token) => {
         // console.log("token", token);
-        localStorage.setItem('access', token?.access)
-        localStorage.setItem('refresh', token?.refresh)
-
-        // console.log(localStorage.getItem('access'));
-        // console.log(localStorage.getItem('refresh'));
+        dispatch(
+          setAuth({
+            access: token.access,
+            refresh: token.refresh,
+            user: JSON.parse(localStorage.getItem("user")),
+          })
+        );
       })
   };
-
 
   const onSubmit = () => {
     setOffButton(true)
@@ -52,10 +52,9 @@ export function AuthorizationLoginPage() {
       password: password
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         localStorage.setItem('user', JSON.stringify(response));
         changingUserData(JSON.parse(localStorage.getItem('user')))
-
         navigate('/');
       }).catch((error) => {
         // console.log(error)
@@ -65,10 +64,7 @@ export function AuthorizationLoginPage() {
       });
     responseToken()
   }
-  
-  // console.log(localStorage.getItem('access'));
-  // console.log(localStorage.getItem('refresh'));
-  
+
   return (
     <>
       <GlobalStyle />
