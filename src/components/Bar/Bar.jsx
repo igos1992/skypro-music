@@ -3,15 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 import {
   selectAllTracks,
   selectAllTracksFavorites,
+  selectCollectionId,
   selectCurrentTrack,
   selectShuffle,
   selectToggleShuffleTrack,
   setAllTracks,
   setAllTracksFavorites,
+  setCollectionId,
   setCurrentTrack,
   setPulsatingPoint,
   setToggleShuffleTrack,
-} from '../../redux/music/serviceQuery';
+} from '../../redux/music/musicSlice';
 import PlayerControls from './Player Controls/PlayerControls';
 import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
 import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
@@ -41,7 +43,9 @@ function Bar() {
   const dispatch = useDispatch()
   const allTracks = useSelector(selectAllTracks);
   const favoritesTracks = useSelector(selectAllTracksFavorites)
+  const collectionId = useSelector(selectCollectionId)
   const [activeArrayTrack, setActiveArrayTrack] = useState([])
+  console.log(collectionId);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -53,8 +57,18 @@ function Bar() {
     if (location.pathname === "/FavoritesPage") {
       // console.log(favoritesTracks);
       dispatch(setAllTracksFavorites(favoritesTracks));
+      console.log(dispatch(setAllTracksFavorites(favoritesTracks)));
       dispatch(setToggleShuffleTrack(favoritesTracks))
+      console.log(dispatch(setToggleShuffleTrack(favoritesTracks)));
       setActiveArrayTrack(favoritesTracks)
+      console.log(setActiveArrayTrack(favoritesTracks));
+    }
+    if (location.pathname === `/ProfileCollectionPages/${collectionId}`) {
+      dispatch(setCollectionId(collectionId))
+      console.log(dispatch(setCollectionId(collectionId)));
+      dispatch(setToggleShuffleTrack(collectionId))
+      console.log(dispatch(setToggleShuffleTrack(collectionId)));
+      setActiveArrayTrack(collectionId);
     }
   }, [activeArrayTrack, favoritesTracks, allTracks])
 

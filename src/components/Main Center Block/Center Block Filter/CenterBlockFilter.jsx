@@ -1,14 +1,15 @@
-import { useState, 
+import {
+  useState,
   // useEffect 
 } from 'react';
 import * as S from './CenterBlockFilter.style';
 // import { getTodosMusicAll } from '../../../api';
-import { useGetAllMusicQuery } from '../../../redux/music/usersTokenSlice';
+import { useGetAllMusicQuery } from '../../../redux/music/serviceQuery';
 
 function CenterBlockFilter() {
 
   // const [arrayMusicAll, setArrayMusicAll] = useState([])
-  const {data = []} = useGetAllMusicQuery()
+  const { data = [] } = useGetAllMusicQuery()
 
   // useEffect(() => {
   //   getTodosMusicAll().then((arrayMusicAll) => {
@@ -21,7 +22,7 @@ function CenterBlockFilter() {
     setActiveFilter(activeFilter === filter ? null : filter);
   };
 
-  
+
 
   return (
 

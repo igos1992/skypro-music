@@ -23,6 +23,12 @@ export const ContentPlaylist = styled.div`
     width: 0px;
   }
 `
+export const SpanNotTracksFavorite = styled.span`
+  font-family: 'StratosSkyeng';
+  font-size: 30px;
+  margin-top: 50px;
+  text-align: justify;
+`
 
 export const SpanErrorBlock = styled.span`
   font-family: 'StratosSkyeng';

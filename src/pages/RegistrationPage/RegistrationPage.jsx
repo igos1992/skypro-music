@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { setAuth } from '../../redux/music/authSlice';
-import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+import { useGetTokenMutation } from '../../redux/music/serviceQuery';
 import { UserContext } from '../../Usercontext/Usercontext';
 import { postTodosUserSignUp } from '../../api'
 import GlobalStyle from '../../App.CreateGlobalStyle';

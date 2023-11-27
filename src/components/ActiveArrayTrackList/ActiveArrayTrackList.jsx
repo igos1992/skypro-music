@@ -6,32 +6,45 @@ import {
   useDeleteFavoriteTrackIDMutation,
   useGetAllMusicQuery,
   useGetFavoriteTracksAllQuery,
-} from '../../redux/music/usersTokenSlice';
+  useGetSelectionsQuery,
+} from '../../redux/music/serviceQuery';
 import {
   selectCurrentTrack,
   selectPulsatingPoint,
   setAllTracks,
   setAllTracksFavorites,
+  setCollectionId,
   setCurrentTrack,
-} from '../../redux/music/serviceQuery';
+} from '../../redux/music/musicSlice';
 import * as S from './ActiveArrayTrackList.style';
+import { useParams } from 'react-router-dom';
 
 export function ActiveArrayTrackList({ data }) {
 
   const dispatch = useDispatch();
+  const params = useParams();
   const { data: arrayAllTracks } = useGetAllMusicQuery()
   const { data: arrayFavoriteTracks } = useGetFavoriteTracksAllQuery()
+  const { data: arrayCollectionPages } = useGetSelectionsQuery(Number(params.id))
+  console.log(arrayCollectionPages?.items);
 
   const handleCurrentTrack = (music) => {
     if (location.pathname === "/") {
       // console.log(arrayAllTracks);
       dispatch(setAllTracks(arrayAllTracks));
       dispatch(setAllTracksFavorites());
+      dispatch(setCollectionId())
     }
     if (location.pathname === "/FavoritesPage") {
       // console.log(arrayFavoriteTracks);
       dispatch(setAllTracksFavorites(arrayFavoriteTracks));
       dispatch(setAllTracks());
+      dispatch(setCollectionId())
+    }
+    if (location.pathname === `/ProfileCollectionPages/${arrayCollectionPages?.id}`) {
+      dispatch(setCollectionId(arrayCollectionPages?.items))
+      dispatch(setAllTracks());
+      dispatch(setAllTracksFavorites());
     }
     dispatch(setCurrentTrack(music))
   }
@@ -47,7 +60,12 @@ export function ActiveArrayTrackList({ data }) {
     // console.log(music?.stared_user?.find((user) => user.id === userData.id));
     if (location.pathname === "/FavoritesPage" || music?.stared_user?.find((user) => user.id === userData.id)) {
       deleteFavoriteTrackID(music.id)
-    } else if (location.pathname === "/" || music?.stared_user?.find((user) => user.id === userData.id)) {
+    } else if (
+      location.pathname === `/ProfileCollectionPages/${data?.id}`
+      ||
+      location.pathname === "/"
+      ||
+      music?.stared_user?.find((user) => user.id === userData.id)) {
       addFavoriteTrackID(music.id)
     }
   }
@@ -63,11 +81,9 @@ export function ActiveArrayTrackList({ data }) {
 
   return (
     <>
-      {data.length === 0 && location.pathname === "/FavoritesPage" ?
-        <S.SpanNotTracksFavorite>В этом плейлисте пока нет Ваших любимых треков</S.SpanNotTracksFavorite>
-        :
+      {
         <>
-          {data.map((music) => (
+          {data && data.map((music) => (
             <S.PlayListItem key={music.id} >
               <S.PlayListTrack>
                 <S.TrackTitle>

@@ -6,7 +6,7 @@ import GlobalStyle from '../../App.CreateGlobalStyle';
 import { UserContext } from '../../Usercontext/Usercontext';
 import { setAuth } from '../../redux/music/authSlice';
 import { postTodosUserLoginUp } from '../../api';
-import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+import { useGetTokenMutation } from '../../redux/music/serviceQuery';
 import * as S from './AuthorizationLoginPage.Style';
 
 export function AuthorizationLoginPage() {

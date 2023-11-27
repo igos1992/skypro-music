@@ -1,12 +1,12 @@
 import * as S from './CenterBlockContent.style';
 import { ContentTitle } from './ContentTitle/ContentTitle';
-import { useGetAllMusicQuery } from '../../redux/music/usersTokenSlice';
+import { useGetAllMusicQuery } from '../../redux/music/serviceQuery';
 import { ActiveArrayTrackList } from '../ActiveArrayTrackList/ActiveArrayTrackList';
 import Skeleton from '../Array/skeleton';
 
 function CenterBlockContent() {
 
-  const { data = [], isError, error, isLoading } = useGetAllMusicQuery()
+  const { data, isError, error, isLoading } = useGetAllMusicQuery()
 
   return (
     <S.CenterBlockContent>

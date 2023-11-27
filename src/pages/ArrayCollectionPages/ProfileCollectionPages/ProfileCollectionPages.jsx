@@ -1,14 +1,28 @@
 import { useParams } from "react-router-dom";
-import { ArrayCollectionPages } from '../ArrayCollectionPages';
+
 import * as S from './ProfileCollectionPages.style';
+import {
+  useGetSelectionsQuery
+} from "../../../redux/music/serviceQuery";
+import { ContentTitle } from "../../../components/Main Center Block/ContentTitle/ContentTitle";
+import { ActiveArrayTrackList } from "../../../components/ActiveArrayTrackList/ActiveArrayTrackList";
+
 
 export const ProfileCollectionPages = () => {
 
   const params = useParams();
-  const collection = ArrayCollectionPages.find((collection) => collection.id === Number(params.id))
-  console.log(params);
-  console.log(ArrayCollectionPages);
+
+  const { data } = useGetSelectionsQuery(Number(params.id))
+
   return (
-    <S.CollectionPage>{collection.namePage}</S.CollectionPage>
+    <>
+      <S.CenterblockH2>{data?.name}</S.CenterblockH2>
+      <ContentTitle />
+      <S.ContentPlaylist>
+        <ActiveArrayTrackList
+          data={data?.items}
+        />
+      </S.ContentPlaylist>
+    </>
   );
 }
