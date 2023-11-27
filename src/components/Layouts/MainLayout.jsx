@@ -1,14 +1,13 @@
 import { Outlet } from "react-router-dom"
-import { selectCurrentTrack } from '../../redux/music/playerBarSlice';
 import { useSelector } from 'react-redux';
+import { selectCurrentTrack } from '../../redux/music/serviceQuery';
 import GlobalStyle from "../../App.CreateGlobalStyle";
-import MainNavMenu from "../../components/Main Nav Menu/MainNavMenu";
-import Footer from "../../components/Footer/Footer";
-import Bar from '../../components/Bar/Bar';
+import MainNavMenu from "../Main Nav Menu/MainNavMenu";
+import Footer from "../Footer/Footer";
+import Bar from '../Bar/Bar';
 import CenterBlockSearch from '../Main Center Block/Center Block Search/CenterBlockSearch';
-import MainSidebar from '../../components/Main Sidebar/MainSidebar';
+import MainSidebar from '../Main Sidebar/MainSidebar';
 import * as S from './MainLayout.style';
-
 
 const MainLayout = () => {
 
@@ -26,7 +25,7 @@ const MainLayout = () => {
             </S.MainCenterblock>
             <MainSidebar />
           </S.Main>
-          
+
           {CurrentTrack && (<Bar />)}
           <Footer />
         </S.Container>

@@ -1,4 +1,4 @@
-import { styled, keyframes, css } from "styled-components";
+import { styled } from 'styled-components'
 
 export const CenterBlockContent = styled.div`
   display: -webkit-box;
@@ -23,12 +23,6 @@ export const ContentPlaylist = styled.div`
   &::-webkit-scrollbar {
     width: 0px;
   }
-`
-
-export const SpanErrorBlock = styled.span`
-  font-family: 'StratosSkyeng';
-  font-size: 30px;
-  color: red;
 `
 
 export const PlayListItem = styled.div`
@@ -206,37 +200,3 @@ export const TrackTimeTextSpan = styled.span`
   text-align: right;
   color: #696969;
 `
-
-export const animation = keyframes`{
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0.2;
-  }
-}`;
-
-const animationPointPulse = () => css`
-  animation: pulse 0.6s ease-in-out infinite both;
-
-  @keyframes pulse {
-    0%,
-    to {
-      transform: scale(0.5);
-    }
-    50% {
-      transform: scale(1);
-    }
-  }
-`;
-  export const PointPlaying = styled.div`
-  position: relative; 
-  text-align: center;
-  padding: 8px;
-  width: 16px;
-  height: 16px;
-  background-color: #b672ff;
-  border-radius: 50%;
-  ${(props) => (props.$playing ? animationPointPulse : "")};
-`;

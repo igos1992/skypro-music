@@ -9,7 +9,7 @@ function SidebarPersonal() {
   return (
     <S.SidebarPersonal>
       <S.SidebarPersonalName>
-        {userData}
+        {userData.username}
       </S.SidebarPersonalName>
       <S.SidebarIcon
         onClick={changingUserInformation}

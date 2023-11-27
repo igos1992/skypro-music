@@ -4,7 +4,7 @@ import { createContext } from "react";
 export const UserContext = createContext({
   userData: '',
   changingUserData: () => { },
-  changingUserInformation: () => { }
+  changingUserInformation: () => { },
 })
 
 export const useUserLoginLogout = () => {

@@ -1,8 +1,6 @@
 import { useUserLoginLogout } from '../../../Usercontext/Usercontext';
 import * as S from './NavMenu.style';
 
-
-
 function NavMenu() {
 
   const { changingUserInformation } = useUserLoginLogout();

@@ -12,7 +12,7 @@ Redux. Асинхронность
 
 ## Фактически затраченное время
 
-?
+54 часа
 
 # Getting Started with Create React App
 
