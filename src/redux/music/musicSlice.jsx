@@ -7,7 +7,12 @@ const initialState = {
   shuffleAllTracks: [],
   pulsatingPoint: false,
   favoriteArrayTrack: [],
-  collectionId: []
+  collectionId: [],
+  trackInfo: null,
+  searchByTrackTitle: '',
+  filterAuthors: [],
+  filterGenres: [],
+  filterSort: { sort: '' },
 };
 
 const getShuffleAllTracks = (array) => {
@@ -30,6 +35,11 @@ const playerBarSlice = createSlice({
       state.favoriteArrayTrack = action.payload;
     },
 
+    // категории (массив той категории, уоторый выбрал)
+    setCollectionId: (state, action) => {
+      state.collectionId = action.payload;
+    },
+
     // текущая дорожка
     setCurrentTrack: (state, action) => {
       state.currentTrack = action.payload;
@@ -37,7 +47,7 @@ const playerBarSlice = createSlice({
 
     // переключение трека в случайном порядке
     setToggleShuffleTrack: (state) => {
-      state.shuffleAllTracks = getShuffleAllTracks(state.allTracks || state.favoriteArrayTrack)
+      state.shuffleAllTracks = getShuffleAllTracks(state.allTracks || state.favoriteArrayTrack || state.collectionId)
     },
 
     // Активная / не активная иконка shuffle
@@ -49,9 +59,81 @@ const playerBarSlice = createSlice({
     setPulsatingPoint: (state, action) => {
       state.pulsatingPoint = action.payload;
     },
-    setCollectionId: (state, action) => {
-      state.collectionId = action.payload;
-    }
+
+    // Инфо по играющему треку
+    setTrackInfo: (state, action) => {
+      state.trackInfo = action.payload;
+    },
+
+    // поиск по названию трека
+    setSearchByTrackTitle: (state, action) => {
+      state.searchByTrackTitle = action.payload;
+    },
+
+    // // фильтр по исполнителю
+    // setFilterAuthors: (state, action) => {
+    //   state.filterAuthors = action.payload;
+    // },
+
+    // // фильтр по жанру
+    // setFilterGenres: (state, action) => {
+    //   state.filterGenres = action.payload;
+    // },
+
+    // // фильтр сортировки
+    // setFilterSort: (state, action) => {
+    //   state.filterSort = action.payload;
+    // },
+
+    // // Активный фильтр
+    // setDeterminingTheActiveFilter: (state, action) => {
+    //   state.determiningTheActiveFilter = action.payload
+    // }
+
+    // // Активный фильтр
+    // setDeterminingTheActiveFilter: (state, action) => {
+    //   state.determiningTheActiveFilter = action.payload
+    // },
+
+    
+    // // фильтр сортировки
+    // setFilterSort: (state, action) => {
+    //   state.filterSort.sort = action.payload;
+    // },
+
+
+    // сортировка по датам
+    setFilterSort: (state, action) => {
+      state.filterSort.sort = action.payload
+    },
+
+
+    // фильтр по добавлению исполнителю
+    setFilterAuthors: (state, action) => {
+      state.filterAuthors.push(action.payload);
+    },
+
+    // фильтр по удалению исполнителя
+    setDeleteFilterAuthors: (state, action) => ({
+      ...state,
+      filterAuthors: state.filterAuthors.filter(
+        (author) => author !== action.payload,
+      ),
+    }),
+
+
+    // фильтр по добавлению жанра
+    setFilterGenres: (state, action) => {
+      state.filterGenres.push(action.payload);
+    },
+
+    // фильтр по удалению жанра
+    setDeleteFilterGenres: (state, action) => ({
+      ...state,
+      filterGenres: state.filterGenres.filter(
+        (genre) => genre !== action.payload,)
+    }),
+
   }
 })
 
@@ -62,15 +144,33 @@ export const {
   setToggleShuffleTrack,
   setPulsatingPoint,
   setShuffle,
-  setCollectionId
+  setCollectionId,
+  setTrackInfo,
+  setSearchByTrackTitle,
+  setSortTrackFilter,
+  setFilterAuthors,
+  setDeleteFilterAuthors,
+  setFilterGenres,
+  setDeleteFilterGenres,
+  setFilterSort,
+  
 } = playerBarSlice.actions;
 
-export const selectAllTracks = (store) => store.track.allTracks;
-export const selectAllTracksFavorites = (store) => store.track.favoriteArrayTrack;
-export const selectCurrentTrack = (store) => store.track.currentTrack;
-export const selectToggleShuffleTrack = (store) => store.track.shuffleAllTracks;
-export const selectShuffle = (store) => store.track.shuffle;
-export const selectPulsatingPoint = (store) => store.track.pulsatingPoint;
-export const selectCollectionId = (store) => store.track.collectionId;
+export const selectAllTracks = (state) => state.track.allTracks;
+export const selectAllTracksFavorites = (state) => state.track.favoriteArrayTrack;
+export const selectCurrentTrack = (state) => state.track.currentTrack;
+export const selectToggleShuffleTrack = (state) => state.track.shuffleAllTracks;
+export const selectShuffle = (state) => state.track.shuffle;
+export const selectPulsatingPoint = (state) => state.track.pulsatingPoint;
+export const selectCollectionId = (state) => state.track.collectionId;
+export const selectTrackInfo = (state) => state.track.trackInfo;
+export const selectSearchByTrackTitle = (state) => state.track.searchByTrackTitle;
+export const selectFilterAuthors = (state) => state.track.filterAuthors;
+export const selectFilterSort = (state) => state.track.filterSort;
+export const selectDeleteFilterAuthors = (state) => state.track.deleteFilterAuthors;
+export const selectFilterGenres = (state) => state.track.filterGenres;
+export const selectDeleteFilterGenres = (state) => state.track.deleteFilterGenres;
+
+
 
 export default playerBarSlice.reducer

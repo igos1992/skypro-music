@@ -32,7 +32,6 @@ function Bar() {
     }
     return `${min}:${sec}`;
   }
-
   const CurrentTrack = useSelector(selectCurrentTrack)
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoop, setIsLoop] = useState(false);
@@ -45,7 +44,9 @@ function Bar() {
   const favoritesTracks = useSelector(selectAllTracksFavorites)
   const collectionId = useSelector(selectCollectionId)
   const [activeArrayTrack, setActiveArrayTrack] = useState([])
-  console.log(collectionId);
+  // console.log(allTracks);
+  // console.log(favoritesTracks);
+  // console.log(collectionId);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -57,20 +58,25 @@ function Bar() {
     if (location.pathname === "/FavoritesPage") {
       // console.log(favoritesTracks);
       dispatch(setAllTracksFavorites(favoritesTracks));
-      console.log(dispatch(setAllTracksFavorites(favoritesTracks)));
+      // console.log(dispatch(setAllTracksFavorites(favoritesTracks)));
       dispatch(setToggleShuffleTrack(favoritesTracks))
-      console.log(dispatch(setToggleShuffleTrack(favoritesTracks)));
+      // console.log(dispatch(setToggleShuffleTrack(favoritesTracks)));
       setActiveArrayTrack(favoritesTracks)
-      console.log(setActiveArrayTrack(favoritesTracks));
+      // console.log(setActiveArrayTrack(favoritesTracks));
     }
-    if (location.pathname === `/ProfileCollectionPages/${collectionId}`) {
+
+    if (
+      location.pathname === `/ProfileCollectionPages/1` ||
+      location.pathname === `/ProfileCollectionPages/2` ||
+      location.pathname === `/ProfileCollectionPages/3`
+    ) {
       dispatch(setCollectionId(collectionId))
-      console.log(dispatch(setCollectionId(collectionId)));
+      // console.log(dispatch(setCollectionId(collectionId)));
       dispatch(setToggleShuffleTrack(collectionId))
-      console.log(dispatch(setToggleShuffleTrack(collectionId)));
+      // console.log(dispatch(setToggleShuffleTrack(collectionId)));
       setActiveArrayTrack(collectionId);
     }
-  }, [activeArrayTrack, favoritesTracks, allTracks])
+  }, [activeArrayTrack, favoritesTracks, allTracks, collectionId])
 
   const toggleShuffleTrack = useSelector(selectToggleShuffleTrack) // Перемешанный массив
   const shuffle = useSelector(selectShuffle); // active / not active shuffle
@@ -122,18 +128,18 @@ function Bar() {
     handleStart();
 
     if (!currentTime) {
-      audioRef.current.addEventListener("timeupdate", () => {
-        setCurrentTime(Math.floor(audioRef.current.currentTime));
+      audioRef.current?.addEventListener("timeupdate", () => {
+        setCurrentTime(Math.floor(audioRef.current?.currentTime));
       });
-      audioRef.current.addEventListener("loadedmetadata", () => {
-        setTrackTime(Math.floor(audioRef.current.duration));
+      audioRef.current?.addEventListener("loadedmetadata", () => {
+        setTrackTime(Math.floor(audioRef.current?.duration));
       });
       return () => {
-        audioRef.current.removeEventListener("timeupdate", () => {
-          setCurrentTime(Math.floor(audioRef.current.currentTime));
+        audioRef.current?.removeEventListener("timeupdate", () => {
+          setCurrentTime(Math.floor(audioRef.current?.currentTime));
         });
-        audioRef.current.removeEventListener("loadedmetadata", () => {
-          setTrackTime(Math.floor(audioRef.current.duration));
+        audioRef.current?.removeEventListener("loadedmetadata", () => {
+          setTrackTime(Math.floor(audioRef.current?.duration));
         });
       };
     }
@@ -187,7 +193,7 @@ function Bar() {
                 <S.TrackPlayContain>
                   <S.TrackPlayImage>
                     <S.TrackPlaySvg alt="music">
-                      <use xlinkHref="img/icon/sprite.svg#icon-note" />
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note" />
                     </S.TrackPlaySvg>
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor onClick={togglePlay}>

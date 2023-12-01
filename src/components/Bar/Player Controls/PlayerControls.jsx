@@ -26,7 +26,7 @@ function PlayerControls({
     <S.PlayerControls>
       <S.PlayerBtnPrev onClick={() => handlePrevTrack()}>
         <S.PlayerBtnPrevSvg alt="prev" >
-          <use xlinkHref="img/icon/sprite.svg#icon-prev" />
+          <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
         </S.PlayerBtnPrevSvg>
       </S.PlayerBtnPrev>
 
@@ -44,7 +44,7 @@ function PlayerControls({
 
       <S.PlayerBtnNext onClick={() => handleNextTrack()}>
         <S.PlayerBtnNextSvg alt="next">
-          <use xlinkHref="img/icon/sprite.svg#icon-next" />
+          <use xlinkHref="/img/icon/sprite.svg#icon-next" />
         </S.PlayerBtnNextSvg>
       </S.PlayerBtnNext>
 

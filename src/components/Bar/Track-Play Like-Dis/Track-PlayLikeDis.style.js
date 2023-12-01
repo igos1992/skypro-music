@@ -15,7 +15,7 @@ margin-left: 26%;
 `;
 
 export const TrackPlayLike = styled.div`
-padding: 5px;
+padding: 25px;
 &:hover svg {
   fill: transparent;
   stroke: #acacac;

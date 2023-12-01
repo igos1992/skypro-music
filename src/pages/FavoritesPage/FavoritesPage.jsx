@@ -23,11 +23,9 @@ export const FavoritesPage = () => {
                 Не удалось загрузить плейлист, попробуйте позже: {error?.error}
               </S.SpanErrorBlock>}
             <>
-
               {data.length === 0 && location.pathname === "/FavoritesPage" ?
                 <S.SpanNotTracksFavorite>В этом плейлисте пока нет Ваших любимых треков</S.SpanNotTracksFavorite>
                 :
-
                 <ActiveArrayTrackList
                   data={data}
                   isLoading={isLoading}

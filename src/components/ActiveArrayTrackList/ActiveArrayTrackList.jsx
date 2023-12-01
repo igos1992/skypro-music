@@ -1,70 +1,116 @@
 import { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector
+} from 'react-redux';
 import { UserContext } from '../../Usercontext/Usercontext';
+
 import {
   useAddFavoriteTrackIDMutation,
   useDeleteFavoriteTrackIDMutation,
-  useGetAllMusicQuery,
-  useGetFavoriteTracksAllQuery,
-  useGetSelectionsQuery,
 } from '../../redux/music/serviceQuery';
 import {
   selectCurrentTrack,
+  // selectDeterminingTheActiveFilter,
+  selectFilterAuthors,
+  selectFilterGenres,
+  selectFilterSort,
   selectPulsatingPoint,
-  setAllTracks,
-  setAllTracksFavorites,
-  setCollectionId,
-  setCurrentTrack,
+  selectSearchByTrackTitle,
+  setSortTrackFilter,
+
 } from '../../redux/music/musicSlice';
 import * as S from './ActiveArrayTrackList.style';
-import { useParams } from 'react-router-dom';
+import { ItemTrack } from './ItemTrack/ItemTrack';
+
 
 export function ActiveArrayTrackList({ data }) {
 
-  const dispatch = useDispatch();
-  const params = useParams();
-  const { data: arrayAllTracks } = useGetAllMusicQuery()
-  const { data: arrayFavoriteTracks } = useGetFavoriteTracksAllQuery()
-  const { data: arrayCollectionPages } = useGetSelectionsQuery(Number(params.id))
-  console.log(arrayCollectionPages?.items);
 
-  const handleCurrentTrack = (music) => {
-    if (location.pathname === "/") {
-      // console.log(arrayAllTracks);
-      dispatch(setAllTracks(arrayAllTracks));
-      dispatch(setAllTracksFavorites());
-      dispatch(setCollectionId())
+  const searchByTrackTitleText = useSelector(selectSearchByTrackTitle)
+  // const filterGenreAll = useSelector(selectFilterGenres)
+  // const filterAuthor = useSelector(selectFilterAuthors)
+  // const determiningTheActiveFilter = useSelector(selectDeterminingTheActiveFilter)
+  // console.log(determiningTheActiveFilter);
+
+  // const searchLetter = (data).filter((music) => {
+  //   if (searchByTrackTitleText) {
+  //      const matchesTitle = music.name.toLowerCase().includes(searchByTrackTitleText.toLowerCase())
+  //   // console.log(music);
+  //   // console.log({ name: music.name, matchesTitle });
+  //   return matchesTitle
+  //   }
+  //   if (determiningTheActiveFilter === "genre") {
+  //     const sortFilterGenre = music.genre.includes(filterGenreAll)
+  //     // console.log({ name: music.genre, sortFilterGenre });
+
+  //     return sortFilterGenre
+  //   }
+  //   if (determiningTheActiveFilter === "author") {
+  //     const sortFilterAuthor = music.author.includes(filterAuthor)
+  //     // console.log({ name: music.author, sortFilterAuthor });
+  //     return sortFilterAuthor
+  //   }
+  //   return data
+  // })
+
+  const authorTrackFilter = useSelector(selectFilterAuthors)
+  const genreTrackFilter = useSelector(selectFilterGenres)
+
+
+  const searchLetter = (data).filter((music) => {
+    const matchesTitle = music.name.toLowerCase().includes(searchByTrackTitleText.toLowerCase())
+    // console.log(music);
+    // console.log({ name: music.name, matchesTitle });
+    const sortFilterAuthor = !authorTrackFilter.length
+      ? music
+      : music.author.includes(
+        authorTrackFilter.find((author) => author === music.author)
+      )
+    // console.log({ name: music.genre, sortFilterGenre });
+    const sortFilterGenre = !genreTrackFilter.length
+      ? music
+      : music.genre.includes(
+        genreTrackFilter.find((genre) => genre === music.genre)
+      )
+    // console.log({ name: music.author, sortFilterAuthor });
+    return matchesTitle && sortFilterGenre && sortFilterAuthor
+  });
+
+  const sortTrackFilter = useSelector(selectFilterSort)
+  console.log(sortTrackFilter);
+
+  const filteredAndSortTracks = () => {
+    if (sortTrackFilter === "Сначала новые") {
+      return searchLetter
+        .sort((a, b) => parseFloat(a.release_date) - parseFloat(b.release_date))
+        .reverse()
     }
-    if (location.pathname === "/FavoritesPage") {
-      // console.log(arrayFavoriteTracks);
-      dispatch(setAllTracksFavorites(arrayFavoriteTracks));
-      dispatch(setAllTracks());
-      dispatch(setCollectionId())
+    if (sortTrackFilter === "Сначала старые") {
+      return searchLetter
+        .sort((a, b) => parseFloat(a.release_date) - parseFloat(b.release_date))
+        .reverse()
     }
-    if (location.pathname === `/ProfileCollectionPages/${arrayCollectionPages?.id}`) {
-      dispatch(setCollectionId(arrayCollectionPages?.items))
-      dispatch(setAllTracks());
-      dispatch(setAllTracksFavorites());
+    if (sortTrackFilter === "По умолчанию" || !setSortTrackFilter) {
+      return searchLetter
     }
-    dispatch(setCurrentTrack(music))
   }
 
+
+
   const { userData } = useContext(UserContext)
-  // console.log(userData);
   const CurrentTrack = useSelector(selectCurrentTrack);
   const pulsatingPoint = useSelector(selectPulsatingPoint);
   const [addFavoriteTrackID] = useAddFavoriteTrackIDMutation()
   const [deleteFavoriteTrackID] = useDeleteFavoriteTrackIDMutation()
 
   const toggleLikedTrack = ({ music }) => {
-    // console.log(music?.stared_user?.find((user) => user.id === userData.id));
     if (location.pathname === "/FavoritesPage" || music?.stared_user?.find((user) => user.id === userData.id)) {
       deleteFavoriteTrackID(music.id)
     } else if (
-      location.pathname === `/ProfileCollectionPages/${data?.id}`
-      ||
-      location.pathname === "/"
-      ||
+      location.pathname === `/ProfileCollectionPages/1` ||
+      location.pathname === `/ProfileCollectionPages/2` ||
+      location.pathname === `/ProfileCollectionPages/3` ||
+      location.pathname === "/" ||
       music?.stared_user?.find((user) => user.id === userData.id)) {
       addFavoriteTrackID(music.id)
     }
@@ -82,64 +128,64 @@ export function ActiveArrayTrackList({ data }) {
   return (
     <>
       {
-        <>
-          {data && data.map((music) => (
-            <S.PlayListItem key={music.id} >
-              <S.PlayListTrack>
-                <S.TrackTitle>
+        filteredAndSortTracks()?.map((music) => (
+          <S.PlayListItem key={music.id} >
+            <S.PlayListTrack>
+              <S.TrackTitle>
 
-                  <S.TrackTitleImage >
-                    {CurrentTrack && CurrentTrack.id === music.id ? (
-                      <S.PointPlaying $playing={pulsatingPoint} />
-                    ) : (
-                      <S.TrackTitleSvg alt="music">
-                        <use xlinkHref="img/icon/sprite.svg#icon-note" />
-                      </S.TrackTitleSvg>
-                    )
-                    }
-                  </S.TrackTitleImage>
+                <S.TrackTitleImage >
+                  {CurrentTrack && CurrentTrack.id === music.id ? (
+                    <S.PointPlaying $playing={pulsatingPoint} />
+                  ) : (
+                    <S.TrackTitleSvg alt="music">
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note" />
+                    </S.TrackTitleSvg>
+                  )
+                  }
+                </S.TrackTitleImage>
 
-                  <S.TrackTitleText>
-                    <S.TrackTitleLink onClick={() => handleCurrentTrack(music)} >
-                      {music.name}
-                      <S.TrackTitleSpan>{music.addition}</S.TrackTitleSpan>
-                    </S.TrackTitleLink>
-                  </S.TrackTitleText>
+                <ItemTrack
+                  music={music}
+                  data={data}
+                />
 
-                </S.TrackTitle>
+              </S.TrackTitle>
 
-                <S.TrackAuthor>
-                  <S.TrackAuthorLink href="http://">
-                    {music.author}
-                  </S.TrackAuthorLink>
-                </S.TrackAuthor>
+              <S.TrackAuthor>
+                <S.TrackAuthorLink href="http://">
+                  {music.author}
+                </S.TrackAuthorLink>
+              </S.TrackAuthor>
 
+              <S.TrackAlbum>
+                <S.TrackAlbumLink href="http://">
+                  {music.album}
+                </S.TrackAlbumLink>
+              </S.TrackAlbum>
 
-                <S.TrackAlbum>
-                  <S.TrackAlbumLink href="http://">
-                    {music.album}
-                  </S.TrackAlbumLink>
-                </S.TrackAlbum>
+              <S.TrackTime >
+                <S.TrackTimeSvg alt="time" onClick={() => toggleLikedTrack({ music })}>
+                  {location.pathname === "/FavoritesPage" ||
+                    music?.stared_user?.find((user) => user.id === userData.id) ? (
+                    <use xlinkHref="/img/icon/sprite.svg#icon-like-active" />
+                  ) : (
+                    <use xlinkHref="/img/icon/sprite.svg#icon-like" />
+                  )
+                  }
 
-                <S.TrackTime >
-                  <S.TrackTimeSvg alt="time" onClick={() => toggleLikedTrack({ music })}>
-                    {location.pathname === "/FavoritesPage" ||
-                      music?.stared_user?.find((user) => user.id === userData.id) ? (
-                      <use xlinkHref="/img/icon/sprite.svg#icon-like-active" />
-                    ) : (
-                      <use xlinkHref="/img/icon/sprite.svg#icon-like" />
-                    )
-                    }
+                </S.TrackTimeSvg>
+                <S.TrackTimeTextSpan>{convertTime(music.duration_in_seconds)}</S.TrackTimeTextSpan>
 
-                  </S.TrackTimeSvg>
-                  <S.TrackTimeTextSpan>{convertTime(music.duration_in_seconds)}</S.TrackTimeTextSpan>
-
-                </S.TrackTime>
-              </S.PlayListTrack>
-            </S.PlayListItem>
-          ))}
-        </>
+              </S.TrackTime>
+            </S.PlayListTrack>
+          </S.PlayListItem>
+        ))
       }
     </>
+
+
+
+
+
   )
 }
