@@ -99,9 +99,21 @@ export const FilterMenu = styled.div`
   overflow-y: hidden;
 `
 
+export const FilterMenuGenre = styled.div`
+position: absolute;
+top: 50px;
+width: 248px;
+height: 240px;
+box-sizing: border-box;
+background-color: #313131;
+border-radius: 12px;
+padding: 34px;
+overflow-y: hidden;
+`
+
 export const FilterMenuYear = styled(FilterMenu)`
   width: 248px;
-  height: 305px;
+  height: 200px;
 `
 
 export const FilterList = styled.ul`
@@ -135,6 +147,7 @@ export const FilterList = styled.ul`
 
 export const TextDecoration = styled.a`
   color: #fff;
+  color: ${(props) => (props.$isSelected ? "#b672ff" : "#fff")};
   &:active {
     color: #ad61ff;
     text-decoration: underline;

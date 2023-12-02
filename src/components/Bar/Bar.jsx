@@ -44,36 +44,25 @@ function Bar() {
   const favoritesTracks = useSelector(selectAllTracksFavorites)
   const collectionId = useSelector(selectCollectionId)
   const [activeArrayTrack, setActiveArrayTrack] = useState([])
-  // console.log(allTracks);
-  // console.log(favoritesTracks);
-  // console.log(collectionId);
 
   useEffect(() => {
     if (location.pathname === "/") {
-      // console.log(allTracks);
       dispatch(setAllTracks(allTracks))
       dispatch(setToggleShuffleTrack(allTracks))
       setActiveArrayTrack(allTracks);
     }
     if (location.pathname === "/FavoritesPage") {
-      // console.log(favoritesTracks);
       dispatch(setAllTracksFavorites(favoritesTracks));
-      // console.log(dispatch(setAllTracksFavorites(favoritesTracks)));
       dispatch(setToggleShuffleTrack(favoritesTracks))
-      // console.log(dispatch(setToggleShuffleTrack(favoritesTracks)));
       setActiveArrayTrack(favoritesTracks)
-      // console.log(setActiveArrayTrack(favoritesTracks));
     }
-
     if (
       location.pathname === `/ProfileCollectionPages/1` ||
       location.pathname === `/ProfileCollectionPages/2` ||
       location.pathname === `/ProfileCollectionPages/3`
     ) {
       dispatch(setCollectionId(collectionId))
-      // console.log(dispatch(setCollectionId(collectionId)));
       dispatch(setToggleShuffleTrack(collectionId))
-      // console.log(dispatch(setToggleShuffleTrack(collectionId)));
       setActiveArrayTrack(collectionId);
     }
   }, [activeArrayTrack, favoritesTracks, allTracks, collectionId])
@@ -99,7 +88,7 @@ function Bar() {
   const handleNextTrack = () => {
     if (!shuffle) {
       nextTrack(activeArrayTrack)
-    } else {
+    } else if (indexShuffle < activeArrayTrack.length - 1) {
       dispatch(setCurrentTrack(toggleShuffleTrack[++indexShuffle]))
     }
   }
@@ -107,19 +96,19 @@ function Bar() {
   const handlePrevTrack = () => {
     if (!shuffle) {
       prevTrack(activeArrayTrack)
-    } else {
+    } else if (indexShuffle > 0) {
       dispatch(setCurrentTrack(toggleShuffleTrack[indexShuffle - 1]))
     }
   }
 
   const handleStart = () => {
-    audioRef.current.play();
+    audioRef.current?.play();
     setIsPlaying(true);
     dispatch(setPulsatingPoint(true))
   };
 
   const handleStop = () => {
-    audioRef.current.pause();
+    audioRef.current?.pause();
     setIsPlaying(false);
     dispatch(setPulsatingPoint(false))
   };
@@ -176,7 +165,6 @@ function Bar() {
             }}
             $color="#b672ff"
           />
-
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <PlayerControls

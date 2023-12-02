@@ -12,7 +12,8 @@ const initialState = {
   searchByTrackTitle: '',
   filterAuthors: [],
   filterGenres: [],
-  filterSort: { sort: '' },
+  filterSort: { sort: 'По умолчанию' },
+  activeLinkOnFilters: false
 };
 
 const getShuffleAllTracks = (array) => {
@@ -35,7 +36,7 @@ const playerBarSlice = createSlice({
       state.favoriteArrayTrack = action.payload;
     },
 
-    // категории (массив той категории, уоторый выбрал)
+    // категории (массив той категории, который выбрал)
     setCollectionId: (state, action) => {
       state.collectionId = action.payload;
     },
@@ -70,43 +71,10 @@ const playerBarSlice = createSlice({
       state.searchByTrackTitle = action.payload;
     },
 
-    // // фильтр по исполнителю
-    // setFilterAuthors: (state, action) => {
-    //   state.filterAuthors = action.payload;
-    // },
-
-    // // фильтр по жанру
-    // setFilterGenres: (state, action) => {
-    //   state.filterGenres = action.payload;
-    // },
-
-    // // фильтр сортировки
-    // setFilterSort: (state, action) => {
-    //   state.filterSort = action.payload;
-    // },
-
-    // // Активный фильтр
-    // setDeterminingTheActiveFilter: (state, action) => {
-    //   state.determiningTheActiveFilter = action.payload
-    // }
-
-    // // Активный фильтр
-    // setDeterminingTheActiveFilter: (state, action) => {
-    //   state.determiningTheActiveFilter = action.payload
-    // },
-
-    
-    // // фильтр сортировки
-    // setFilterSort: (state, action) => {
-    //   state.filterSort.sort = action.payload;
-    // },
-
-
     // сортировка по датам
     setFilterSort: (state, action) => {
       state.filterSort.sort = action.payload
     },
-
 
     // фильтр по добавлению исполнителю
     setFilterAuthors: (state, action) => {
@@ -121,7 +89,6 @@ const playerBarSlice = createSlice({
       ),
     }),
 
-
     // фильтр по добавлению жанра
     setFilterGenres: (state, action) => {
       state.filterGenres.push(action.payload);
@@ -134,6 +101,10 @@ const playerBarSlice = createSlice({
         (genre) => genre !== action.payload,)
     }),
 
+    // активная / не активная ссылка на фильтре при выборе
+    setActiveLinkOnFilters: (state, action) => {
+      state.activeLinkOnFilters = action.payload
+    }
   }
 })
 
@@ -153,7 +124,7 @@ export const {
   setFilterGenres,
   setDeleteFilterGenres,
   setFilterSort,
-  
+  setActiveLinkOnFilters,
 } = playerBarSlice.actions;
 
 export const selectAllTracks = (state) => state.track.allTracks;
@@ -170,7 +141,7 @@ export const selectFilterSort = (state) => state.track.filterSort;
 export const selectDeleteFilterAuthors = (state) => state.track.deleteFilterAuthors;
 export const selectFilterGenres = (state) => state.track.filterGenres;
 export const selectDeleteFilterGenres = (state) => state.track.deleteFilterGenres;
-
+export const selectActiveLinkOnFilters = (state) => state.track.activeLinkOnFilters;
 
 
 export default playerBarSlice.reducer

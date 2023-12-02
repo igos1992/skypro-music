@@ -1,5 +1,5 @@
-import * as S from './skeleton.style';
 import ArrayMusic from './ArrayMusic';
+import * as S from './skeleton.style';
 
 function Skeleton({ loading }) {
   return (

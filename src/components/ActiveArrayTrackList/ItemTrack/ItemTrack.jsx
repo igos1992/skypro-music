@@ -11,18 +11,14 @@ import * as S from './ItemTrack.style'
 export function ItemTrack({ music, data }) {
 
   const dispatch = useDispatch();
-
   const handleCurrentTrack = (music) => {
     if (location.pathname === "/") {
-      // console.log(arrayAllTracks);
       dispatch(setAllTracks(data));
       dispatch(setAllTracksFavorites());
       dispatch(setCollectionId())
     }
     if (location.pathname === "/FavoritesPage") {
-      // console.log(arrayFavoriteTracks);
       dispatch(setAllTracksFavorites(data));
-      // console.log(dispatch(setAllTracksFavorites(arrayFavoriteTracks)));
       dispatch(setAllTracks());
       dispatch(setCollectionId())
     }
@@ -32,7 +28,6 @@ export function ItemTrack({ music, data }) {
       location.pathname === `/ProfileCollectionPages/3`
     ) {
       dispatch(setCollectionId(data))
-      // console.log(dispatch(setCollectionId(arrayCollectionPages?.items)));
       dispatch(setAllTracks());
       dispatch(setAllTracksFavorites());
     }

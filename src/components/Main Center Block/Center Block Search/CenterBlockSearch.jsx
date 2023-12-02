@@ -5,9 +5,7 @@ import * as S from './CenterBlockSearch.style';
 function CenterBlockSearch() {
 
   const dispatch = useDispatch()
-
   const searchByTrackTitle = useSelector(selectSearchByTrackTitle)
-
   const handleSearchByTrackName = (e) => {
     dispatch(setSearchByTrackTitle(e.target.value))
   }

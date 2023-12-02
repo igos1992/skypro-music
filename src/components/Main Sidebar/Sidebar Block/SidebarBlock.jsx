@@ -13,23 +13,21 @@ function SidebarBlock({ collections }) {
 
   return (
     <>
-        {collections.map((collection) => (
-          <S.Item key={collection.id}>
+      {collections.map((collection) => (
+        <S.Item key={collection.id}>
           {
-            loading?(
-        <S.SkeletonSidebarItem />
-      ) : (
-        <S.SidebarItem>
-
-          <S.SidebarLink to={`/ProfileCollectionPages/${collection.id}`} >
-            <S.SidebarImg
-              src={collection.img}
-              alt="day's playlist"
-            />
-          </S.SidebarLink>
-
-        </S.SidebarItem>
-      )}
+            loading ? (
+              <S.SkeletonSidebarItem />
+            ) : (
+              <S.SidebarItem>
+                <S.SidebarLink to={`/ProfileCollectionPages/${collection.id}`} >
+                  <S.SidebarImg
+                    src={collection.img}
+                    alt="day's playlist"
+                  />
+                </S.SidebarLink>
+              </S.SidebarItem>
+            )}
         </S.Item>
       ))}
     </>

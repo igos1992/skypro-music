@@ -11,8 +11,6 @@ function getAuthFromLocalStorage() {
   }
 }
 
-// console.log(JSON.parse(localStorage.getItem(AUTH_INFO)));
-
 const initialState = {
   id: 0,
   email: "",

@@ -12,6 +12,7 @@ import * as S from './MainLayout.style';
 const MainLayout = () => {
 
   const CurrentTrack = useSelector(selectCurrentTrack)
+
   return <>
     <GlobalStyle />
     <S.App>
@@ -25,7 +26,6 @@ const MainLayout = () => {
             </S.MainCenterblock>
             <MainSidebar />
           </S.Main>
-
           {CurrentTrack && (<Bar />)}
           <Footer />
         </S.Container>

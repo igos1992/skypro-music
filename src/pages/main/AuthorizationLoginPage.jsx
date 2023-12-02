@@ -34,7 +34,6 @@ export function AuthorizationLoginPage() {
     await getToken({ email, password })
       .unwrap()
       .then((token) => {
-        // console.log("token", token);
         dispatch(
           setAuth({
             access: token.access,
@@ -52,12 +51,10 @@ export function AuthorizationLoginPage() {
       password: password
     })
       .then((response) => {
-        // console.log(response);
         localStorage.setItem('user', JSON.stringify(response));
         changingUserData(JSON.parse(localStorage.getItem('user')))
         navigate('/');
       }).catch((error) => {
-        // console.log(error)
         setError(error.message);
       }).finally(() => {
         setOffButton(false)
@@ -91,7 +88,6 @@ export function AuthorizationLoginPage() {
               <S.FillInTheField>
                 {errors.login && <p>{errors.login.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               <S.ModalInput
                 type="password"
                 placeholder="Пароль"
@@ -107,13 +103,10 @@ export function AuthorizationLoginPage() {
               <S.FillInTheField>
                 {errors.password && <p>{errors.password.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               {error && <S.Error>{error}</S.Error>}
-
               <S.ModalInputEnter type="submit" disabled={offButton}>
                 Войти
               </S.ModalInputEnter>
-
               <S.ModalBtnSignup>
                 <S.AModalBtnSignup to="/RegistrationPage" >Зарегистрироваться</S.AModalBtnSignup>
               </S.ModalBtnSignup>
