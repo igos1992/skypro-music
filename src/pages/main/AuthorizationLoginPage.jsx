@@ -42,6 +42,11 @@ export function AuthorizationLoginPage() {
           })
         );
       })
+      .catch((error) => {
+        return error;
+      }).finally(() => {
+        setOffButton(false)
+      });
   };
 
   const onSubmit = () => {
@@ -108,7 +113,7 @@ export function AuthorizationLoginPage() {
                 Войти
               </S.ModalInputEnter>
               <S.ModalBtnSignup>
-                <S.AModalBtnSignup to="/RegistrationPage" >Зарегистрироваться</S.AModalBtnSignup>
+                <S.AModalBtnSignup to="/RegistrationPage">Зарегистрироваться</S.AModalBtnSignup>
               </S.ModalBtnSignup>
             </S.ModalFormLogin>
           </S.ModalBlock>

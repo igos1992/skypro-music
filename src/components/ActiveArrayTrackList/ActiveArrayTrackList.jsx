@@ -8,7 +8,7 @@ import {
 import {
   selectCurrentTrack,
   selectPulsatingPoint,
-} from '../../redux/music/musicSlice';
+} from '../../redux/selectedFile/selectedFile';
 import { ItemTrack } from './ItemTrack/ItemTrack';
 import * as S from './ActiveArrayTrackList.style';
 

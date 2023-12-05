@@ -10,11 +10,11 @@ import {
   selectCollectionId,
   selectCurrentTrack,
   selectTrackInfo
-} from '../../../redux/music/musicSlice';
+} from '../../../redux/selectedFile/selectedFile';
 import { UserContext } from '../../../Usercontext/Usercontext';
-import * as S from './Track-PlayLikeDis.style';
+import * as S from './LikeAndDislikeTrack.style';
 
-function TrackPlayLikeDis() {
+function LikeAndDislikeTrack() {
 
   const { userData } = useContext(UserContext)
   const [addFavoriteTrackID] = useAddFavoriteTrackIDMutation()
@@ -54,4 +54,4 @@ function TrackPlayLikeDis() {
   );
 }
 
-export default TrackPlayLikeDis;
+export default LikeAndDislikeTrack;

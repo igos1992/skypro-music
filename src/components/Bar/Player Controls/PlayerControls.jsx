@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import * as S from './PlayerControls.style';
+import { setShuffle, setToggleShuffleTrack, } from '../../../redux/music/musicSlice';
 import {
   selectShuffle,
-  setToggleShuffleTrack,
   selectToggleShuffleTrack,
-  setShuffle
-} from '../../../redux/music/musicSlice';
+} from '../../../redux/selectedFile/selectedFile'
+import * as S from './PlayerControls.style';
+
 
 function PlayerControls({
   isPlaying,

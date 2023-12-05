@@ -1,6 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useGetAllMusicQuery } from '../../redux/music/serviceQuery';
-import { selectFilterAuthors, selectFilterGenres, selectFilterSort, selectSearchByTrackTitle, setSortTrackFilter } from '../../redux/music/musicSlice';
+import { setSortTrackFilter } from '../../redux/music/musicSlice';
+import {
+  selectFilterAuthors,
+  selectFilterGenres,
+  selectFilterSort,
+  selectSearchByTrackTitle
+} from '../../redux/selectedFile/selectedFile'
 import { ContentTitle } from './ContentTitle/ContentTitle';
 import { ActiveArrayTrackList } from '../ActiveArrayTrackList/ActiveArrayTrackList';
 import Skeleton from '../Array/skeleton';

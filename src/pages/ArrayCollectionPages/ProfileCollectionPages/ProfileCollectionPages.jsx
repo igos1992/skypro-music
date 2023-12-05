@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGetSelectionsQuery } from "../../../redux/music/serviceQuery";
-import { selectSearchByTrackTitle } from "../../../redux/music/musicSlice";
+import { selectSearchByTrackTitle } from "../../../redux/selectedFile/selectedFile";
 import { ContentTitle } from "../../../components/Main Center Block/ContentTitle/ContentTitle";
 import { ActiveArrayTrackList } from "../../../components/ActiveArrayTrackList/ActiveArrayTrackList";
 import Skeleton from "../../../components/Array/skeleton";

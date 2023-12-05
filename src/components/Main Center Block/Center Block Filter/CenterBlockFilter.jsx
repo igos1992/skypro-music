@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetAllMusicQuery } from '../../../redux/music/serviceQuery';
 import {
-  selectActiveLinkOnFilters,
-  selectFilterAuthors,
-  selectFilterGenres,
-  selectFilterSort,
   setDeleteFilterAuthors,
   setDeleteFilterGenres,
   setFilterAuthors,
   setFilterGenres,
   setFilterSort,
 } from '../../../redux/music/musicSlice';
+import {
+  selectActiveLinkOnFilters,
+  selectFilterAuthors,
+  selectFilterGenres,
+  selectFilterSort,
+} from '../../../redux/selectedFile/selectedFile'
 import * as S from './CenterBlockFilter.style';
 
 function CenterBlockFilter() {

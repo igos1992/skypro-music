@@ -3,7 +3,7 @@ import { useGetFavoriteTracksAllQuery } from '../../redux/music/serviceQuery';
 import { ContentTitle } from '../../components/Main Center Block/ContentTitle/ContentTitle';
 import { ActiveArrayTrackList } from '../../components/ActiveArrayTrackList/ActiveArrayTrackList';
 import Skeleton from '../../components/Array/skeleton';
-import { selectSearchByTrackTitle } from '../../redux/music/musicSlice';
+import { selectSearchByTrackTitle } from '../../redux/selectedFile/selectedFile';
 
 import * as S from './FavoritesPage.style';
 

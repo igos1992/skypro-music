@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { useSelector } from 'react-redux';
-import { selectCurrentTrack } from '../../redux/music/musicSlice';
+import { selectCurrentTrack } from '../../redux/selectedFile/selectedFile';
 import GlobalStyle from "../../App.CreateGlobalStyle";
 import MainNavMenu from "../Main Nav Menu/MainNavMenu";
 import Footer from "../Footer/Footer";

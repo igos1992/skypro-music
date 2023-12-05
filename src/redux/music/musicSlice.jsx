@@ -127,21 +127,4 @@ export const {
   setActiveLinkOnFilters,
 } = playerBarSlice.actions;
 
-export const selectAllTracks = (state) => state.track.allTracks;
-export const selectAllTracksFavorites = (state) => state.track.favoriteArrayTrack;
-export const selectCurrentTrack = (state) => state.track.currentTrack;
-export const selectToggleShuffleTrack = (state) => state.track.shuffleAllTracks;
-export const selectShuffle = (state) => state.track.shuffle;
-export const selectPulsatingPoint = (state) => state.track.pulsatingPoint;
-export const selectCollectionId = (state) => state.track.collectionId;
-export const selectTrackInfo = (state) => state.track.trackInfo;
-export const selectSearchByTrackTitle = (state) => state.track.searchByTrackTitle;
-export const selectFilterAuthors = (state) => state.track.filterAuthors;
-export const selectFilterSort = (state) => state.track.filterSort;
-export const selectDeleteFilterAuthors = (state) => state.track.deleteFilterAuthors;
-export const selectFilterGenres = (state) => state.track.filterGenres;
-export const selectDeleteFilterGenres = (state) => state.track.deleteFilterGenres;
-export const selectActiveLinkOnFilters = (state) => state.track.activeLinkOnFilters;
-
-
 export default playerBarSlice.reducer

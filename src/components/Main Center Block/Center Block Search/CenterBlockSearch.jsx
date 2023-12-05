@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchByTrackTitle, selectSearchByTrackTitle } from '../../../redux/music/musicSlice';
+import { setSearchByTrackTitle } from '../../../redux/music/musicSlice';
+import { selectSearchByTrackTitle } from '../../../redux/selectedFile/selectedFile';
 import * as S from './CenterBlockSearch.style';
 
 function CenterBlockSearch() {

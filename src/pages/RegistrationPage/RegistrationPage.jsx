@@ -48,6 +48,11 @@ export function RegistrationPage() {
           })
         );
       })
+      .catch((error) => {
+       return error;
+      }).finally(() => {
+        setOffButton(false)
+      });
   };
 
   const onSubmit = () => {

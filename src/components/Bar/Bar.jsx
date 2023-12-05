@@ -1,12 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import {
-  selectAllTracks,
-  selectAllTracksFavorites,
-  selectCollectionId,
-  selectCurrentTrack,
-  selectShuffle,
-  selectToggleShuffleTrack,
   setAllTracks,
   setAllTracksFavorites,
   setCollectionId,
@@ -14,8 +8,16 @@ import {
   setPulsatingPoint,
   setToggleShuffleTrack,
 } from '../../redux/music/musicSlice';
+import {
+  selectAllTracks,
+  selectAllTracksFavorites,
+  selectCollectionId,
+  selectCurrentTrack,
+  selectShuffle,
+  selectToggleShuffleTrack,
+} from '../../redux/selectedFile/selectedFile'
 import PlayerControls from './Player Controls/PlayerControls';
-import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
+import LikeAndDislikeTrack from './LikeAndDislikeTrack/LikeAndDislikeTrack';
 import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
 import * as S from './Bar.style';
 
@@ -113,6 +115,18 @@ function Bar() {
     dispatch(setPulsatingPoint(false))
   };
 
+  function audioRefCurrentCurrentTime() {
+    console.log('Да');
+    setCurrentTime(audioRef.current?.currentTime)
+    console.log('Нет');
+  }
+
+  function audioRefCurrentDuration() {
+    console.log('Да');
+    setTrackTime(audioRef.current?.duration)
+    console.log('Нет');
+  }
+
   useEffect(() => {
     handleStart();
 
@@ -124,14 +138,12 @@ function Bar() {
         setTrackTime(Math.floor(audioRef.current?.duration));
       });
       return () => {
-        audioRef.current?.removeEventListener("timeupdate", () => {
-          setCurrentTime(Math.floor(audioRef.current?.currentTime));
-        });
-        audioRef.current?.removeEventListener("loadedmetadata", () => {
-          setTrackTime(Math.floor(audioRef.current?.duration));
-        });
-      };
+        audioRef.current?.removeEventListener("loadedmetadata", audioRefCurrentDuration())
+        audioRef.current?.removeEventListener("timeupdate", audioRefCurrentCurrentTime())
+      }
     }
+
+  
   }, [CurrentTrack.track_file]);
 
   const togglePlay = isPlaying ? handleStop : handleStart;
@@ -195,7 +207,7 @@ function Bar() {
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
-                <TrackPlayLikeDis />
+                <LikeAndDislikeTrack />
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <BarVolumeBlock

@@ -8,11 +8,7 @@ import { ProfileCollectionPages } from './pages/ArrayCollectionPages/ProfileColl
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 import MainLayout from "./components/Layouts/MainLayout";
 
-const AppRoutes = ({
-  loading,
-  arrayMusicAll,
-  addTodoError,
-}) => {
+const AppRoutes = () => {
 
   return (
     <Routes>
@@ -20,7 +16,7 @@ const AppRoutes = ({
       <Route path="/RegistrationPage" element={<RegistrationPage />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<MainPage loading={loading} arrayMusicAll={arrayMusicAll} addTodoError={addTodoError} />} />
+          <Route index element={<MainPage />} />
           <Route path="FavoritesPage" element={<FavoritesPage />} />
           <Route path="ProfileCollectionPages/:id" element={<ProfileCollectionPages />} />
           <Route path="*" element={<NotFound />} />
