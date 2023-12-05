@@ -18,7 +18,7 @@ function NavMenu() {
           </S.MenuLink>
         </S.MenuItem>
         <S.MenuItem>
-          <S.MenuLink onClick={changingUserInformation} to="/login">
+          <S.MenuLink onClick={changingUserInformation} >
             Выйти
           </S.MenuLink>
         </S.MenuItem>

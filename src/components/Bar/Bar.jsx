@@ -35,7 +35,7 @@ function Bar() {
     return `${min}:${sec}`;
   }
   const CurrentTrack = useSelector(selectCurrentTrack)
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
@@ -117,13 +117,13 @@ function Bar() {
 
   function audioRefCurrentCurrentTime() {
     console.log('Да');
-    setCurrentTime(audioRef.current?.currentTime)
+    setCurrentTime(Math.floor(audioRef.current?.currentTime))
     console.log('Нет');
   }
 
   function audioRefCurrentDuration() {
     console.log('Да');
-    setTrackTime(audioRef.current?.duration)
+    setTrackTime(Math.floor(audioRef.current?.duration))
     console.log('Нет');
   }
 
@@ -138,12 +138,10 @@ function Bar() {
         setTrackTime(Math.floor(audioRef.current?.duration));
       });
       return () => {
-        audioRef.current?.removeEventListener("loadedmetadata", audioRefCurrentDuration())
-        audioRef.current?.removeEventListener("timeupdate", audioRefCurrentCurrentTime())
+        audioRef.current?.removeEventListener("loadedmetadata", audioRefCurrentDuration)
+        audioRef.current?.removeEventListener("timeupdate", audioRefCurrentCurrentTime)
       }
     }
-
-  
   }, [CurrentTrack.track_file]);
 
   const togglePlay = isPlaying ? handleStop : handleStart;
