@@ -1,70 +1,169 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { setAuth } from './authSlice';
 
-const initialState = {
-  allTracks: [],
-  currentTrack: null,
-  shuffle: false,
-  shuffleAllTracks: [],
-  pulsatingPoint: false,
-  favoriteArrayTrack: [],
-};
+const baseQueryWithReauth = async (args, api, extraOptions) => {
 
-const getShuffleAllTracks = (array) => {
-  const arrayTracks = new Array(...array);
-  return arrayTracks.sort(() => Math.random() - 0.5);
-};
+  const baseQuery = fetchBaseQuery({
+    baseUrl: 'https://skypro-music-api.skyeng.tech',
 
-const playerBarSlice = createSlice({
-  name: 'music',
-  initialState,
-  reducers: {
-
-    // все треки (массив главный)
-    setAllTracks: (state, action) => {
-      state.allTracks = action.payload;
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.access;
+      // console.debug("Использую токен из стора", { token });
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
     },
+  });
 
-    // все треки (массив избранных треков)
-    setAllTracksFavorites: (state, action) => {
-      state.favoriteArrayTrack = action.payload;
-    },
 
-    // текущая дорожка
-    setCurrentTrack: (state, action) => {
-      state.currentTrack = action.payload;
-    },
+  const result = await baseQuery(args, api, extraOptions);
+  // console.debug("Результат первого запроса", { result });
 
-    // переключение трека в случайном порядке
-    setToggleShuffleTrack: (state) => {
-      state.shuffleAllTracks = getShuffleAllTracks(state.allTracks || state.favoriteArrayTrack)
-    },
-
-    // Активная / не активная иконка shuffle
-    setShuffle: (state, action) => {
-      state.shuffle = action.payload;
-    },
-
-    // Активная / не активная пульсирующая точка
-    setPulsatingPoint: (state, action) => {
-      state.pulsatingPoint = action.payload;
-    }
+  if (result?.error?.status !== 401) {
+    return result;
   }
+
+  const forceLogout = () => {
+    // console.debug("Принудительная авторизация!");
+    api.dispatch(setAuth(null));
+    window.location.navigate('/login');
+  };
+
+  const { auth } = api.getState();
+  // console.debug("Данные пользователя в сторе", { auth });
+  if (!auth.refresh) {
+    return forceLogout();
+  }
+
+  const refreshResult = await baseQuery(
+    {
+      url: "/user/token/refresh/",
+      method: "POST",
+      body: {
+        refresh: auth.refresh,
+      },
+    },
+    api,
+    extraOptions
+  );
+
+  // console.debug("Результат запроса на обновление токена", { refreshResult });
+
+  if (!refreshResult.data.access) {
+    return forceLogout();
+  }
+
+  api.dispatch(setAuth({ ...auth, access: refreshResult.data.access }));
+
+  const retryResult = await baseQuery(args, api, extraOptions);
+
+  if (retryResult?.error?.status === 401) {
+    return forceLogout();
+  }
+
+  // console.debug("Повторный запрос завершился успешно");
+
+  return retryResult;
+};
+
+export const fetchUsersToken = createApi({
+  reducerPath: 'fetchUsersToken',
+  baseQuery: baseQueryWithReauth,
+  endpoints: (builder) => ({
+    getToken: builder.mutation({
+      query: ({ email, password }) => ({
+        url: '/user/token/',
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+    }),
+    getTokenRefresh: builder.mutation({
+      query: () => ({
+        url: '/user/token/refresh/',
+        method: "POST",
+        body: JSON.stringify({
+          refresh: `Bearer ${localStorage.getItem('refresh')}`
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+    })
+  })
+})
+
+export const fetchAllTracks = createApi({
+  reducerPath: 'fetchFavoriteTracks',
+  tagTypes: ['FavoriteTrack', 'Track'],
+  baseQuery: baseQueryWithReauth,
+  endpoints: (builder) => ({
+    getAllMusic: builder.query({
+      query: () => `/catalog/track/all/`,
+      providesTags: (result) => result
+        ? [
+          ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
+          { type: 'FavoriteTrack', id: 'LIST' },
+        ]
+        : [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
+    getFavoriteTracksAll: builder.query({
+      query: () => ({
+        url: 'catalog/track/favorite/all/',
+        method: "GET",
+      }),
+      providesTags: (result) => result
+        ? [
+          ...result.map(({ id }) => ({ type: 'FavoriteTrack', id })),
+          { type: 'FavoriteTrack', id: 'LIST' },
+        ]
+        : [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
+    addFavoriteTrackID: builder.mutation({
+      query: (id) => ({
+        url: `catalog/track/${id}/favorite/`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
+    deleteFavoriteTrackID: builder.mutation({
+      query: (id) => ({
+        url: `catalog/track/${id}/favorite/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: 'FavoriteTrack', id: 'LIST' }]
+    }),
+    getSelections: builder.query({
+      query: (id) => ({
+        url: `catalog/selection/${id}/`,
+        method: "GET",
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.items.map(({ id }) => ({ type: "FavoriteTrack", id })),
+            { type: "FavoriteTrack", id: "LIST" },
+          ]
+          : [{ type: "FavoriteTrack", id: "LIST" }],
+    }),
+  })
 })
 
 export const {
-  setAllTracks,
-  setAllTracksFavorites,
-  setCurrentTrack,
-  setToggleShuffleTrack,
-  setPulsatingPoint,
-  setShuffle
-} = playerBarSlice.actions;
+  useGetTokenMutation,
+  useGetTokenRefreshMutation,
+} = fetchUsersToken;
 
-export const selectAllTracks = (store) => store.track.allTracks;
-export const selectAllTracksFavorites = (store) => store.track.favoriteArrayTrack;
-export const selectCurrentTrack = (store) => store.track.currentTrack;
-export const selectToggleShuffleTrack = (store) => store.track.shuffleAllTracks;
-export const selectShuffle = (store) => store.track.shuffle;
-export const selectPulsatingPoint = (store) => store.track.pulsatingPoint;
-
-export default playerBarSlice.reducer
+export const {
+  useGetFavoriteTracksAllQuery,
+  useAddFavoriteTrackIDMutation,
+  useDeleteFavoriteTrackIDMutation,
+  useGetAllMusicQuery,
+  useGetSelectionsQuery
+} = fetchAllTracks

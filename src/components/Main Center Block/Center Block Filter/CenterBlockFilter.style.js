@@ -12,6 +12,17 @@ export const CenterBlockFilter = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 51px;
+  justify-content: space-between;
+`
+
+export const FilterNameGenre = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const FilterByDate = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 export const FilterTitle = styled.div`
@@ -43,6 +54,7 @@ export const FilterButton = styled.button`
   border-color: #ad61ff;
   color: #ad61ff;
   cursor: pointer;
+  transition: 0.5s;
   &:not(:last-child) {
     margin-right: 10px;
   }
@@ -50,13 +62,15 @@ export const FilterButton = styled.button`
     border-color: #d9b6ff;
     color: #d9b6ff;
     cursor: pointer;
+    transition: 0.5s;
   }
   &:active {
     border-color: #ad61ff;
     color: #ad61ff;
     cursor: pointer;
+    transform: translateY(2px);
+    filter: saturate(100%);
   }
-
 `
 
 export const FilterLength = styled.div`
@@ -85,9 +99,21 @@ export const FilterMenu = styled.div`
   overflow-y: hidden;
 `
 
+export const FilterMenuGenre = styled.div`
+position: absolute;
+top: 50px;
+width: 248px;
+height: 240px;
+box-sizing: border-box;
+background-color: #313131;
+border-radius: 12px;
+padding: 34px;
+overflow-y: hidden;
+`
+
 export const FilterMenuYear = styled(FilterMenu)`
   width: 248px;
-  height: 305px;
+  height: 200px;
 `
 
 export const FilterList = styled.ul`
@@ -121,6 +147,7 @@ export const FilterList = styled.ul`
 
 export const TextDecoration = styled.a`
   color: #fff;
+  color: ${(props) => (props.$isSelected ? "#b672ff" : "#fff")};
   &:active {
     color: #ad61ff;
     text-decoration: underline;

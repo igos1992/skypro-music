@@ -1,19 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import {
-  selectAllTracks,
-  selectAllTracksFavorites,
-  selectCurrentTrack,
-  selectShuffle,
-  selectToggleShuffleTrack,
   setAllTracks,
   setAllTracksFavorites,
+  setCollectionId,
   setCurrentTrack,
   setPulsatingPoint,
   setToggleShuffleTrack,
-} from '../../redux/music/serviceQuery';
+} from '../../redux/music/musicSlice';
+import {
+  selectAllTracks,
+  selectAllTracksFavorites,
+  selectCollectionId,
+  selectCurrentTrack,
+  selectShuffle,
+  selectToggleShuffleTrack,
+} from '../../redux/selectedFile/selectedFile'
 import PlayerControls from './Player Controls/PlayerControls';
-import TrackPlayLikeDis from './Track-Play Like-Dis/Track-PlayLikeDis';
+import LikeAndDislikeTrack from './LikeAndDislikeTrack/LikeAndDislikeTrack';
 import BarVolumeBlock from './Bar Volume-Block/BarVolumeBlock';
 import * as S from './Bar.style';
 
@@ -30,9 +34,8 @@ function Bar() {
     }
     return `${min}:${sec}`;
   }
-
   const CurrentTrack = useSelector(selectCurrentTrack)
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
@@ -41,22 +44,30 @@ function Bar() {
   const dispatch = useDispatch()
   const allTracks = useSelector(selectAllTracks);
   const favoritesTracks = useSelector(selectAllTracksFavorites)
+  const collectionId = useSelector(selectCollectionId)
   const [activeArrayTrack, setActiveArrayTrack] = useState([])
 
   useEffect(() => {
     if (location.pathname === "/") {
-      // console.log(allTracks);
       dispatch(setAllTracks(allTracks))
       dispatch(setToggleShuffleTrack(allTracks))
       setActiveArrayTrack(allTracks);
     }
     if (location.pathname === "/FavoritesPage") {
-      // console.log(favoritesTracks);
       dispatch(setAllTracksFavorites(favoritesTracks));
       dispatch(setToggleShuffleTrack(favoritesTracks))
       setActiveArrayTrack(favoritesTracks)
     }
-  }, [activeArrayTrack, favoritesTracks, allTracks])
+    if (
+      location.pathname === `/ProfileCollectionPages/1` ||
+      location.pathname === `/ProfileCollectionPages/2` ||
+      location.pathname === `/ProfileCollectionPages/3`
+    ) {
+      dispatch(setCollectionId(collectionId))
+      dispatch(setToggleShuffleTrack(collectionId))
+      setActiveArrayTrack(collectionId);
+    }
+  }, [activeArrayTrack, favoritesTracks, allTracks, collectionId])
 
   const toggleShuffleTrack = useSelector(selectToggleShuffleTrack) // Перемешанный массив
   const shuffle = useSelector(selectShuffle); // active / not active shuffle
@@ -79,7 +90,7 @@ function Bar() {
   const handleNextTrack = () => {
     if (!shuffle) {
       nextTrack(activeArrayTrack)
-    } else {
+    } else if (indexShuffle < activeArrayTrack.length - 1) {
       dispatch(setCurrentTrack(toggleShuffleTrack[++indexShuffle]))
     }
   }
@@ -87,41 +98,49 @@ function Bar() {
   const handlePrevTrack = () => {
     if (!shuffle) {
       prevTrack(activeArrayTrack)
-    } else {
+    } else if (indexShuffle > 0) {
       dispatch(setCurrentTrack(toggleShuffleTrack[indexShuffle - 1]))
     }
   }
 
   const handleStart = () => {
-    audioRef.current.play();
+    audioRef.current?.play();
     setIsPlaying(true);
     dispatch(setPulsatingPoint(true))
   };
 
   const handleStop = () => {
-    audioRef.current.pause();
+    audioRef.current?.pause();
     setIsPlaying(false);
     dispatch(setPulsatingPoint(false))
   };
+
+  function audioRefCurrentCurrentTime() {
+    console.log('Да');
+    setCurrentTime(Math.floor(audioRef.current?.currentTime))
+    console.log('Нет');
+  }
+
+  function audioRefCurrentDuration() {
+    console.log('Да');
+    setTrackTime(Math.floor(audioRef.current?.duration))
+    console.log('Нет');
+  }
 
   useEffect(() => {
     handleStart();
 
     if (!currentTime) {
-      audioRef.current.addEventListener("timeupdate", () => {
-        setCurrentTime(Math.floor(audioRef.current.currentTime));
+      audioRef.current?.addEventListener("timeupdate", () => {
+        setCurrentTime(Math.floor(audioRef.current?.currentTime));
       });
-      audioRef.current.addEventListener("loadedmetadata", () => {
-        setTrackTime(Math.floor(audioRef.current.duration));
+      audioRef.current?.addEventListener("loadedmetadata", () => {
+        setTrackTime(Math.floor(audioRef.current?.duration));
       });
       return () => {
-        audioRef.current.removeEventListener("timeupdate", () => {
-          setCurrentTime(Math.floor(audioRef.current.currentTime));
-        });
-        audioRef.current.removeEventListener("loadedmetadata", () => {
-          setTrackTime(Math.floor(audioRef.current.duration));
-        });
-      };
+        audioRef.current?.removeEventListener("loadedmetadata", audioRefCurrentDuration)
+        audioRef.current?.removeEventListener("timeupdate", audioRefCurrentCurrentTime)
+      }
     }
   }, [CurrentTrack.track_file]);
 
@@ -156,7 +175,6 @@ function Bar() {
             }}
             $color="#b672ff"
           />
-
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <PlayerControls
@@ -173,7 +191,7 @@ function Bar() {
                 <S.TrackPlayContain>
                   <S.TrackPlayImage>
                     <S.TrackPlaySvg alt="music">
-                      <use xlinkHref="img/icon/sprite.svg#icon-note" />
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note" />
                     </S.TrackPlaySvg>
                   </S.TrackPlayImage>
                   <S.TrackPlayAuthor onClick={togglePlay}>
@@ -187,7 +205,7 @@ function Bar() {
                     </S.TrackPlayAlbumLink>
                   </S.TrackPlayAlbum>
                 </S.TrackPlayContain>
-                <TrackPlayLikeDis />
+                <LikeAndDislikeTrack />
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <BarVolumeBlock

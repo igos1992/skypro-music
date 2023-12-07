@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import playerBarReducer from './music/serviceQuery';
+import playerBarReducer from './music/musicSlice';
 import {
   fetchUsersToken,
   fetchAllTracks,
-} from "./music/usersTokenSlice";
+} from "./music/serviceQuery";
 import { authReducer } from "./music/authSlice";
 
 const store = configureStore({

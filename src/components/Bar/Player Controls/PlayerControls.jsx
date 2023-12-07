@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import * as S from './PlayerControls.style';
+import { setShuffle, setToggleShuffleTrack, } from '../../../redux/music/musicSlice';
 import {
   selectShuffle,
-  setToggleShuffleTrack,
   selectToggleShuffleTrack,
-  setShuffle
-} from '../../../redux/music/serviceQuery';
+} from '../../../redux/selectedFile/selectedFile'
+import * as S from './PlayerControls.style';
+
 
 function PlayerControls({
   isPlaying,
@@ -26,10 +26,9 @@ function PlayerControls({
     <S.PlayerControls>
       <S.PlayerBtnPrev onClick={() => handlePrevTrack()}>
         <S.PlayerBtnPrevSvg alt="prev" >
-          <use xlinkHref="img/icon/sprite.svg#icon-prev" />
+          <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
         </S.PlayerBtnPrevSvg>
       </S.PlayerBtnPrev>
-
       <S.PlayerBtnPlay>
         <S.PlayerBtnPlaySvg
           alt="play"
@@ -41,13 +40,11 @@ function PlayerControls({
           )}
         </S.PlayerBtnPlaySvg>
       </S.PlayerBtnPlay>
-
       <S.PlayerBtnNext onClick={() => handleNextTrack()}>
         <S.PlayerBtnNextSvg alt="next">
-          <use xlinkHref="img/icon/sprite.svg#icon-next" />
+          <use xlinkHref="/img/icon/sprite.svg#icon-next" />
         </S.PlayerBtnNextSvg>
       </S.PlayerBtnNext>
-
       <S.PlayerBtnRepeat>
         <S.PlayerBtnRepeatSvg
           alt="repeat"
@@ -59,7 +56,6 @@ function PlayerControls({
           )}
         </S.PlayerBtnRepeatSvg>
       </S.PlayerBtnRepeat>
-
       <S.PlayerBtnShuffle onClick={() => dispatch(setToggleShuffleTrack(toggleShuffleTrack))}>
         <S.PlayerBtnShuffleSvg alt="shuffle" onClick={() => { dispatch(setShuffle(!shuffle)) }}>
           {
@@ -72,7 +68,6 @@ function PlayerControls({
                 <use xlinkHref="../img/icon/sprite.svg#icon-shuffle" />
               )
           }
-
         </S.PlayerBtnShuffleSvg>
       </S.PlayerBtnShuffle>
     </S.PlayerControls>

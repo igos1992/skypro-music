@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { useSelector } from 'react-redux';
-import { selectCurrentTrack } from '../../redux/music/serviceQuery';
+import { selectCurrentTrack } from '../../redux/selectedFile/selectedFile';
 import GlobalStyle from "../../App.CreateGlobalStyle";
 import MainNavMenu from "../Main Nav Menu/MainNavMenu";
 import Footer from "../Footer/Footer";
@@ -12,6 +12,7 @@ import * as S from './MainLayout.style';
 const MainLayout = () => {
 
   const CurrentTrack = useSelector(selectCurrentTrack)
+
   return <>
     <GlobalStyle />
     <S.App>
@@ -25,7 +26,6 @@ const MainLayout = () => {
             </S.MainCenterblock>
             <MainSidebar />
           </S.Main>
-
           {CurrentTrack && (<Bar />)}
           <Footer />
         </S.Container>

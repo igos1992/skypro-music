@@ -14,7 +14,6 @@ background: #313131;
 
 export const SidebarItem = styled.div`
 width: 250px;
-height: 150px;
 &:not(:last-child) {
   margin-bottom: 30px;
 }

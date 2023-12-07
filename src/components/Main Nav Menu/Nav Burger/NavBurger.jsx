@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as S from './NavBurger.style';
 
 function NavBurger() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const toggleVisibility = () => setVisible(!visible);
   return (
     <>

@@ -1,12 +1,21 @@
-import { useGetFavoriteTracksAllQuery } from '../../redux/music/usersTokenSlice';
+import { useSelector } from 'react-redux';
+import { useGetFavoriteTracksAllQuery } from '../../redux/music/serviceQuery';
 import { ContentTitle } from '../../components/Main Center Block/ContentTitle/ContentTitle';
 import { ActiveArrayTrackList } from '../../components/ActiveArrayTrackList/ActiveArrayTrackList';
 import Skeleton from '../../components/Array/skeleton';
+import { selectSearchByTrackTitle } from '../../redux/selectedFile/selectedFile';
+
 import * as S from './FavoritesPage.style';
 
 export const FavoritesPage = () => {
 
-  const { data = [], isError, error, isLoading } = useGetFavoriteTracksAllQuery()
+  const { data, isError, error, isLoading } = useGetFavoriteTracksAllQuery()
+  const searchByTrackTitleText = useSelector(selectSearchByTrackTitle)
+  const searchLetter = data?.filter((music) => {
+    const matchesTitle = music.name.toLowerCase().
+      includes(searchByTrackTitleText.toLowerCase())
+    return matchesTitle
+  });
 
   return (
     <>
@@ -22,10 +31,20 @@ export const FavoritesPage = () => {
               <S.SpanErrorBlock>
                 Не удалось загрузить плейлист, попробуйте позже: {error?.error}
               </S.SpanErrorBlock>}
-            <ActiveArrayTrackList
-              data={data}
-              isLoading={isLoading}
-            />
+            <>
+              {data?.length === 0 && location.pathname === "/FavoritesPage" ?
+                <S.SpanNotTracksFavorite>В этом плейлисте пока нет Ваших любимых треков</S.SpanNotTracksFavorite>
+                :
+                searchLetter?.map((music) => (
+                  <ActiveArrayTrackList
+                    key={music.id}
+                    data={data}
+                    music={music}
+                    isLoading={isLoading}
+                  />
+                ))
+              }
+            </>
           </>
         }
       </S.ContentPlaylist>

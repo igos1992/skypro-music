@@ -15,7 +15,11 @@ margin-left: 26%;
 `;
 
 export const TrackPlayLike = styled.div`
-padding: 5px;
+margin-left: 28.5px;
+transition: 1s;
+  &:hover {
+    transform: scale(1.5); 
+   }
 &:hover svg {
   fill: transparent;
   stroke: #acacac;
@@ -39,6 +43,10 @@ stroke: #696969;
 export const TrackPlayDislike = styled.div`
 padding: 5px;
 margin-left: 28.5px;
+transition: 1s;
+  &:hover {
+    transform: scale(1.5); 
+   }
 &:hover svg {
   fill: transparent;
   stroke: #acacac;
@@ -48,7 +56,6 @@ margin-left: 28.5px;
   fill: #696969;
   stroke: #ffffff;
   cursor: pointer;
- 
 }
 `;
 

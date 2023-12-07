@@ -22,6 +22,10 @@ export const PlayerBtnPrev = styled.div`
   align-items: center;
   margin-right: 23px;
   cursor: pointer;
+  transition: 0.8s;
+  &:hover {
+    transform: scale(1.5); 
+   }
 `
 
 export const PlayerBtnPlay = styled.div`
@@ -35,6 +39,10 @@ export const PlayerBtnPlay = styled.div`
   margin-right: 23px;
   fill: #a53939;
   cursor: pointer;
+  transition: 0.8s;
+  &:hover {
+    transform: scale(1.2); 
+   }
 `
 
 export const PlayerBtnNext = styled.div`
@@ -46,6 +54,10 @@ export const PlayerBtnNext = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 24px;
+  transition: 0.8s;
+  &:hover {
+    transform: scale(1.5); 
+   }
 `
 
 export const PlayerBtnRepeat = styled.div`
@@ -57,10 +69,14 @@ export const PlayerBtnRepeat = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 24px;
+  transition: 1s;
+  &:hover {
+    transform: scale(1.5); 
+   }
   &:hover svg {
     fill: transparent;
     stroke: #acacac;
-    cursor: pointer;
+    cursor: pointer; 
   }
   &:active svg {
     fill: #696969;
@@ -83,6 +99,10 @@ export const PlayerBtnShuffle = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  transition: 1s;
+  &:hover {
+    transform: scale(1.5); 
+   }
   &:hover svg {
     fill: transparent;
     stroke: #acacac;

@@ -2,14 +2,12 @@ import CenterBlockFilter from '../../components/Main Center Block/Center Block F
 import CenterBlockContent from '../../components/Main Center Block/CenterBlockContent';
 import * as S from './MainPage.Style'
 
-export function MainPage({ loading }) {
+export function MainPage() {
   return (
     <>
       <S.CenterblockH2>Треки</S.CenterblockH2>
       <CenterBlockFilter />
-      <CenterBlockContent
-        loading={loading}
-      />
+      <CenterBlockContent />
     </>
   );
 }

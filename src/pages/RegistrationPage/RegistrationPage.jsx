@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { setAuth } from '../../redux/music/authSlice';
-import { useGetTokenMutation } from '../../redux/music/usersTokenSlice';
+import { useGetTokenMutation } from '../../redux/music/serviceQuery';
 import { UserContext } from '../../Usercontext/Usercontext';
 import { postTodosUserSignUp } from '../../api'
 import GlobalStyle from '../../App.CreateGlobalStyle';
@@ -40,7 +40,6 @@ export function RegistrationPage() {
     await getToken({ email, password })
       .unwrap()
       .then((token) => {
-        // console.log("token", token);
         dispatch(
           setAuth({
             access: token.access,
@@ -49,6 +48,11 @@ export function RegistrationPage() {
           })
         );
       })
+      .catch((error) => {
+       return error;
+      }).finally(() => {
+        setOffButton(false)
+      });
   };
 
   const onSubmit = () => {
@@ -80,8 +84,6 @@ export function RegistrationPage() {
     }
   }
 
-  // console.log(offButton);
-
   return (
     <>
       <GlobalStyle />
@@ -108,7 +110,6 @@ export function RegistrationPage() {
               <S.FillInTheField>
                 {errors.login && <p>{errors.login.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               <S.ModalInput
                 type="text"
                 placeholder="Имя"
@@ -123,7 +124,6 @@ export function RegistrationPage() {
               <S.FillInTheField>
                 {errors.name && <p>{errors.name.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               <S.ModalInput
                 type="password"
                 placeholder="Пароль"
@@ -135,11 +135,9 @@ export function RegistrationPage() {
                   }
                 })}
               />
-
               <S.FillInTheField>
                 {errors.password && <p>{errors.password.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               <S.ModalInput
                 type="password"
                 placeholder="Повторите пароль"
@@ -153,13 +151,10 @@ export function RegistrationPage() {
               <S.FillInTheField>
                 {errors.repeatPassword && <p>{errors.repeatPassword.message || 'Error!'}</p>}
               </S.FillInTheField>
-
               {error && <S.Error>{error}</S.Error>}
-
               <S.InputSubmit type="submit" disabled={offButton}>
                 Зарегистрироваться
               </S.InputSubmit>
-
             </S.ModalFormLogin>
           </S.ModalBlock>
         </S.ContainerSignup>
